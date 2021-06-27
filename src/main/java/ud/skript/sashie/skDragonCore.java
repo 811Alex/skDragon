@@ -117,7 +117,7 @@ public class skDragonCore extends JavaPlugin {
                SchedulingManager.runAsyncRepeating(skdragoncore::updateCheckOp, 1, UpdateTimer);
             }
          } else {
-            sendLog("Update checking is disabled, you should consider enabling them again!");
+            sendLog("This hacky version of skDragon does not check for updates!");
          }
       } else {
          Bukkit.getPluginManager().disablePlugin(skdragoncore);
@@ -231,7 +231,7 @@ public class skDragonCore extends JavaPlugin {
    }
 
    public void loadConfigData() {
-      UpdateCheck = this.getConfig().getBoolean("CheckForUpdates.Enabled");
+      UpdateCheck = false;
       UpdateTimer = this.getConfig().getInt("CheckForUpdates.UpdateTimer");
       UpdateMsgOps = this.getConfig().getBoolean("CheckForUpdates.JoinMessageOps");
       DocsGen = this.getConfig().getBoolean("Documentation.Enabled");
@@ -308,67 +308,10 @@ public class skDragonCore extends JavaPlugin {
 
    private void updateCheck() {
       String newVer = "";
-      sendLog("Checking for updates now!");
-
-      try {
-         InputStream is = (new URL("http://pastebin.com/raw/jCpT9A9j")).openStream();
-         BufferedReader br = new BufferedReader(new InputStreamReader(is));
-         newVer = br.readLine();
-         if (!Objects.equals(version, newVer)) {
-            sendLog("v" + newVer + " is available");
-
-            String line;
-            while((line = br.readLine()) != null) {
-               sendLog(line);
-            }
-         } else {
-            sendLog("You have the latest version!");
-         }
-
-         br.close();
-         is.close();
-      } catch (Exception var5) {
-         sendLog("Update check failed! Most likey you aren't connected to the internet!");
-      }
-
+      sendLog("This hacky version of skDragon does not check for updates!");
    }
 
    private void updateCheckOp() {
-      Iterator var2 = Bukkit.getOnlinePlayers().iterator();
 
-      while(true) {
-         Player player;
-         do {
-            if (!var2.hasNext()) {
-               return;
-            }
-
-            player = (Player)var2.next();
-         } while(!player.isOp() && !player.hasPermission("skdragon.updates"));
-
-         String newVer = "";
-         sendOpMsg("Checking for updates now!");
-
-         try {
-            InputStream is = (new URL("http://pastebin.com/raw/jCpT9A9j")).openStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            newVer = br.readLine();
-            if (!Objects.equals(version, newVer)) {
-               sendMsg(player, "Hey " + player.getName() + " v" + newVer + " is available");
-
-               String line;
-               while((line = br.readLine()) != null) {
-                  sendMsg(player, line);
-               }
-            } else {
-               sendLog("You have the latest version!");
-            }
-
-            br.close();
-            is.close();
-         } catch (Exception var7) {
-            sendExLog(var7.getCause().getMessage(), "skDragonCore", 0);
-         }
-      }
    }
 }
