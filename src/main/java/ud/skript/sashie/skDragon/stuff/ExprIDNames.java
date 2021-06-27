@@ -29,7 +29,7 @@ public class ExprIDNames extends SimpleExpression {
          l.add(allEffects);
       }
 
-      return (String[])l.toArray(new String[l.size()]);
+      return (String[])l.toArray(new String[0]);
    }
 
    public boolean init(Expression[] e, int i, Kleenean k, ParseResult p) {

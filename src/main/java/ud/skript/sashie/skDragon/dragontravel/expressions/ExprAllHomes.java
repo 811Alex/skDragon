@@ -32,7 +32,7 @@ public class ExprAllHomes extends SimpleExpression {
          cl.add(names);
       }
 
-      return (String[])cl.toArray(new String[cl.size()]);
+      return (String[])cl.toArray(new String[0]);
    }
 
    public boolean init(Expression[] e, int i, Kleenean k, ParseResult p) {

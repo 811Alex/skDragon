@@ -24,13 +24,13 @@ public class SkullEvents1_8 implements Listener {
    )
    public void cancelMove(InventoryClickEvent event) {
       Player player = (Player)event.getWhoClicked();
-      if ((event.getSlot() < event.getInventory().getSize() || event.getRawSlot() < event.getInventory().getSize() || event.isShiftClick()) && event.getCursor() != null && event.getCursor().hasItemMeta() && event.getCursor().getItemMeta().hasDisplayName() && event.getCursor().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId().toString())) {
+      if ((event.getSlot() < event.getInventory().getSize() || event.getRawSlot() < event.getInventory().getSize() || event.isShiftClick()) && event.getCursor() != null && event.getCursor().hasItemMeta() && event.getCursor().getItemMeta().hasDisplayName() && event.getCursor().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId())) {
          event.setCancelled(true);
       }
 
-      if (event.getInventory().getType() == InventoryType.PLAYER && event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().hasDisplayName() && event.getCurrentItem().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId().toString())) {
+      if (event.getInventory().getType() == InventoryType.PLAYER && event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().hasDisplayName() && event.getCurrentItem().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId())) {
          player.getInventory().remove(event.getCurrentItem());
-         player.getInventory().removeItem(new ItemStack[]{event.getCurrentItem()});
+         player.getInventory().removeItem(event.getCurrentItem());
          player.closeInventory();
       } else {
          if (SkullEffectsLib.entityHasEmote(player)) {
@@ -40,20 +40,19 @@ public class SkullEvents1_8 implements Listener {
                return;
             }
 
-            if (event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().hasDisplayName() && event.getCurrentItem().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId().toString())) {
+            if (event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().hasDisplayName() && event.getCurrentItem().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId())) {
                player.getInventory().remove(event.getCurrentItem());
-               player.getInventory().removeItem(new ItemStack[]{event.getCurrentItem()});
+               player.getInventory().removeItem(event.getCurrentItem());
                event.setCancelled(true);
                player.updateInventory();
                return;
             }
 
-            if (event.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD || event.getAction() == InventoryAction.HOTBAR_SWAP || event.getAction() == InventoryAction.PLACE_ALL && event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().hasDisplayName() && event.getCurrentItem().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId().toString())) {
+            if (event.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD || event.getAction() == InventoryAction.HOTBAR_SWAP || event.getAction() == InventoryAction.PLACE_ALL && event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().hasDisplayName() && event.getCurrentItem().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId())) {
                player.getInventory().remove(event.getCurrentItem());
-               player.getInventory().removeItem(new ItemStack[]{event.getCurrentItem()});
+               player.getInventory().removeItem(event.getCurrentItem());
                event.setCancelled(true);
                player.updateInventory();
-               return;
             }
          }
 
@@ -71,7 +70,7 @@ public class SkullEvents1_8 implements Listener {
          }
 
          item = (ItemStack)var3.next();
-      } while(item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().getDisplayName().equals("§b§lEMOTE-" + ((Player)event.getWhoClicked()).getUniqueId().toString()));
+      } while(item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().getDisplayName().equals("§b§lEMOTE-" + event.getWhoClicked().getUniqueId()));
 
       event.setCancelled(true);
       ((Player)event.getWhoClicked()).updateInventory();
@@ -79,7 +78,7 @@ public class SkullEvents1_8 implements Listener {
 
    @EventHandler
    public void onDrop(PlayerDropItemEvent event) {
-      if (event.getItemDrop().getItemStack().hasItemMeta() && event.getItemDrop().getItemStack().getItemMeta().hasDisplayName() && event.getItemDrop().getItemStack().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + event.getPlayer().getUniqueId().toString())) {
+      if (event.getItemDrop().getItemStack().hasItemMeta() && event.getItemDrop().getItemStack().getItemMeta().hasDisplayName() && event.getItemDrop().getItemStack().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + event.getPlayer().getUniqueId())) {
          event.getItemDrop().remove();
          event.getPlayer().updateInventory();
       }
@@ -88,7 +87,7 @@ public class SkullEvents1_8 implements Listener {
 
    @EventHandler
    public void onPlayerPickUpItem(PlayerPickupItemEvent event) {
-      if (event.getItem().getItemStack() != null && event.getItem().getItemStack().hasItemMeta() && event.getItem().getItemStack().getItemMeta().hasDisplayName() && event.getItem().getItemStack().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + event.getPlayer().getUniqueId().toString())) {
+      if (event.getItem().getItemStack() != null && event.getItem().getItemStack().hasItemMeta() && event.getItem().getItemStack().getItemMeta().hasDisplayName() && event.getItem().getItemStack().getItemMeta().getDisplayName().equals("§b§lEMOTE-" + event.getPlayer().getUniqueId())) {
          event.setCancelled(true);
          event.getItem().remove();
       }
@@ -103,9 +102,9 @@ public class SkullEvents1_8 implements Listener {
 
       for(int var4 = 0; var4 < var5; ++var4) {
          ItemStack item = var6[var4];
-         if (item != null && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId().toString())) {
+         if (item != null && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals("§b§lEMOTE-" + player.getUniqueId())) {
             player.getInventory().setHelmet(new ItemStack(Material.AIR, 1));
-            player.getInventory().removeItem(new ItemStack[]{item});
+            player.getInventory().removeItem(item);
          }
       }
 

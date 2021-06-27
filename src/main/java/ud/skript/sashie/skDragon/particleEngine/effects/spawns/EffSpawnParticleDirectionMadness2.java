@@ -49,7 +49,6 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
    private Expression inputRange;
    private Expression inputPulseDelay;
    private Expression inputKeepDelay;
-   private String parsedSyntax = "";
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
       this.partCount = exprs[0];
@@ -92,7 +91,7 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
       final float offsetZ = SkriptHandler.inputParticleOffset(e, this.offZ);
       Vector direction = SkriptHandler.inputVector(e, this.inputDirection);
       float speed = SkriptHandler.inputFloat(0.0F, e, this.inputSpeed);
-      long finalPulseTick = (long)SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
+      long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
       final long finalKeepDelay = SkriptHandler.inputKeepDelay(e, this.inputKeepDelay);
       double range = SkriptHandler.inputDouble(32.0D, e, this.inputRange);
       final String idName;
@@ -117,7 +116,6 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
             float finalOffsetX = offsetX;
             float finalOffsetY = offsetY;
             float finalOffsetZ = offsetZ;
-            Vector dir = particle.getDirection().normalize();
             Random r = new Random();
             protected double prevPosX;
             protected double prevPosY;
@@ -278,7 +276,7 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
                         double k = particle.getDirection().getY();
                         double j = particle.getDirection().getZ();
                         this.rand = new Random();
-                        init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i + this.rand.nextFloat()) - 0.5D, (double)((float)k - this.rand.nextFloat() - 1.0F), (double)((float)j + this.rand.nextFloat()) - 0.5D);
+                        init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i + this.rand.nextFloat()) - 0.5D, (float)k - this.rand.nextFloat() - 1.0F, (double)((float)j + this.rand.nextFloat()) - 0.5D);
                         particleMaxAge = (int)(Math.random() * 10.0D) + 30;
                         this.init = true;
                      }
@@ -351,7 +349,7 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
                         this.finalOffsetZ = RandomUtils.randomRangeFloat(-offsetZ, offsetZ);
                      }
 
-                     location.add((double)this.finalOffsetX, (double)this.finalOffsetY, (double)this.finalOffsetZ);
+                     location.add(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
                      if (style <= 1) {
                         if (!particle.getParticle().hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
                            this.startPortal(location);
@@ -361,7 +359,7 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
                      } else if (style == 2) {
                         particle.displayDirectional(idName, players, EffSpawnParticleDirectionMadness2.drop(location));
                      } else if (style == 3) {
-                        particle.setDirection(new Vector((double)EffSpawnParticleDirectionMadness2.Vec(), 0.1D, (double)EffSpawnParticleDirectionMadness2.Vec()));
+                        particle.setDirection(new Vector(EffSpawnParticleDirectionMadness2.Vec(), 0.1D, EffSpawnParticleDirectionMadness2.Vec()));
                         particle.displayDirectional(idName, players, location);
                      } else if (style == 4) {
                         this.startBigSoulWell(location);
@@ -380,7 +378,7 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
                         }
                      }
 
-                     location.subtract((double)this.finalOffsetX, (double)this.finalOffsetY, (double)this.finalOffsetZ);
+                     location.subtract(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
                   }
                }
 
@@ -403,7 +401,6 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
    }
 
    private static float Vec() {
-      float Vec = -0.05F + (float)(Math.random() * 0.1D);
-      return Vec;
+      return -0.05F + (float)(Math.random() * 0.1D);
    }
 }

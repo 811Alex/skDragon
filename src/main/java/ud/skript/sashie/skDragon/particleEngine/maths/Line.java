@@ -72,7 +72,7 @@ public class Line extends EffectsLib {
 
                   double amount = 0.0D;
                   if (zigZags > 0) {
-                     amount = (double)(this.density / (float)zigZags);
+                     amount = this.density / (float)zigZags;
                   }
 
                   Vector link = this.target.toVector().subtract(center.toVector());
@@ -109,9 +109,9 @@ public class Line extends EffectsLib {
                   for(int i = 0; (float)i < this.density; ++i) {
                      if (zigZags > 0) {
                         if (this.zigs) {
-                           finalLoc.add(0.0D, (double)zigHeight, 0.0D);
+                           finalLoc.add(0.0D, zigHeight, 0.0D);
                         } else {
-                           finalLoc.subtract(0.0D, (double)zigHeight, 0.0D);
+                           finalLoc.subtract(0.0D, zigHeight, 0.0D);
                         }
                      }
 
@@ -123,11 +123,7 @@ public class Line extends EffectsLib {
                   }
 
                   if ((double)this.step >= amount) {
-                     if (this.zigs) {
-                        this.zigs = false;
-                     } else {
-                        this.zigs = true;
-                     }
+                     this.zigs = !this.zigs;
 
                      this.step = 0.0F;
                   }

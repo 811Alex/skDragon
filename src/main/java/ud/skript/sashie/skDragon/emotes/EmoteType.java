@@ -671,7 +671,7 @@ public enum EmoteType {
 
    public abstract void playParticle(int var1, int var2, Location var3);
 
-   private EmoteType(Integer id, String name) {
+   EmoteType(Integer id, String name) {
       this.id = id;
       this.name = name;
    }

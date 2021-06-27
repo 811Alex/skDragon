@@ -104,7 +104,7 @@ public class EffText extends Effect {
       Vector axis = SkriptHandler.inputEffectRotationOld(e, this.xRot, this.yRot, this.zRot);
       double visibleRange = ((Number)this.range.getSingle(e)).doubleValue();
       List players = SkriptHandler.inputPlayers(e, this.inputPlayers);
-      Long scaleSize = 5L;
+      long scaleSize = 5L;
       if (this.scale != null) {
          scaleSize = ((Number)this.scale.getSingle(e)).longValue();
       }
@@ -112,7 +112,7 @@ public class EffText extends Effect {
       Font font = SkriptHandler.inputFont(e, this.inputFontName, this.inputFontStyle, this.inputFontSize);
       String text = (String)this.inputText.getSingle(e);
       int finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseTick);
-      Text effect = new Text(text, font, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, invert, autoFace, 1.0F, 1.0F, (float)scaleSize, visibleRange, axis, displacement, 0L, (long)finalPulseTick);
+      Text effect = new Text(text, font, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, invert, autoFace, 1.0F, 1.0F, (float)scaleSize, visibleRange, axis, displacement, 0L, finalPulseTick);
       effect.draw();
    }
 }

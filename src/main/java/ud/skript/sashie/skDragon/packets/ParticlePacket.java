@@ -52,7 +52,7 @@ public class ParticlePacket extends ASMPacket {
    }
 
    public ParticlePacket(ParticleEffect effect, ParticleEffect.ParticleColor color, boolean longDistance) {
-      this(effect, color.getR(), color.getG(), color.getB(), 1.0F, 0, longDistance, (ParticleEffect.ParticleData)null);
+      this(effect, color.getR(), color.getG(), color.getB(), 1.0F, 0, longDistance, null);
       if (effect == ParticleEffect.redstone && color instanceof ParticleEffect.OrdinaryColor && ((ParticleEffect.OrdinaryColor)color).getRed() == 0) {
          this.offsetX = 1.17549435E-38F;
       }

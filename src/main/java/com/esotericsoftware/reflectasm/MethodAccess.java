@@ -112,15 +112,15 @@ public abstract class MethodAccess {
                String accessClassNameInternal = accessClassName.replace('.', '/');
                String classNameInternal = className.replace('.', '/');
                ClassWriter cw = new ClassWriter(1);
-               cw.visit(196653, 33, accessClassNameInternal, (String)null, "com/esotericsoftware/reflectasm/MethodAccess", (String[])null);
-               MethodVisitor mv = cw.visitMethod(1, "<init>", "()V", (String)null, (String[])null);
+               cw.visit(196653, 33, accessClassNameInternal, null, "com/esotericsoftware/reflectasm/MethodAccess", null);
+               MethodVisitor mv = cw.visitMethod(1, "<init>", "()V", null, null);
                mv.visitCode();
                mv.visitVarInsn(25, 0);
                mv.visitMethodInsn(183, "com/esotericsoftware/reflectasm/MethodAccess", "<init>", "()V");
                mv.visitInsn(177);
                mv.visitMaxs(0, 0);
                mv.visitEnd();
-               mv = cw.visitMethod(129, "invoke", "(Ljava/lang/Object;I[Ljava/lang/Object;)Ljava/lang/Object;", (String)null, (String[])null);
+               mv = cw.visitMethod(129, "invoke", "(Ljava/lang/Object;I[Ljava/lang/Object;)Ljava/lang/Object;", null, null);
                mv.visitCode();
                if (!methods.isEmpty()) {
                   mv.visitVarInsn(25, 1);
@@ -140,9 +140,9 @@ public abstract class MethodAccess {
                   for(int i = 0; i < n; ++i) {
                      mv.visitLabel(labels[i]);
                      if (i == 0) {
-                        mv.visitFrame(1, 1, new Object[]{classNameInternal}, 0, (Object[])null);
+                        mv.visitFrame(1, 1, new Object[]{classNameInternal}, 0, null);
                      } else {
-                        mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+                        mv.visitFrame(3, 0, null, 0, null);
                      }
 
                      mv.visitVarInsn(25, 4);
@@ -244,7 +244,7 @@ public abstract class MethodAccess {
                   }
 
                   mv.visitLabel(defaultLabel);
-                  mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+                  mv.visitFrame(3, 0, null, 0, null);
                }
 
                mv.visitTypeInsn(187, "java/lang/IllegalArgumentException");

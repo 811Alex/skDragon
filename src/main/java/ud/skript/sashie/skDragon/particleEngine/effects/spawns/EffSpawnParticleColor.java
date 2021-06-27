@@ -79,7 +79,7 @@ public class EffSpawnParticleColor extends DragonEffect {
       final float coffsetX = SkriptHandler.inputFloat(0.0F, e, this.coffX);
       final float coffsetY = SkriptHandler.inputFloat(0.0F, e, this.coffY);
       final float coffsetZ = SkriptHandler.inputFloat(0.0F, e, this.coffZ);
-      long finalPulseTick = (long)SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
+      long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
       long finalKeepDelay = SkriptHandler.inputKeepDelay(e, this.inputKeepDelay);
       double range = SkriptHandler.inputDouble(32.0D, e, this.inputRange);
       final String idName;
@@ -120,14 +120,11 @@ public class EffSpawnParticleColor extends DragonEffect {
                   Object loc = var4[var2];
                   Location location = EffSpawnParticleColor.getLocation(loc);
                   if (randomColor) {
-                     if (rainbowMode) {
-                        this.finalOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                        this.finalOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                     } else {
-                        this.finalOffsetX = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                        this.finalOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                        this.finalOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                     }
+                      if (!rainbowMode) {
+                          this.finalOffsetX = RandomUtils.randomRangeFloat(0.0F, 255.0F);
+                      }
+                      this.finalOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
+                      this.finalOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
                   }
 
                   if (rainbowMode) {
@@ -160,9 +157,9 @@ public class EffSpawnParticleColor extends DragonEffect {
                         this.finalColorOffsetZ = RandomUtils.randomRangeFloat(-coffsetZ, coffsetZ);
                      }
 
-                     location.add((double)this.finalColorOffsetX, (double)this.finalColorOffsetY, (double)this.finalColorOffsetZ);
+                     location.add(this.finalColorOffsetX, this.finalColorOffsetY, this.finalColorOffsetZ);
                      particle.displayColor(idName, players, location, rainbowMode);
-                     location.subtract((double)this.finalColorOffsetX, (double)this.finalColorOffsetY, (double)this.finalColorOffsetZ);
+                     location.subtract(this.finalColorOffsetX, this.finalColorOffsetY, this.finalColorOffsetZ);
                   }
                }
 

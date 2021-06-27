@@ -138,7 +138,7 @@ public class DragonTravelHook {
    }
 
    private static StationaryDragon getStatDragon(String name) {
-      return (StationaryDragon)DragonTravel.getInstance().getDragonManager().getStationaryDragons().get(name);
+      return DragonTravel.getInstance().getDragonManager().getStationaryDragons().get(name);
    }
 
    public static Location getStatDragonLocation(String name) {

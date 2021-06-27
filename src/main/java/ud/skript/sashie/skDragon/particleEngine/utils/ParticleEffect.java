@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -25,87 +24,87 @@ import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.particleEngine.maths.EffectsLib;
 
 public enum ParticleEffect {
-   explosion("explosion", 0, 0, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   explosionlarge("explosionlarge", 1, 1, -1, new ParticleEffect.ParticleProperty[0]),
-   explosionhuge("explosionhuge", 2, 2, -1, new ParticleEffect.ParticleProperty[0]),
-   fireworkspark("fireworkspark", 3, 3, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   waterbubble("waterbubble", 4, 4, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL, ParticleEffect.ParticleProperty.USES_WATER}),
-   watersplash("watersplash", 5, 5, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   waterwake("waterwake", 6, 6, 7, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   suspended("suspended", 7, 7, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.USES_WATER}),
-   suspenddepth("suspenddepth", 8, 8, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   crit("crit", 9, 9, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   critmagic("critmagic", 10, 10, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   smoke("smoke", 11, 11, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   smokelarge("smokelarge", 12, 12, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   spell("spell", 13, 13, -1, new ParticleEffect.ParticleProperty[0]),
-   spellinstant("spellinstant", 14, 14, -1, new ParticleEffect.ParticleProperty[0]),
-   mobspell("mobspell", 15, 15, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.COLORABLE}),
-   mobspellambient("mobspellambient", 16, 16, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.COLORABLE}),
-   witchspell("witchspell", 17, 17, -1, new ParticleEffect.ParticleProperty[0]),
-   waterdrip("waterdrip", 18, 18, -1, new ParticleEffect.ParticleProperty[0]),
-   lavadrip("lavadrip", 19, 19, -1, new ParticleEffect.ParticleProperty[0]),
-   angryvillager("angryvillager", 20, 20, -1, new ParticleEffect.ParticleProperty[0]),
-   happyvillager("happyvillager", 21, 21, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   townaura("townaura", 22, 22, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   note("note", 23, 23, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.COLORABLE}),
-   portal("portal", 24, 24, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   enchantmenttable("enchantmenttable", 25, 25, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   flame("flame", 26, 26, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   lava("lava", 27, 27, -1, new ParticleEffect.ParticleProperty[0]),
-   footstep("footstep", 28, -1, new ParticleEffect.ParticleProperty[0]),
-   cloud("cloud", 29, 28, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   redstone("redstone", 30, 29, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.COLORABLE}),
-   snowball("snowball", 31, 30, -1, new ParticleEffect.ParticleProperty[0]),
-   snowshovel("snowshovel", 32, 31, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   slime("slime", 33, 32, -1, new ParticleEffect.ParticleProperty[0]),
-   heart("heart", 34, 33, -1, new ParticleEffect.ParticleProperty[0]),
-   barrier("barrier", 35, 34, 8, new ParticleEffect.ParticleProperty[0]),
-   itemcrack("itemcrack", 36, 35, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL, ParticleEffect.ParticleProperty.REQUIRES_DATA}),
-   blockcrack("blockcrack", 37, 36, -1, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.REQUIRES_DATA}),
-   blockdust("blockdust", 38, 37, 7, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL, ParticleEffect.ParticleProperty.REQUIRES_DATA}),
-   waterdrop("waterdrop", 39, 38, 8, new ParticleEffect.ParticleProperty[0]),
-   itemtake("itemtake", 40, 8, new ParticleEffect.ParticleProperty[0]),
-   mobappearance("mobappearance", 41, 39, 8, new ParticleEffect.ParticleProperty[0]),
-   dragonbreath("dragonbreath", 42, 40, 9, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   endrod("endrod", 43, 41, 9, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   damage("damage", 44, 42, 9, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   sweep("sweep", 45, 43, 9, new ParticleEffect.ParticleProperty[0]),
-   fallingdust("fallingdust", 46, 44, 10, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.REQUIRES_DATA}),
-   totem("totem", 47, 45, 11, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   spit("spit", 48, 46, 11, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   squidink("squidink", 47, 13, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   bubblepop("bubblepop", 48, 13, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   bubblecurrentdown("bubblecurrentdown", 49, 13, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   bubblecurrentup("bubblecurrentup", 50, 13, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   nautilus("nautilus", 51, 13, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   dolphin("dolphin", 52, 13, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   sneeze("sneeze", 53, 14, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   campfirecozy("campfirecozy", 54, 14, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   campfiresignal("campfiresignal", 55, 14, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   composter("composter", 56, 14, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   flash("flash", 57, 14, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   fallinglava("fallinglava", 58, 14, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   landinglava("landinglava", 59, 14, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   fallingwater("fallingwater", 60, 14, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   drippinghoney("drippinghoney", 61, 15, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   fallinghoney("fallinghoney", 62, 15, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   landinghoney("landinghoney", 63, 15, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   fallingnectar("fallingnectar", 64, 15, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   soulfireflame("soulfireflame", 65, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   ash("ash", 66, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   crimsonspore("crimsonspore", 67, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   warpedspore("warpedspore", 68, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   soul("soul", 69, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   drippingtear("drippingtear", 70, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   fallingtear("fallingtear", 71, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   landingtear("landingtear", 72, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   reverseportal("reverseportal", 73, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   whiteash("whiteash", 74, 16, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL}),
-   legacyblockcrack("legacyblockcrack", 53, 13, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.REQUIRES_DATA}),
-   legacyblockdust("legacyblockdust", 54, 13, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.DIRECTIONAL, ParticleEffect.ParticleProperty.REQUIRES_DATA}),
-   legacyfallingdust("legacyfallingdust", 55, 13, new ParticleEffect.ParticleProperty[]{ParticleEffect.ParticleProperty.REQUIRES_DATA}),
-   NULL("null", 99, -1, new ParticleEffect.ParticleProperty[0]);
+   explosion("explosion", 0, 0, -1, ParticleProperty.DIRECTIONAL),
+   explosionlarge("explosionlarge", 1, 1, -1),
+   explosionhuge("explosionhuge", 2, 2, -1),
+   fireworkspark("fireworkspark", 3, 3, -1, ParticleProperty.DIRECTIONAL),
+   waterbubble("waterbubble", 4, 4, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.USES_WATER),
+   watersplash("watersplash", 5, 5, -1, ParticleProperty.DIRECTIONAL),
+   waterwake("waterwake", 6, 6, 7, ParticleProperty.DIRECTIONAL),
+   suspended("suspended", 7, 7, -1, ParticleProperty.USES_WATER),
+   suspenddepth("suspenddepth", 8, 8, -1, ParticleProperty.DIRECTIONAL),
+   crit("crit", 9, 9, -1, ParticleProperty.DIRECTIONAL),
+   critmagic("critmagic", 10, 10, -1, ParticleProperty.DIRECTIONAL),
+   smoke("smoke", 11, 11, -1, ParticleProperty.DIRECTIONAL),
+   smokelarge("smokelarge", 12, 12, -1, ParticleProperty.DIRECTIONAL),
+   spell("spell", 13, 13, -1),
+   spellinstant("spellinstant", 14, 14, -1),
+   mobspell("mobspell", 15, 15, -1, ParticleProperty.COLORABLE),
+   mobspellambient("mobspellambient", 16, 16, -1, ParticleProperty.COLORABLE),
+   witchspell("witchspell", 17, 17, -1),
+   waterdrip("waterdrip", 18, 18, -1),
+   lavadrip("lavadrip", 19, 19, -1),
+   angryvillager("angryvillager", 20, 20, -1),
+   happyvillager("happyvillager", 21, 21, -1, ParticleProperty.DIRECTIONAL),
+   townaura("townaura", 22, 22, -1, ParticleProperty.DIRECTIONAL),
+   note("note", 23, 23, -1, ParticleProperty.COLORABLE),
+   portal("portal", 24, 24, -1, ParticleProperty.DIRECTIONAL),
+   enchantmenttable("enchantmenttable", 25, 25, -1, ParticleProperty.DIRECTIONAL),
+   flame("flame", 26, 26, -1, ParticleProperty.DIRECTIONAL),
+   lava("lava", 27, 27, -1),
+   footstep("footstep", 28, -1),
+   cloud("cloud", 29, 28, -1, ParticleProperty.DIRECTIONAL),
+   redstone("redstone", 30, 29, -1, ParticleProperty.COLORABLE),
+   snowball("snowball", 31, 30, -1),
+   snowshovel("snowshovel", 32, 31, -1, ParticleProperty.DIRECTIONAL),
+   slime("slime", 33, 32, -1),
+   heart("heart", 34, 33, -1),
+   barrier("barrier", 35, 34, 8),
+   itemcrack("itemcrack", 36, 35, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
+   blockcrack("blockcrack", 37, 36, -1, ParticleProperty.REQUIRES_DATA),
+   blockdust("blockdust", 38, 37, 7, ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
+   waterdrop("waterdrop", 39, 38, 8),
+   itemtake("itemtake", 40, 8),
+   mobappearance("mobappearance", 41, 39, 8),
+   dragonbreath("dragonbreath", 42, 40, 9, ParticleProperty.DIRECTIONAL),
+   endrod("endrod", 43, 41, 9, ParticleProperty.DIRECTIONAL),
+   damage("damage", 44, 42, 9, ParticleProperty.DIRECTIONAL),
+   sweep("sweep", 45, 43, 9),
+   fallingdust("fallingdust", 46, 44, 10, ParticleProperty.REQUIRES_DATA),
+   totem("totem", 47, 45, 11, ParticleProperty.DIRECTIONAL),
+   spit("spit", 48, 46, 11, ParticleProperty.DIRECTIONAL),
+   squidink("squidink", 47, 13, ParticleProperty.DIRECTIONAL),
+   bubblepop("bubblepop", 48, 13, ParticleProperty.DIRECTIONAL),
+   bubblecurrentdown("bubblecurrentdown", 49, 13, ParticleProperty.DIRECTIONAL),
+   bubblecurrentup("bubblecurrentup", 50, 13, ParticleProperty.DIRECTIONAL),
+   nautilus("nautilus", 51, 13, ParticleProperty.DIRECTIONAL),
+   dolphin("dolphin", 52, 13, ParticleProperty.DIRECTIONAL),
+   sneeze("sneeze", 53, 14, ParticleProperty.DIRECTIONAL),
+   campfirecozy("campfirecozy", 54, 14, ParticleProperty.DIRECTIONAL),
+   campfiresignal("campfiresignal", 55, 14, ParticleProperty.DIRECTIONAL),
+   composter("composter", 56, 14, ParticleProperty.DIRECTIONAL),
+   flash("flash", 57, 14, ParticleProperty.DIRECTIONAL),
+   fallinglava("fallinglava", 58, 14, ParticleProperty.DIRECTIONAL),
+   landinglava("landinglava", 59, 14, ParticleProperty.DIRECTIONAL),
+   fallingwater("fallingwater", 60, 14, ParticleProperty.DIRECTIONAL),
+   drippinghoney("drippinghoney", 61, 15, ParticleProperty.DIRECTIONAL),
+   fallinghoney("fallinghoney", 62, 15, ParticleProperty.DIRECTIONAL),
+   landinghoney("landinghoney", 63, 15, ParticleProperty.DIRECTIONAL),
+   fallingnectar("fallingnectar", 64, 15, ParticleProperty.DIRECTIONAL),
+   soulfireflame("soulfireflame", 65, 16, ParticleProperty.DIRECTIONAL),
+   ash("ash", 66, 16, ParticleProperty.DIRECTIONAL),
+   crimsonspore("crimsonspore", 67, 16, ParticleProperty.DIRECTIONAL),
+   warpedspore("warpedspore", 68, 16, ParticleProperty.DIRECTIONAL),
+   soul("soul", 69, 16, ParticleProperty.DIRECTIONAL),
+   drippingtear("drippingtear", 70, 16, ParticleProperty.DIRECTIONAL),
+   fallingtear("fallingtear", 71, 16, ParticleProperty.DIRECTIONAL),
+   landingtear("landingtear", 72, 16, ParticleProperty.DIRECTIONAL),
+   reverseportal("reverseportal", 73, 16, ParticleProperty.DIRECTIONAL),
+   whiteash("whiteash", 74, 16, ParticleProperty.DIRECTIONAL),
+   legacyblockcrack("legacyblockcrack", 53, 13, ParticleProperty.REQUIRES_DATA),
+   legacyblockdust("legacyblockdust", 54, 13, ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
+   legacyfallingdust("legacyfallingdust", 55, 13, ParticleProperty.REQUIRES_DATA),
+   NULL("null", 99, -1);
 
    public static final Map NAME_MAP = new HashMap();
    private final String name;
@@ -125,7 +124,7 @@ public enum ParticleEffect {
 
    }
 
-   private ParticleEffect(String name, int id, int requiredVersion, ParticleEffect.ParticleProperty... properties) {
+   ParticleEffect(String name, int id, int requiredVersion, ParticleEffect.ParticleProperty... properties) {
       this.name = name;
       this.oldID = id;
       this.newID = id;
@@ -133,7 +132,7 @@ public enum ParticleEffect {
       this.properties = Arrays.asList(properties);
    }
 
-   private ParticleEffect(String name, int id, int newID, int requiredVersion, ParticleEffect.ParticleProperty... properties) {
+   ParticleEffect(String name, int id, int newID, int requiredVersion, ParticleEffect.ParticleProperty... properties) {
       this.name = name;
       this.oldID = id;
       this.newID = newID;
@@ -227,7 +226,7 @@ public enum ParticleEffect {
       } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
          throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
       } else {
-         (new ParticleEffect.ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, true, (ParticleEffect.ParticleData)null)).sendTo(center, range);
+         (new ParticleEffect.ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, true, null)).sendTo(center, range);
       }
    }
 
@@ -237,7 +236,7 @@ public enum ParticleEffect {
       } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
          throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
       } else {
-         (new ParticleEffect.ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, isLongDistance(center, players), (ParticleEffect.ParticleData)null)).sendTo(center, players);
+         (new ParticleEffect.ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, isLongDistance(center, players), null)).sendTo(center, players);
       }
    }
 
@@ -247,7 +246,7 @@ public enum ParticleEffect {
       } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
          throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
       } else {
-         (new ParticleEffect.ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, isLongDistance(center, player), (ParticleEffect.ParticleData)null)).sendTo(center, player);
+         (new ParticleEffect.ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, isLongDistance(center, player), null)).sendTo(center, player);
       }
    }
 
@@ -263,7 +262,7 @@ public enum ParticleEffect {
       } else if (!this.hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
          throw new IllegalArgumentException("This particle effect is not directional");
       } else {
-         (new ParticleEffect.ParticlePacket(this, direction, speed, true, (ParticleEffect.ParticleData)null)).sendTo(center, range);
+         (new ParticleEffect.ParticlePacket(this, direction, speed, true, null)).sendTo(center, range);
       }
    }
 
@@ -275,7 +274,7 @@ public enum ParticleEffect {
       } else if (!this.hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
          throw new IllegalArgumentException("This particle effect is not directional");
       } else {
-         (new ParticleEffect.ParticlePacket(this, direction, speed, isLongDistance(center, players), (ParticleEffect.ParticleData)null)).sendTo(center, players);
+         (new ParticleEffect.ParticlePacket(this, direction, speed, isLongDistance(center, players), null)).sendTo(center, players);
       }
    }
 
@@ -518,7 +517,7 @@ public enum ParticleEffect {
                this.display(color, center, visibleRange);
             }
          } else if (isSinglePlayer) {
-            this.display(r, g, b, 1.0F, 0, center, (Player)player);
+            this.display(r, g, b, 1.0F, 0, center, player);
          } else {
             this.display(r, g, b, 1.0F, 0, center, visibleRange);
          }
@@ -560,7 +559,7 @@ public enum ParticleEffect {
                this.display(color, center, visibleRange);
             }
          } else if (isSinglePlayer) {
-            this.display((float)r, (float)g, (float)b, 1.0F, 0, center, (Player)player);
+            this.display((float)r, (float)g, (float)b, 1.0F, 0, center, player);
          } else {
             this.display((float)r, (float)g, (float)b, 1.0F, 0, center, visibleRange);
          }
@@ -573,12 +572,12 @@ public enum ParticleEffect {
          if (this == redstone) {
             ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
             if (players != null) {
-               this.display(color, center, (List)players);
+               this.display(color, center, players);
             } else {
                this.display(color, center, visibleRange);
             }
          } else if (players != null) {
-            this.display((float)r, (float)g, (float)b, 1.0F, 0, center, (List)players);
+            this.display((float)r, (float)g, (float)b, 1.0F, 0, center, players);
          } else {
             this.display((float)r, (float)g, (float)b, 1.0F, 0, center, visibleRange);
          }
@@ -594,20 +593,11 @@ public enum ParticleEffect {
          if (this != redstone && this != mobspell && this != mobspellambient) {
             if (this == note) {
                ParticleEffect.NoteColor color;
-               if (rainbowMode) {
-                  color = new ParticleEffect.NoteColor((int)offsetX);
-                  if (players != null) {
-                     this.display(color, center, (List)players);
-                  } else {
-                     this.display(color, center, visibleRange);
-                  }
+               color = new NoteColor((int)offsetX);
+               if (players != null) {
+                  this.display(color, center, (List)players);
                } else {
-                  color = new ParticleEffect.NoteColor((int)offsetX);
-                  if (players != null) {
-                     this.display(color, center, (List)players);
-                  } else {
-                     this.display(color, center, visibleRange);
-                  }
+                  this.display(color, center, visibleRange);
                }
             } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
                if ((this == fallingdust || this == blockcrack || this == blockdust) && dataMat != null) {
@@ -620,7 +610,7 @@ public enum ParticleEffect {
                   }
 
                   if (players != null) {
-                     this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
+                     this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, players);
                   } else {
                      this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                   }
@@ -634,7 +624,7 @@ public enum ParticleEffect {
                   }
 
                   if (players != null) {
-                     this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
+                     this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, players);
                   } else {
                      this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                   }
@@ -650,14 +640,14 @@ public enum ParticleEffect {
                if (this == redstone) {
                   finalData = new ParticleEffect.RedstoneColor(new Color((int)offsetX, (int)offsetY, (int)offsetZ), 1.0F);
                   if (players != null) {
-                     this.display(finalData, center, (List)players);
+                     this.display(finalData, center, players);
                   } else {
                      this.display(finalData, center, visibleRange);
                   }
                } else {
                   color = new ParticleEffect.OrdinaryColor(Color.getHSBColor(offsetX, offsetY, offsetZ));
                   if (players != null) {
-                     this.display(color, center, (List)players);
+                     this.display(color, center, players);
                   } else {
                      this.display(color, center, visibleRange);
                   }
@@ -665,14 +655,14 @@ public enum ParticleEffect {
             } else if (this == redstone) {
                finalData = new ParticleEffect.RedstoneColor(new Color((int)offsetX, (int)offsetY, (int)offsetZ), 1.0F);
                if (players != null) {
-                  this.display(finalData, center, (List)players);
+                  this.display(finalData, center, players);
                } else {
                   this.display(finalData, center, visibleRange);
                }
             } else {
                color = new ParticleEffect.OrdinaryColor((int)offsetX, (int)offsetY, (int)offsetZ);
                if (players != null) {
-                  this.display(color, center, (List)players);
+                  this.display(color, center, players);
                } else {
                   this.display(color, center, visibleRange);
                }
@@ -687,20 +677,11 @@ public enum ParticleEffect {
       if (this != redstone && this != mobspell && this != mobspellambient) {
          if (this == note) {
             ParticleEffect.NoteColor color;
-            if (rainbowMode) {
-               color = new ParticleEffect.NoteColor((int)offsetX);
-               if (players != null) {
-                  this.display(color, center, (List)players);
-               } else {
-                  this.display(color, center, visibleRange);
-               }
+            color = new NoteColor((int)offsetX);
+            if (players != null) {
+               this.display(color, center, (List)players);
             } else {
-               color = new ParticleEffect.NoteColor((int)offsetX);
-               if (players != null) {
-                  this.display(color, center, (List)players);
-               } else {
-                  this.display(color, center, visibleRange);
-               }
+               this.display(color, center, visibleRange);
             }
          } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
             if ((this == fallingdust || this == blockcrack || this == blockdust) && dataMat != null) {
@@ -713,7 +694,7 @@ public enum ParticleEffect {
                }
 
                if (players != null) {
-                  this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
+                  this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, players);
                } else {
                   this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                }
@@ -727,7 +708,7 @@ public enum ParticleEffect {
                }
 
                if (players != null) {
-                  this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
+                  this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, players);
                } else {
                   this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                }
@@ -743,14 +724,14 @@ public enum ParticleEffect {
             if (this == redstone) {
                finalData = new ParticleEffect.RedstoneColor(new Color((int)offsetX, (int)offsetY, (int)offsetZ), 1.0F);
                if (players != null) {
-                  this.display(finalData, center, (List)players);
+                  this.display(finalData, center, players);
                } else {
                   this.display(finalData, center, visibleRange);
                }
             } else {
                color = new ParticleEffect.OrdinaryColor(Color.getHSBColor(offsetX, offsetY, offsetZ));
                if (players != null) {
-                  this.display(color, center, (List)players);
+                  this.display(color, center, players);
                } else {
                   this.display(color, center, visibleRange);
                }
@@ -758,14 +739,14 @@ public enum ParticleEffect {
          } else if (this == redstone) {
             finalData = new ParticleEffect.RedstoneColor(new Color((int)offsetX, (int)offsetY, (int)offsetZ), 1.0F);
             if (players != null) {
-               this.display(finalData, center, (List)players);
+               this.display(finalData, center, players);
             } else {
                this.display(finalData, center, visibleRange);
             }
          } else {
             color = new ParticleEffect.OrdinaryColor((int)offsetX, (int)offsetY, (int)offsetZ);
             if (players != null) {
-               this.display(color, center, (List)players);
+               this.display(color, center, players);
             } else {
                this.display(color, center, visibleRange);
             }
@@ -1002,7 +983,7 @@ public enum ParticleEffect {
       }
 
       public ParticlePacket(ParticleEffect effect, ParticleEffect.ParticleColor color, boolean longDistance) {
-         this(effect, color.getR(), color.getG(), color.getB(), 1.0F, 0, longDistance, (ParticleEffect.ParticleData)null);
+         this(effect, color.getR(), color.getG(), color.getB(), 1.0F, 0, longDistance, null);
          if (effect == ParticleEffect.redstone && color instanceof ParticleEffect.OrdinaryColor && ((ParticleEffect.OrdinaryColor)color).getRed() == 0) {
             this.offsetX = 1.17549435E-38F;
          }
@@ -1024,16 +1005,16 @@ public enum ParticleEffect {
                Class packetClass = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL_GAME).getClass(version < 7 ? "Packet63WorldParticles" : "PacketPlayOutWorldParticles");
                getHandle = ReflectionUtils.getMethod("CraftPlayer", ReflectionUtils.PackageType.CRAFTBUKKIT_ENTITY, "getHandle");
                Class entityPlayerClass = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_LEVEL).getClass("EntityPlayer");
-              Field plyConnField = Arrays.stream(entityPlayerClass.getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
+               Field plyConnField = Arrays.stream(entityPlayerClass.getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
                playerConnection = FieldAccess.get(entityPlayerClass);
                playerConnectionIndex = playerConnection.getIndex(plyConnField.getName());
                sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK.getClass("PlayerConnection"));
                sendPacketIndex = sendPacket.getIndex("sendPacket", (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL).getClass("Packet"));
                Class particleParam;
                if(version >= 17){
-                 enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
-                 particleParam = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("ParticleParam");
-                 packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
+                  enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
+                  particleParam = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("ParticleParam");
+                  packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
                }else if(version >= 15) {
                   enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
                   particleParam = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParam");
@@ -1218,11 +1199,11 @@ public enum ParticleEffect {
       }
    }
 
-   public static enum ParticleProperty {
+   public enum ParticleProperty {
       USES_WATER,
       REQUIRES_DATA,
       DIRECTIONAL,
-      COLORABLE;
+      COLORABLE
    }
 
    private static final class ParticleVersionException extends RuntimeException {

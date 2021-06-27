@@ -16,7 +16,6 @@ public class Documentation {
    public static List expressions = new ArrayList();
    public static List conditions = new ArrayList();
    public static List effects = new ArrayList();
-   public static List events = new ArrayList();
    File file;
    File htmlFile;
    BufferedWriter htmlWriter;

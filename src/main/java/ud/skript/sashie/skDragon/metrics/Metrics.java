@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -30,8 +31,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class Metrics {
-   public static final int B_STATS_VERSION = 1;
-   private static final String URL = "https://bStats.org/submitData/bukkit";
    private static boolean logFailedRequests;
    private static String serverUUID;
    private final JavaPlugin plugin;
@@ -239,7 +238,7 @@ public class Metrics {
       } else {
          ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
          GZIPOutputStream gzip = new GZIPOutputStream(outputStream);
-         gzip.write(str.getBytes("UTF-8"));
+         gzip.write(str.getBytes(StandardCharsets.UTF_8));
          gzip.close();
          return outputStream.toByteArray();
       }

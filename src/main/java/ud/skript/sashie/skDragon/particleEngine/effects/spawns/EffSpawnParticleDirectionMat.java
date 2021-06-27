@@ -92,7 +92,7 @@ public class EffSpawnParticleDirectionMat extends DragonEffect {
       final float offsetZ = SkriptHandler.inputParticleOffset(e, this.offZ);
       Vector direction = SkriptHandler.inputVector(e, this.inputDirection);
       float speed = SkriptHandler.inputFloat(0.0F, e, this.inputSpeed);
-      long finalPulseTick = (long)SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
+      long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
       long finalKeepDelay = SkriptHandler.inputKeepDelay(e, this.inputKeepDelay);
       double range = SkriptHandler.inputDouble(32.0D, e, this.inputRange);
       final String idName;
@@ -140,9 +140,9 @@ public class EffSpawnParticleDirectionMat extends DragonEffect {
                         this.finalOffsetZ = RandomUtils.randomRangeFloat(-offsetZ, offsetZ);
                      }
 
-                     location.add((double)this.finalOffsetX, (double)this.finalOffsetY, (double)this.finalOffsetZ);
+                     location.add(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
                      particle.displayDirectional(idName, players, location);
-                     location.subtract((double)this.finalOffsetX, (double)this.finalOffsetY, (double)this.finalOffsetZ);
+                     location.subtract(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
                   }
                }
 

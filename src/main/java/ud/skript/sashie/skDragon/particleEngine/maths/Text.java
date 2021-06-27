@@ -92,7 +92,7 @@ public class Text extends EffectsLib {
             this.filter = this.image.getRGB(x, y);
             if ((invert || Color.black.getRGB() == this.filter) && (!invert || Color.black.getRGB() != this.filter)) {
                Vector v2 = (new Vector((float)this.image.getWidth() / 2.0F - (float)x, (float)this.image.getHeight() / 2.0F - (float)y, 0.0F)).multiply(1.0F / scaleSize);
-               v2 = VectorUtils.rotateVector(v2, (double)(this.pitchX * 0.017453292F), (double)(this.yaw * 0.017453292F), (double)(this.pitchZ * 0.017453292F));
+               v2 = VectorUtils.rotateVector(v2, this.pitchX * 0.017453292F, this.yaw * 0.017453292F, this.pitchZ * 0.017453292F);
                this.vectorList.add(v2);
             }
          }
@@ -123,34 +123,30 @@ public class Text extends EffectsLib {
 
          Iterator var2 = this.vectorList.iterator();
 
-         while(true) {
-            while(var2.hasNext()) {
-               Vector v = (Vector)var2.next();
-               if (this.center.isDynamic() && this.autoFace) {
-                  this.display(v, (float)Math.toRadians((double)this.center.getYaw()));
-               } else if (!this.center.isDynamic() && this.autoFace && this.players != null) {
-                  Iterator var4 = this.players.iterator();
+         while(var2.hasNext()) {
+            Vector v = (Vector)var2.next();
+            if (this.center.isDynamic() && this.autoFace) {
+               this.display(v, (float)Math.toRadians(this.center.getYaw()));
+            } else if (!this.center.isDynamic() && this.autoFace && this.players != null) {
+               Iterator var4 = this.players.iterator();
 
-                  while(var4.hasNext()) {
-                     Player player = (Player)var4.next();
+               while(var4.hasNext()) {
+                  Player player = (Player)var4.next();
+                  this.display(v, VectorUtils.angleXZBetweenPoints(this.center, player.getLocation()) + 90.0F);
+               }
+            } else if (!this.center.isDynamic() && this.autoFace && this.players == null) {
+               double d2 = this.visibleRange * this.visibleRange;
+               Iterator var6 = this.center.getWorld().getPlayers().iterator();
+
+               while(var6.hasNext()) {
+                  Player player = (Player)var6.next();
+                  if (player.getLocation().distanceSquared(this.center) <= d2) {
                      this.display(v, VectorUtils.angleXZBetweenPoints(this.center, player.getLocation()) + 90.0F);
                   }
-               } else if (!this.center.isDynamic() && this.autoFace && this.players == null) {
-                  double d2 = this.visibleRange * this.visibleRange;
-                  Iterator var6 = this.center.getWorld().getPlayers().iterator();
-
-                  while(var6.hasNext()) {
-                     Player player = (Player)var6.next();
-                     if (player.getLocation().distanceSquared(this.center) <= d2) {
-                        this.display(v, VectorUtils.angleXZBetweenPoints(this.center, player.getLocation()) + 90.0F);
-                     }
-                  }
-               } else {
-                  this.display(v);
                }
+            } else {
+               this.display(v);
             }
-
-            return;
          }
       } catch (NullPointerException var7) {
          foundNull(this.center, this.idName, var7);

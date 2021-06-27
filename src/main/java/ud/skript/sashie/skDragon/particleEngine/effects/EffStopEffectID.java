@@ -30,11 +30,9 @@ public class EffStopEffectID extends Effect {
 
    protected void execute(@Nullable Event e) {
       String[] idName = (String[])this.name.getAll(e);
-      String[] var6 = idName;
-      int var5 = idName.length;
 
-      for(int var4 = 0; var4 < var5; ++var4) {
-         String id = var6[var4];
+      for(int var4 = 0; var4 < idName.length; ++var4) {
+         String id = idName[var4];
          EffectsLib.stopItemEffect(id);
          EffectsLib.stopEffect2(id);
          EffectsLib.stopEffect(id);

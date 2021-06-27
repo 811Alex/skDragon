@@ -224,7 +224,7 @@ public class SkullEffectsLib {
    public static void playEmote(final CustomEmote emote, final LivingEntity entity, int repeats, long tick) {
       if (!emotelist.containsKey(entity.getUniqueId().toString())) {
          originalItem.put(entity.getUniqueId().toString(), getHelmet(entity));
-         String skullName = "§b§lEMOTE-" + entity.getUniqueId().toString();
+         String skullName = "§b§lEMOTE-" + entity.getUniqueId();
          final List skulls = new ArrayList();
 
          int custom;
@@ -315,7 +315,7 @@ public class SkullEffectsLib {
          ItemStack item = var4[var2];
          if (item != null) {
             System.out.println(item.getType());
-            if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals("§b§lEMOTE-" + ent.getUniqueId().toString())) {
+            if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals("§b§lEMOTE-" + ent.getUniqueId())) {
                giveBackOriginal(ent);
             }
          }
@@ -332,11 +332,9 @@ public class SkullEffectsLib {
          head = new ItemStack(Material.valueOf("PLAYER_HEAD"), 1);
       }
 
-      if (url.isEmpty()) {
-         return head;
-      } else {
-         SkullMeta headMeta = (SkullMeta)head.getItemMeta();
-         GameProfile profile = new GameProfile(UUID.randomUUID(), (String)null);
+      if (!url.isEmpty()) {
+         SkullMeta headMeta = (SkullMeta) head.getItemMeta();
+         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
          profile.getProperties().put("textures", new Property("textures", url));
 
          try {
@@ -349,7 +347,7 @@ public class SkullEffectsLib {
 
          headMeta.setDisplayName(name);
          head.setItemMeta(headMeta);
-         return head;
       }
+      return head;
    }
 }

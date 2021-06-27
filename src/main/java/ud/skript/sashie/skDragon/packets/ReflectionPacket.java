@@ -29,7 +29,7 @@ public abstract class ReflectionPacket {
          try {
             this.initialize();
             getHandle = ReflectionUtils.getMethod("CraftPlayer", ReflectionUtils.PackageType.CRAFTBUKKIT_ENTITY, "getHandle");
-           Field plyConnField = Arrays.stream(ReflectionUtils.PackageType.MINECRAFT_LEVEL.getClass("EntityPlayer").getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
+            Field plyConnField = Arrays.stream(ReflectionUtils.PackageType.MINECRAFT_LEVEL.getClass("EntityPlayer").getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
             playerConnection = ReflectionUtils.getField("EntityPlayer", ReflectionUtils.PackageType.MINECRAFT_LEVEL, false, plyConnField.getName());
             sendPacket = ReflectionUtils.getMethod(playerConnection.getType(), "sendPacket", ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("Packet"));
          } catch (Exception var2) {

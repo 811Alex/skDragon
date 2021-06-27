@@ -76,7 +76,7 @@ public class SkullConfig {
             while(var10.hasNext()) {
                String skull = (String)var10.next();
                if (this.skullData.getString("Emotes." + name + ".Frames." + key).equals(skull)) {
-                  emote.addFrame((Integer)timings.get(key), (String)customSkullList.get((String)frames.get(key)));
+                  emote.addFrame((Integer)timings.get(key), (String)customSkullList.get(frames.get(key)));
                   found = true;
                   break;
                }

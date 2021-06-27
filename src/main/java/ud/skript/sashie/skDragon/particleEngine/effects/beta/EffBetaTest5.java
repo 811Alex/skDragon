@@ -19,7 +19,7 @@ public class EffBetaTest5 extends Effect {
    private Expression location;
 
    static {
-      Skript.registerEffect(EffBetaTest5.class, new String[]{"drawBetaTest5 player %player% at %location%, id %string%"});
+      Skript.registerEffect(EffBetaTest5.class, "drawBetaTest5 player %player% at %location%, id %string%");
    }
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {

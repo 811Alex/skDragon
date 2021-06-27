@@ -19,7 +19,7 @@ public class CondUsingEmote extends Condition {
    private Expression entity;
 
    static {
-      Skript.registerCondition(CondUsingEmote.class, new String[]{"[entity] %entity% (is using|has) [an] emote"});
+      Skript.registerCondition(CondUsingEmote.class, "[entity] %entity% (is using|has) [an] emote");
    }
 
    public boolean check(Event event) {

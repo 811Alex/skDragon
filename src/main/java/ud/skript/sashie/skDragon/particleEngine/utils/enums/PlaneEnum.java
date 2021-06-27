@@ -11,7 +11,7 @@ public enum PlaneEnum {
 
    private final String name;
 
-   private PlaneEnum(String name) {
+   PlaneEnum(String name) {
       this.name = name;
    }
 

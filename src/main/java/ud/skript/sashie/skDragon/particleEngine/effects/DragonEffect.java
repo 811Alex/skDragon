@@ -56,8 +56,8 @@ public abstract class DragonEffect extends Effect {
       }
 
       if (!(exprs instanceof Variable) && !ParticleEffect.valueOf(exprs.toString()).hasProperty(property)) {
-         Skript.warning("'" + exprs.toString() + "' is not a " + error + "particle type");
-         skDragonCore.error("'" + exprs.toString() + "' is not a " + error + "particle type");
+         Skript.warning("'" + exprs + "' is not a " + error + "particle type");
+         skDragonCore.error("'" + exprs + "' is not a " + error + "particle type");
          this.justReturn = true;
       }
 
@@ -66,8 +66,8 @@ public abstract class DragonEffect extends Effect {
 
    public Expression checkParticle(Expression exprs) {
       if (!ParticleEffect.NAME_MAP.containsKey(exprs.toString().toLowerCase())) {
-         Skript.warning("'" + exprs.toString() + "' is not a particle type");
-         skDragonCore.error("'" + exprs.toString() + "' is not a particle type");
+         Skript.warning("'" + exprs + "' is not a particle type");
+         skDragonCore.error("'" + exprs + "' is not a particle type");
          this.justReturn = true;
       }
 
@@ -76,12 +76,12 @@ public abstract class DragonEffect extends Effect {
 
    public Expression checkLocation(Expression exprs) {
       if (exprs instanceof Variable) {
-         exprs = exprs.getConvertedExpression(new Class[]{Location.class});
+         exprs = exprs.getConvertedExpression(Location.class);
       }
 
       if (!Location.class.isAssignableFrom(exprs.getReturnType()) && !Entity.class.isAssignableFrom(exprs.getReturnType())) {
-         Skript.warning("'" + exprs.toString() + "' is not a valid location or entity type");
-         skDragonCore.error("'" + exprs.toString() + "' is not a valid location or entity type");
+         Skript.warning("'" + exprs + "' is not a valid location or entity type");
+         skDragonCore.error("'" + exprs + "' is not a valid location or entity type");
          this.justReturn = true;
       } else {
          this.justReturn = false;

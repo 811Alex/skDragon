@@ -21,7 +21,7 @@ public class EvtMount implements Listener {
 
    @EventHandler
    public void onPostMount(DragonPostPlayerMountEvent event) {
-      DragonPostPlayerMountEvent e = new DragonPostPlayerMountEvent(event.getPlayer(), (IRyeDragon)null, (DragonType)null);
+      DragonPostPlayerMountEvent e = new DragonPostPlayerMountEvent(event.getPlayer(), null, null);
       Bukkit.getServer().getPluginManager().callEvent(e);
    }
 }

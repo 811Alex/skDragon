@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -32,15 +33,10 @@ import ud.skript.sashie.skDragon.registration.annotations.PropertyExpressionType
 import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 public class AnnotationParser {
-   public void register() throws Exception {
+   public void register() {
       File file = null;
 
-      try {
-         file = new File(URLDecoder.decode(skDragonCore.class.getProtectionDomain().getCodeSource().getLocation().getFile(), "UTF-8"));
-      } catch (UnsupportedEncodingException var4) {
-         System.out.println("Could not find main .jar file!");
-         var4.printStackTrace();
-      }
+      file = new File(URLDecoder.decode(skDragonCore.class.getProtectionDomain().getCodeSource().getLocation().getFile(), StandardCharsets.UTF_8));
 
       Iterator var3 = this.getClasses(file, "ud.skript.sashie").iterator();
 
@@ -142,9 +138,7 @@ public class AnnotationParser {
    }
 
    private void events(Class clazz) {
-      if (clazz.getAnnotation(DontRegister.class) == null) {
-         ;
-      }
+
    }
 
    private void propertyConditions(Class clazz) {
@@ -152,7 +146,7 @@ public class AnnotationParser {
          if (clazz.getAnnotation(Syntaxes.class) != null) {
             String[] properties = ((Syntaxes)clazz.getAnnotation(Syntaxes.class)).value();
             String[] syntax = new String[]{"%" + properties[0] + "% " + properties[1] + " (is|are) " + properties[2], "%" + properties[0] + "% " + properties[1] + " (isn't|is not|aren't|are not) " + properties[2]};
-            Skript.registerCondition(clazz, new String[]{syntax[0], syntax[1]});
+            Skript.registerCondition(clazz, syntax[0], syntax[1]);
             this.registerDocs(clazz, Documentation.conditions, syntax);
          }
       }
@@ -162,7 +156,7 @@ public class AnnotationParser {
       if (clazz.getAnnotation(DontRegister.class) == null) {
          if (clazz.getAnnotation(Syntaxes.class) != null) {
             String[] syntax = ((Syntaxes)clazz.getAnnotation(Syntaxes.class)).value();
-            Skript.registerCondition(clazz, new String[]{syntax[0], syntax[1]});
+            Skript.registerCondition(clazz, syntax[0], syntax[1]);
             this.registerDocs(clazz, Documentation.conditions, syntax);
          }
       }
@@ -188,11 +182,9 @@ public class AnnotationParser {
          return null;
       } else {
          syntaxes = new String[syntax.length];
-         String[] var7 = syntax;
-         int var6 = syntax.length;
 
-         for(int var5 = 0; var5 < var6; ++var5) {
-            String s = var7[var5];
+         for(int var5 = 0; var5 < syntax.length; ++var5) {
+            String s = syntax[var5];
             syntaxes[i] = "[skDragon] " + s;
             ++i;
          }

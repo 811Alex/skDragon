@@ -16,7 +16,7 @@ import ud.skript.sashie.skDragon.emotes.EmoteStartedEvent;
 
 public class Events {
    public static void emoteEvents() {
-      Skript.registerEvent("emote start", SimpleEvent.class, EmoteStartedEvent.class, new String[]{"emote start"});
+      Skript.registerEvent("emote start", SimpleEvent.class, EmoteStartedEvent.class, "emote start");
       EventValues.registerEventValue(EmoteStartedEvent.class, Entity.class, new Getter() {
          public Entity get(Object e) {
             return ((EmoteStartedEvent)e).getEntity();
@@ -27,7 +27,7 @@ public class Events {
             return ((EmoteStartedEvent)e).getEmoteType();
          }
       }, 0);
-      Skript.registerEvent("emote stop", SimpleEvent.class, EmoteEndedEvent.class, new String[]{"emote stop"});
+      Skript.registerEvent("emote stop", SimpleEvent.class, EmoteEndedEvent.class, "emote stop");
       EventValues.registerEventValue(EmoteEndedEvent.class, Entity.class, new Getter() {
          public Entity get(Object e) {
             return ((EmoteEndedEvent)e).getEntity();
@@ -36,9 +36,9 @@ public class Events {
    }
 
    public static void dragonTravelEvents() {
-      Skript.registerEvent("DragonTravel dismount", SimpleEvent.class, DragonPlayerDismountEvent.class, new String[]{"DragonTravel dismount"});
-      Skript.registerEvent("DragonTravel post mount", SimpleEvent.class, DragonPostPlayerMountEvent.class, new String[]{"DragonTravel post mount"});
-      Skript.registerEvent("DragonTravel pre mount", SimpleEvent.class, DragonPrePlayerMountEvent.class, new String[]{"DragonTravel pre mount"});
+      Skript.registerEvent("DragonTravel dismount", SimpleEvent.class, DragonPlayerDismountEvent.class, "DragonTravel dismount");
+      Skript.registerEvent("DragonTravel post mount", SimpleEvent.class, DragonPostPlayerMountEvent.class, "DragonTravel post mount");
+      Skript.registerEvent("DragonTravel pre mount", SimpleEvent.class, DragonPrePlayerMountEvent.class, "DragonTravel pre mount");
    }
 
    public static void dragonTravelValues() {

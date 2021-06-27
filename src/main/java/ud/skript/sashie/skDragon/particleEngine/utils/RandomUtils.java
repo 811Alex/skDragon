@@ -27,7 +27,7 @@ public final class RandomUtils {
    public static Vector getRandomVectorline() {
       int n3 = (int)(Math.random() * 10.0D + -5.0D);
       int n4 = (int)(Math.random() * 10.0D + -5.0D);
-      return (new Vector((double)n4, Math.random() * 4.0D + -5.0D, (double)n3)).normalize();
+      return (new Vector(n4, Math.random() * 4.0D + -5.0D, n3)).normalize();
    }
 
    public static Material getRandomMaterial(Material[] materials) {

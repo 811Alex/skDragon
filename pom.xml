@@ -64,22 +64,22 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-      <repository>
-        <id>enginehub-repo</id>
-        <url>https://maven.enginehub.org/repo/</url>
-      </repository>
-      <repository>
-        <id>phiwa</id>
-        <url>https://maven.phiwa.eu/</url>
-      </repository>
-      <repository>
-        <id>spigot-repo</id>
-        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-      </repository>
-      <repository>
-        <id>aikar-release-repo</id>
-        <url>https://repo.aikar.co/nexus/content/repositories/aikar-release/</url>
-      </repository>
+        <repository>
+            <id>enginehub-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
+        <repository>
+            <id>phiwa</id>
+            <url>https://maven.phiwa.eu/</url>
+        </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>aikar-release-repo</id>
+            <url>https://repo.aikar.co/nexus/content/repositories/aikar-release/</url>
+        </repository>
         <repository>
             <id>FuseSource-3rdP</id>
             <url>https://repo.fusesource.com/nexus/content/repositories/releases-3rd-party/</url>
@@ -93,44 +93,44 @@
             <version>1.17-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-      <dependency>
-        <groupId>com.github.SkriptLang</groupId>
-        <artifactId>Skript</artifactId>
-        <version>2.6-alpha1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.bstats</groupId>
-        <artifactId>bstats-bukkit</artifactId>
-        <version>2.2.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.enginehub</groupId>
-        <artifactId>squirrelid</artifactId>
-        <version>0.3.0</version>
-        <scope>compile</scope>
-        <type>jar</type>
-      </dependency>
-      <dependency>
-        <groupId>com.google.code.findbugs</groupId>
-        <artifactId>jsr305</artifactId>
-        <version>3.0.2</version>
-      </dependency>
-      <dependency>
-        <groupId>eu.phiwa.dt</groupId>
-        <artifactId>DragonTravel</artifactId>
-        <version>01.007.10</version>
-      </dependency>
-      <dependency>
-        <groupId>com.googlecode.json-simple</groupId>
-        <artifactId>json-simple</artifactId>
-        <version>1.1.1</version>
-      </dependency>
-      <dependency>
-        <groupId>com.mojang</groupId>
-        <artifactId>authlib</artifactId>
-        <version>1.11</version>
-        <scope>provided</scope>
-      </dependency>
+        <dependency>
+            <groupId>com.github.SkriptLang</groupId>
+            <artifactId>Skript</artifactId>
+            <version>2.6-alpha1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.enginehub</groupId>
+            <artifactId>squirrelid</artifactId>
+            <version>0.3.0</version>
+            <scope>compile</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.phiwa.dt</groupId>
+            <artifactId>DragonTravel</artifactId>
+            <version>01.007.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>authlib</artifactId>
+            <version>1.11</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>

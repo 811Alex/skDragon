@@ -41,14 +41,12 @@ public class DynamicLocation extends Location implements ConfigurationSerializab
       if (this.dynamic) {
          Location current = this.entity.getLocation();
          Location last = this.lastLocation;
-         if (this.lastLocation != null) {
-            last = this.lastLocation;
-         } else {
-            this.lastLocation = current;
-            last = this.lastLocation;
-         }
+          if (this.lastLocation == null) {
+              this.lastLocation = current;
+          }
+          last = this.lastLocation;
 
-         if (current.getWorld() == last.getWorld()) {
+          if (current.getWorld() == last.getWorld()) {
             this.lastLocation = this.entity.getLocation();
             if (last.getY() > current.getY()) {
                if (last.distanceSquared(current) > (double)(this.epsilon * this.epsilon) && !this.isFalling) {

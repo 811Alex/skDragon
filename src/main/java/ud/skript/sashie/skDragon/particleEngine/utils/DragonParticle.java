@@ -312,12 +312,12 @@ public class DragonParticle implements Serializable {
                if (rainbowMode) {
                   ParticleEffect.NoteColor color = new ParticleEffect.NoteColor((int)this.r);
                   if (players != null) {
-                     this.particle.display(color, center, (List)players);
+                     this.particle.display(color, center, players);
                   } else {
                      this.particle.display(color, center, this.range);
                   }
                } else if (players != null) {
-                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, (List)players);
+                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, players);
                } else {
                   this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, this.range);
                }
@@ -325,14 +325,14 @@ public class DragonParticle implements Serializable {
                if ((this.particle == ParticleEffect.fallingdust || this.particle == ParticleEffect.blockcrack || this.particle == ParticleEffect.blockdust) && this.material != null) {
                   ParticleEffect.BlockData finalData = new ParticleEffect.BlockData(this.material, this.materialId);
                   if (players != null) {
-                     this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, (List)players);
+                     this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, players);
                   } else {
                      this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, this.range);
                   }
                } else if (this.particle == ParticleEffect.itemcrack && this.material != null) {
                   ParticleEffect.ItemData finalData = new ParticleEffect.ItemData(this.material, this.materialId);
                   if (players != null) {
-                     this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, (List)players);
+                     this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, players);
                   } else {
                      this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, this.range);
                   }
@@ -346,18 +346,13 @@ public class DragonParticle implements Serializable {
             ParticleEffect.OrdinaryColor color;
             if (rainbowMode) {
                color = new ParticleEffect.OrdinaryColor(Color.getHSBColor(this.r, this.g, this.b));
-               if (players != null) {
-                  this.particle.display(color, center, (List)players);
-               } else {
-                  this.particle.display(color, center, this.range);
-               }
             } else {
                color = new ParticleEffect.OrdinaryColor((int)this.r, (int)this.g, (int)this.b);
-               if (players != null) {
-                  this.particle.display(color, center, (List)players);
-               } else {
-                  this.particle.display(color, center, this.range);
-               }
+            }
+            if (players != null) {
+               this.particle.display(color, center, (List)players);
+            } else {
+               this.particle.display(color, center, this.range);
             }
          }
 
@@ -370,12 +365,12 @@ public class DragonParticle implements Serializable {
             if (rainbowMode) {
                ParticleEffect.NoteColor color = new ParticleEffect.NoteColor((int)this.r);
                if (players != null) {
-                  this.particle.display(color, center, (List)players);
+                  this.particle.display(color, center, players);
                } else {
                   this.particle.display(color, center, this.range);
                }
             } else if (players != null) {
-               this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, (List)players);
+               this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, players);
             } else {
                this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, this.range);
             }
@@ -383,14 +378,14 @@ public class DragonParticle implements Serializable {
             if ((this.particle == ParticleEffect.fallingdust || this.particle == ParticleEffect.blockcrack || this.particle == ParticleEffect.blockdust) && this.material != null) {
                ParticleEffect.BlockData finalData = new ParticleEffect.BlockData(this.material, this.materialId);
                if (players != null) {
-                  this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, (List)players);
+                  this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, players);
                } else {
                   this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, this.range);
                }
             } else if (this.particle == ParticleEffect.itemcrack && this.material != null) {
                ParticleEffect.ItemData finalData = new ParticleEffect.ItemData(this.material, this.materialId);
                if (players != null) {
-                  this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, (List)players);
+                  this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, players);
                } else {
                   this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, this.range);
                }
@@ -404,18 +399,13 @@ public class DragonParticle implements Serializable {
          ParticleEffect.OrdinaryColor color;
          if (rainbowMode) {
             color = new ParticleEffect.OrdinaryColor(Color.getHSBColor(this.r, this.g, this.b));
-            if (players != null) {
-               this.particle.display(color, center, (List)players);
-            } else {
-               this.particle.display(color, center, this.range);
-            }
          } else {
             color = new ParticleEffect.OrdinaryColor((int)this.r, (int)this.g, (int)this.b);
-            if (players != null) {
-               this.particle.display(color, center, (List)players);
-            } else {
-               this.particle.display(color, center, this.range);
-            }
+         }
+         if (players != null) {
+            this.particle.display(color, center, (List)players);
+         } else {
+            this.particle.display(color, center, this.range);
          }
       }
 
@@ -426,14 +416,14 @@ public class DragonParticle implements Serializable {
          if ((this.particle == ParticleEffect.fallingdust || this.particle == ParticleEffect.blockcrack || this.particle == ParticleEffect.blockdust) && this.material != null) {
             ParticleEffect.BlockData finalData = new ParticleEffect.BlockData(this.material, this.materialId);
             if (players != null) {
-               this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, (List)players);
+               this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, players);
             } else {
                this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, this.range);
             }
          } else if (this.particle == ParticleEffect.itemcrack && this.material != null) {
             ParticleEffect.ItemData finalData = new ParticleEffect.ItemData(this.material, this.materialId);
             if (players != null) {
-               this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, (List)players);
+               this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, players);
             } else {
                this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, this.range);
             }
@@ -455,12 +445,12 @@ public class DragonParticle implements Serializable {
                if (rainbowMode) {
                   ParticleEffect.NoteColor color = new ParticleEffect.NoteColor((int)this.r);
                   if (players != null) {
-                     this.particle.display(color, center, (List)players);
+                     this.particle.display(color, center, players);
                   } else {
                      this.particle.display(color, center, this.range);
                   }
                } else if (players != null) {
-                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, (List)players);
+                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, players);
                } else {
                   this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, this.range);
                }
@@ -469,18 +459,13 @@ public class DragonParticle implements Serializable {
             ParticleEffect.OrdinaryColor color;
             if (rainbowMode) {
                color = new ParticleEffect.OrdinaryColor(Color.getHSBColor(this.r, this.g, this.b));
-               if (players != null) {
-                  this.particle.display(color, center, (List)players);
-               } else {
-                  this.particle.display(color, center, this.range);
-               }
             } else {
                color = new ParticleEffect.OrdinaryColor((int)this.r, (int)this.g, (int)this.b);
-               if (players != null) {
-                  this.particle.display(color, center, (List)players);
-               } else {
-                  this.particle.display(color, center, this.range);
-               }
+            }
+            if (players != null) {
+               this.particle.display(color, center, (List)players);
+            } else {
+               this.particle.display(color, center, this.range);
             }
          }
 
@@ -493,12 +478,12 @@ public class DragonParticle implements Serializable {
             if (rainbowMode) {
                ParticleEffect.NoteColor color = new ParticleEffect.NoteColor((int)this.r);
                if (players != null) {
-                  this.particle.display(color, center, (List)players);
+                  this.particle.display(color, center, players);
                } else {
                   this.particle.display(color, center, this.range);
                }
             } else if (players != null) {
-               this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, (List)players);
+               this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, players);
             } else {
                this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, this.range);
             }
@@ -507,18 +492,13 @@ public class DragonParticle implements Serializable {
          ParticleEffect.OrdinaryColor color;
          if (rainbowMode) {
             color = new ParticleEffect.OrdinaryColor(Color.getHSBColor(this.r, this.g, this.b));
-            if (players != null) {
-               this.particle.display(color, center, (List)players);
-            } else {
-               this.particle.display(color, center, this.range);
-            }
          } else {
             color = new ParticleEffect.OrdinaryColor((int)this.r, (int)this.g, (int)this.b);
-            if (players != null) {
-               this.particle.display(color, center, (List)players);
-            } else {
-               this.particle.display(color, center, this.range);
-            }
+         }
+         if (players != null) {
+            this.particle.display(color, center, (List)players);
+         } else {
+            this.particle.display(color, center, this.range);
          }
       }
 
@@ -538,12 +518,12 @@ public class DragonParticle implements Serializable {
             if (rainbowMode) {
                ParticleEffect.NoteColor color = new ParticleEffect.NoteColor(r);
                if (players != null) {
-                  this.particle.display(color, center, (List)players);
+                  this.particle.display(color, center, players);
                } else {
                   this.particle.display(color, center, range);
                }
             } else if (players != null) {
-               this.particle.display(new ParticleEffect.NoteColor(r), center, (List)players);
+               this.particle.display(new ParticleEffect.NoteColor(r), center, players);
             } else {
                this.particle.display(new ParticleEffect.NoteColor(r), center, range);
             }
@@ -552,18 +532,13 @@ public class DragonParticle implements Serializable {
          ParticleEffect.OrdinaryColor color;
          if (rainbowMode) {
             color = new ParticleEffect.OrdinaryColor(Color.getHSBColor((float)r, (float)g, (float)b));
-            if (players != null) {
-               this.particle.display(color, center, (List)players);
-            } else {
-               this.particle.display(color, center, range);
-            }
          } else {
             color = new ParticleEffect.OrdinaryColor(r, g, b);
-            if (players != null) {
-               this.particle.display(color, center, (List)players);
-            } else {
-               this.particle.display(color, center, range);
-            }
+         }
+         if (players != null) {
+            this.particle.display(color, center, (List)players);
+         } else {
+            this.particle.display(color, center, range);
          }
       }
 
@@ -576,14 +551,14 @@ public class DragonParticle implements Serializable {
          if ((this.particle == ParticleEffect.fallingdust || this.particle == ParticleEffect.blockcrack || this.particle == ParticleEffect.blockdust) && this.material != null) {
             ParticleEffect.BlockData finalData = new ParticleEffect.BlockData(this.material, this.materialId);
             if (players != null) {
-               this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, (List)players);
+               this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, players);
             } else {
                this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, this.range);
             }
          } else if (this.particle == ParticleEffect.itemcrack && this.material != null) {
             ParticleEffect.ItemData finalData = new ParticleEffect.ItemData(this.material, this.materialId);
             if (players != null) {
-               this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, (List)players);
+               this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, players);
             } else {
                this.particle.display(finalData, this.offsetX, this.offsetY, this.offsetZ, this.speed, this.count, center, this.range);
             }
@@ -601,14 +576,14 @@ public class DragonParticle implements Serializable {
          if (this.particle == ParticleEffect.blockdust && this.material != null) {
             ParticleEffect.BlockData finalData = new ParticleEffect.BlockData(this.getMaterial(), this.getMaterialId());
             if (players != null) {
-               this.particle.display(finalData, direction, this.speed, center, (List)players);
+               this.particle.display(finalData, direction, this.speed, center, players);
             } else {
                this.particle.display(finalData, direction, this.speed, center, this.range);
             }
          } else if (this.particle == ParticleEffect.itemcrack && this.material != null) {
             ParticleEffect.ItemData finalData = new ParticleEffect.ItemData(this.getMaterial(), this.getMaterialId());
             if (players != null) {
-               this.particle.display(finalData, direction, this.speed, center, (List)players);
+               this.particle.display(finalData, direction, this.speed, center, players);
             } else {
                this.particle.display(finalData, direction, this.speed, center, this.range);
             }

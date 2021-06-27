@@ -59,13 +59,13 @@ public class Disco extends EffectsLib {
 
                   int i;
                   for(i = 0; i < mL * 2; ++i) {
-                     double x = (double)(RandomUtils.random.nextInt(this.max - this.max * -1) + this.max * -1);
-                     double y = (double)(RandomUtils.random.nextInt(this.max - this.max * -1) + this.max * -1);
-                     double z = (double)(RandomUtils.random.nextInt(this.max - this.max * -1) + this.max * -1);
+                     double x = RandomUtils.random.nextInt(this.max - this.max * -1) + this.max * -1;
+                     double y = RandomUtils.random.nextInt(this.max - this.max * -1) + this.max * -1;
+                     double z = RandomUtils.random.nextInt(this.max - this.max * -1) + this.max * -1;
                      if (style == 1) {
-                        y = (double)(RandomUtils.random.nextInt(this.max * 2 - this.max) + this.max);
+                        y = RandomUtils.random.nextInt(this.max * 2 - this.max) + this.max;
                      } else if (style == 2) {
-                        y = (double)(RandomUtils.random.nextInt(this.max * -1 - this.max * -2) + this.max * -2);
+                        y = RandomUtils.random.nextInt(this.max * -1 - this.max * -2) + this.max * -2;
                      }
 
                      Location target = center.clone().subtract(x, y, z);

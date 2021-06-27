@@ -72,7 +72,7 @@ public class FancyShapes {
                double k = FancyShapes.this.particle.getDirection().getY();
                double j = FancyShapes.this.particle.getDirection().getZ();
                this.rand = new Random();
-               FancyShapes.this.init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i + this.rand.nextFloat()) - 0.5D, (double)((float)k - this.rand.nextFloat() - 1.0F), (double)((float)j + this.rand.nextFloat()) - 0.5D);
+               FancyShapes.this.init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i + this.rand.nextFloat()) - 0.5D, (float)k - this.rand.nextFloat() - 1.0F, (double)((float)j + this.rand.nextFloat()) - 0.5D);
                FancyShapes.this.particleMaxAge = (int)(Math.random() * 10.0D) + 30;
                this.init = true;
             }
@@ -107,7 +107,7 @@ public class FancyShapes {
                double i = FancyShapes.this.particle.getDirection().getX();
                double k = FancyShapes.this.particle.getDirection().getY();
                double j = FancyShapes.this.particle.getDirection().getZ();
-               FancyShapes.this.init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i) - 0.5D, (double)((float)k - 1.0F), (double)((float)j) - 0.5D);
+               FancyShapes.this.init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i) - 0.5D, (float)k - 1.0F, (double)((float)j) - 0.5D);
                FancyShapes.this.particleMaxAge = (int)(Math.random() * 10.0D) + 30;
                this.init = true;
             }
@@ -182,7 +182,7 @@ public class FancyShapes {
                double i = FancyShapes.this.particle.getDirection().getX();
                double k = FancyShapes.this.particle.getDirection().getY();
                double j = FancyShapes.this.particle.getDirection().getZ();
-               FancyShapes.this.init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i) - 0.5D, (double)((float)k - 1.0F), (double)((float)j) - 0.5D);
+               FancyShapes.this.init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i) - 0.5D, (float)k - 1.0F, (double)((float)j) - 0.5D);
                FancyShapes.this.particleMaxAge = (int)(Math.random() * 10.0D) + 30;
                this.init = true;
             }
@@ -214,7 +214,7 @@ public class FancyShapes {
                double i = FancyShapes.this.particle.getDirection().getX();
                double k = FancyShapes.this.particle.getDirection().getY();
                double j = FancyShapes.this.particle.getDirection().getZ();
-               FancyShapes.this.init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i) - 0.5D, (double)((float)k - 1.0F), (double)((float)j) - 0.5D);
+               FancyShapes.this.init2(pos.getX(), pos.getY() + 2.0D, pos.getZ(), (double)((float)i) - 0.5D, (float)k - 1.0F, (double)((float)j) - 0.5D);
                FancyShapes.this.particleMaxAge = (int)(Math.random() * 10.0D) + 30;
                this.init = true;
             }

@@ -36,9 +36,6 @@ public class EffSphere extends Effect {
    private Expression InputRingDensity;
    private Expression radius;
    private Expression range;
-   private Expression xRot;
-   private Expression yRot;
-   private Expression zRot;
    private Expression displaceX;
    private Expression displaceY;
    private Expression displaceZ;
@@ -119,12 +116,6 @@ public class EffSphere extends Effect {
          disX = ((Number)this.displaceX.getSingle(e)).doubleValue();
          disY = ((Number)this.displaceY.getSingle(e)).doubleValue();
          disZ = ((Number)this.displaceZ.getSingle(e)).doubleValue();
-      }
-
-      if (this.xRot != null && this.yRot != null && this.zRot != null) {
-         xRotation = ((Number)this.xRot.getSingle(e)).doubleValue();
-         yRotation = ((Number)this.yRot.getSingle(e)).doubleValue();
-         zRotation = ((Number)this.zRot.getSingle(e)).doubleValue();
       }
 
       if (this.ticks != null) {

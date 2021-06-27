@@ -47,8 +47,8 @@ public class Heart extends EffectsLib {
 
                      for(i = 0; i < particleDensity; ++i) {
                         float alpha = 3.1415927F / this.complication / (float)particleDensity * (float)i;
-                        double phi = Math.pow(Math.abs(Math.sin((double)(2.0F * this.complication * alpha))) + this.factorInnerSpike * Math.abs(Math.sin((double)(this.complication * alpha))), this.compressYFactorTotal);
-                        Vector init = new Vector(0.0D, phi * (Math.sin((double)alpha) + Math.cos((double)alpha)) * this.yFactor, phi * (Math.cos((double)alpha) - Math.sin((double)alpha)) * this.xFactor);
+                        double phi = Math.pow(Math.abs(Math.sin(2.0F * this.complication * alpha)) + this.factorInnerSpike * Math.abs(Math.sin(this.complication * alpha)), this.compressYFactorTotal);
+                        Vector init = new Vector(0.0D, phi * (Math.sin(alpha) + Math.cos(alpha)) * this.yFactor, phi * (Math.cos(alpha) - Math.sin(alpha)) * this.xFactor);
                         VectorUtils.rotateVector(init, xRotation, yRotation, zRotation);
                         this.vectorList.add(init);
                      }
@@ -57,7 +57,7 @@ public class Heart extends EffectsLib {
                   } else {
                      for(i = 0; i < this.vectorList.size(); ++i) {
                         this.v = (Vector)this.vectorList.get(i);
-                        VectorUtils.rotateVector(this.v, 0.0D, (double)spin, 0.0D);
+                        VectorUtils.rotateVector(this.v, 0.0D, spin, 0.0D);
                         particle.display(idName, dataMat, dataID, player, center.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
                         center.subtract(this.v);
                      }

@@ -86,7 +86,7 @@ public class EffDot extends Effect {
       final Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       final byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
       final boolean isSinglePlayer = SkriptHandler.inputRainbowMode(e, this.isSingle);
-      long finalPulseTick = (long)SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
+      long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
       long finalKeepDelay = SkriptHandler.inputKeepDelay(e, this.inputKeepDelay);
       final double visibleRange = ((Number)this.range.getSingle(e)).doubleValue();
       final Vector displacement = SkriptHandler.inputLocDisplacement(e, this.displaceX, this.displaceY, this.displaceZ);
@@ -102,11 +102,9 @@ public class EffDot extends Effect {
       }
 
       final List locations = new ArrayList();
-      Object[] var26 = center;
-      int var25 = center.length;
 
-      for(int var24 = 0; var24 < var25; ++var24) {
-         Object loc = var26[var24];
+      for(int var24 = 0; var24 < center.length; ++var24) {
+         Object loc = center[var24];
          DynamicLocation location = DynamicLocation.init(loc);
          if (!location.isDynamic()) {
             location.add(displacement.getX(), displacement.getY(), displacement.getZ());

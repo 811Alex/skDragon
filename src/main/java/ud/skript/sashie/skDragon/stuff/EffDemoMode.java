@@ -26,7 +26,7 @@ public class EffDemoMode extends Effect {
 
    protected void execute(@Nullable Event e) {
       String p = Bukkit.getServer().getClass().getPackage().getName();
-      String ver = p.substring(p.lastIndexOf(".") + 1, p.length());
+      String ver = p.substring(p.lastIndexOf(".") + 1);
 
       try {
          Class cPlayer = Class.forName("org.bukkit.craftbukkit." + ver + ".entity.CraftPlayer");
@@ -34,7 +34,7 @@ public class EffDemoMode extends Effect {
          Constructor playOutConstructor = PacketPlayOutGameStateChange.getConstructor(Integer.TYPE, Float.TYPE);
          Method getHandleMethod = cPlayer.getMethod("getHandle");
          Object handle = getHandleMethod.invoke(cPlayer.cast(this.u.getSingle(e)));
-          Field plyConnField = Arrays.stream(handle.getClass().getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
+         Field plyConnField = Arrays.stream(handle.getClass().getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
          Object pc = handle.getClass().getField(plyConnField.getName()).get(handle);
          Method sPM = pc.getClass().getMethod("sendPacket", Class.forName("net.minecraft.server." + ver + ".Packet"));
          sPM.invoke(pc, playOutConstructor.newInstance(5, 0));

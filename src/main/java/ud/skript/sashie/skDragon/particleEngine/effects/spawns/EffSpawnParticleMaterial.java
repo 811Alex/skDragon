@@ -71,7 +71,7 @@ public class EffSpawnParticleMaterial extends Effect {
       float offsetZ = SkriptHandler.inputParticleOffset(e, this.offZ);
       Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
-      long finalPulseTick = (long)SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
+      long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
       long finalKeepDelay = SkriptHandler.inputKeepDelay(e, this.inputKeepDelay);
       double range = SkriptHandler.inputDouble(32.0D, e, this.inputRange);
       final String idName;

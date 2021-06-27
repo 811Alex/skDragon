@@ -35,6 +35,6 @@ public class ExprAllEmoteEffects extends SimpleExpression {
 
    @Nullable
    protected String[] get(Event arg0) {
-      return (String[])SkullEffectsLib.getActiveEmoteKeys().toArray(new String[SkullEffectsLib.getActiveEmoteKeys().size()]);
+      return (String[])SkullEffectsLib.getActiveEmoteKeys().toArray(new String[0]);
    }
 }

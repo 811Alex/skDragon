@@ -112,6 +112,6 @@ public class EffColorImage2 extends Effect {
       Vector axis = SkriptHandler.inputEffectRotationOld(e, this.xRot, this.yRot, this.zRot);
       double visibleRange = ((Number)this.range.getSingle(e)).doubleValue();
       int finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseTick);
-      ColorImage2.drawEffect(file, idName, center, players, autoFace, enableRotation, plane, xyzSpeed, pixelStepX, pixelStepY, (float)scaleSize, visibleRange, axis, displacement, 0L, (long)finalPulseTick);
+      ColorImage2.drawEffect(file, idName, center, players, autoFace, enableRotation, plane, xyzSpeed, pixelStepX, pixelStepY, (float)scaleSize, visibleRange, axis, displacement, 0L, finalPulseTick);
    }
 }

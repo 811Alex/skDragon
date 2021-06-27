@@ -138,26 +138,26 @@ public class EffSpircle extends DragonEffect {
                            this.finalOffsetZ = RandomUtils.randomRangeFloat(-offsetZ, offsetZ);
                         }
 
-                        location.add((double)this.finalOffsetX, (double)this.finalOffsetY, (double)this.finalOffsetZ);
-                        double angle = (double)(this.step * (6.2831855F / (float)density));
+                        location.add(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
+                        double angle = this.step * (6.2831855F / (float)density);
                         this.v = new Vector();
                         this.v.setX(Math.cos(angle) * (double)radius);
                         this.v.setZ(Math.sin(angle) * (double)radius);
                         VectorUtils.rotateAroundAxisY(this.v, (float)i2 * (6.2831855F / (float)points));
-                        VectorUtils.rotateVector(this.v, (double)(xRotation * 0.017453292F), (double)(yRotation * 0.017453292F), (double)(zRotation * 0.017453292F));
+                        VectorUtils.rotateVector(this.v, xRotation * 0.017453292F, yRotation * 0.017453292F, zRotation * 0.017453292F);
                         if (rotate) {
                            VectorUtils.rotateVector(this.v, this.angularVelocityX * (double)this.step, this.angularVelocityY * (double)this.step, this.angularVelocityZ * (double)this.step);
                         }
 
                         particle.displayDirectional(idName, players, location, this.v);
-                        location.subtract((double)this.finalOffsetX, (double)this.finalOffsetY, (double)this.finalOffsetZ);
+                        location.subtract(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
                      }
                   }
                }
 
                ++this.step;
             }
-         }, 0L, (long)finalPulseTick).getTaskId();
+         }, 0L, finalPulseTick).getTaskId();
          EffectsLib.arraylist.put(idName, dotGo);
       }
 

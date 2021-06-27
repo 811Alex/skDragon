@@ -4,14 +4,11 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import java.util.Iterator;
-import java.util.List;
+
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang.NotImplementedException;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import ud.skript.sashie.skDragon.particleEngine.utils.SkriptHandler;
 import ud.skript.sashie.skDragon.registration.annotations.Description;
 import ud.skript.sashie.skDragon.registration.annotations.Examples;
 import ud.skript.sashie.skDragon.registration.annotations.Name;

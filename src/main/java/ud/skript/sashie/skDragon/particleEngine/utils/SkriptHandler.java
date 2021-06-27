@@ -21,11 +21,9 @@ import ud.skript.sashie.skDragon.particleEngine.utils.enums.PlaneEnum;
 
 public class SkriptHandler {
    public static boolean hasNull(@Nullable Event e, @Nullable Expression... args) {
-      Expression[] var5 = args;
-      int var4 = args.length;
 
-      for(int var3 = 0; var3 < var4; ++var3) {
-         Expression arg = var5[var3];
+      for(int var3 = 0; var3 < args.length; ++var3) {
+         Expression arg = args[var3];
          if (arg == null) {
             return true;
          }
@@ -45,7 +43,7 @@ public class SkriptHandler {
    public static boolean isEntityOrLocation(@Nullable Expression entLoc) {
       Class type = entLoc.getReturnType();
       if (type != Entity.class || type != Location.class) {
-         Skript.error(entLoc.toString() + " is neither an entity nor a location.", ErrorQuality.SEMANTIC_ERROR);
+         Skript.error(entLoc + " is neither an entity nor a location.", ErrorQuality.SEMANTIC_ERROR);
       }
 
       return false;
@@ -54,7 +52,7 @@ public class SkriptHandler {
    public static boolean getLocationNullPreCheck(@Nullable Expression entLoc) {
       Class type = entLoc.getReturnType();
       if (type != Entity.class || type != Location.class) {
-         Skript.error(entLoc.toString() + " is neither an entity nor a location.", ErrorQuality.SEMANTIC_ERROR);
+         Skript.error(entLoc + " is neither an entity nor a location.", ErrorQuality.SEMANTIC_ERROR);
       }
 
       return false;
@@ -85,7 +83,7 @@ public class SkriptHandler {
    }
 
    public static List inputPlayers(@Nullable Event e, @Nullable Expression inputPlayers) {
-      return inputPlayers != null && inputPlayers.getAll(e) != null && ((Player[])inputPlayers.getAll(e)).length != 0 ? Arrays.asList((Player[])inputPlayers.getAll(e)) : null;
+      return inputPlayers != null && inputPlayers.getAll(e) != null && inputPlayers.getAll(e).length != 0 ? Arrays.asList((Player[])inputPlayers.getAll(e)) : null;
    }
 
    public static boolean inputRainbowMode(@Nullable Event e, @Nullable Expression inputRainbowMode) {
@@ -193,11 +191,9 @@ public class SkriptHandler {
          fontName = (String)inputFontName.getSingle(e);
          fontStyle = (FontStyleEnum)inputFontStyle.getSingle(e);
          fontSize = ((Number)inputFontSize.getSingle(e)).intValue();
-         String[] var11 = families;
-         int var10 = families.length;
 
-         for(int var9 = 0; var9 < var10; ++var9) {
-            String f = var11[var9];
+         for(int var9 = 0; var9 < families.length; ++var9) {
+            String f = families[var9];
             if (fontName.equals(f)) {
                if (fontStyle.equals(FontStyleEnum.BOLD)) {
                   return new Font(fontName, 1, fontSize);

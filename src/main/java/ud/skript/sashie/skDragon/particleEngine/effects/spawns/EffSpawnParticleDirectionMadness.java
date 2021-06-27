@@ -99,7 +99,7 @@ public class EffSpawnParticleDirectionMadness extends DragonEffect {
       final float offsetZ = SkriptHandler.inputParticleOffset(e, this.offZ);
       Vector direction = SkriptHandler.inputVector(e, this.inputDirection);
       float speed = SkriptHandler.inputFloat(0.0F, e, this.inputSpeed);
-      long finalPulseTick = (long)SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
+      long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
       long finalKeepDelay = SkriptHandler.inputKeepDelay(e, this.inputKeepDelay);
       double range = SkriptHandler.inputDouble(32.0D, e, this.inputRange);
       final String idName;
@@ -150,14 +150,11 @@ public class EffSpawnParticleDirectionMadness extends DragonEffect {
                   Object loc = var4[var2];
                   Location location = EffSpawnParticleDirectionMadness.getLocation(loc);
                   if (randomColor) {
-                     if (rainbowMode) {
-                        this.finalColorOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                        this.finalColorOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                     } else {
+                     if (!rainbowMode) {
                         this.finalColorOffsetX = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                        this.finalColorOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                        this.finalColorOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
                      }
+                     this.finalColorOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
+                     this.finalColorOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
                   }
 
                   if (rainbowMode) {
@@ -190,7 +187,7 @@ public class EffSpawnParticleDirectionMadness extends DragonEffect {
                         this.finalOffsetZ = RandomUtils.randomRangeFloat(-offsetZ, offsetZ);
                      }
 
-                     location.add((double)this.finalOffsetX, (double)this.finalOffsetY, (double)this.finalOffsetZ);
+                     location.add(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
                      FancyShapes boop = new FancyShapes(particle, rainbowMode);
                      if (style <= 1) {
                         boop.startLine1(location, idName, players);
@@ -202,7 +199,7 @@ public class EffSpawnParticleDirectionMadness extends DragonEffect {
                         boop.startPortal(location, idName, players);
                      }
 
-                     location.subtract((double)this.finalOffsetX, (double)this.finalOffsetY, (double)this.finalOffsetZ);
+                     location.subtract(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
                   }
                }
 

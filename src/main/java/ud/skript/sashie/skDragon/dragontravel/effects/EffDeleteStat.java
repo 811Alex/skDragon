@@ -31,8 +31,8 @@ public class EffDeleteStat extends Effect {
 
    protected void execute(@Nullable Event e) {
       String name = (String)this.name.getSingle(e);
-      if (DragonTravel.getInstance().getDragonManager().getStationaryDragons().keySet().contains(name.toLowerCase())) {
-         StationaryDragon sDragon = (StationaryDragon)DragonTravel.getInstance().getDragonManager().getStationaryDragons().get(name.toLowerCase());
+      if (DragonTravel.getInstance().getDragonManager().getStationaryDragons().containsKey(name.toLowerCase())) {
+         StationaryDragon sDragon = DragonTravel.getInstance().getDragonManager().getStationaryDragons().get(name.toLowerCase());
          sDragon.removeDragon(true);
          DragonTravel.getInstance().getDragonManager().getStationaryDragons().remove(name.toLowerCase());
       }

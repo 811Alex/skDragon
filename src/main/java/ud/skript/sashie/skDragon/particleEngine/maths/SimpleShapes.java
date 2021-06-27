@@ -45,8 +45,8 @@ public class SimpleShapes {
       ArrayList locations = new ArrayList();
       int pts = (int)(points + 1.0F);
       float hpts = points / 2.0F;
-      double math1 = (double)(360.0F / points);
-      double math2 = (double)(360.0F / hpts);
+      double math1 = 360.0F / points;
+      double math2 = 360.0F / hpts;
 
       for(int i = 1; i < pts; ++i) {
          Vector v = new Vector(Math.cos((double)i * (math1 * 3.141592653589793D / 180.0D)) * radius, 0.0D, Math.sin((double)i * (math1 * 3.141592653589793D / 180.0D)) * radius);
@@ -129,9 +129,9 @@ public class SimpleShapes {
       for(int x = cx - r; x <= cx + r; ++x) {
          for(int z = cz - r; z <= cz + r; ++z) {
             for(int y = sphere ? cy - r : cy; y < (sphere ? cy + r : cy + h); ++y) {
-               double dist = (double)((cx - x) * (cx - x) + (cz - z) * (cz - z) + (sphere ? (cy - y) * (cy - y) : 0));
+               double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z) + (sphere ? (cy - y) * (cy - y) : 0);
                if (dist < (double)(r * r) && (!hollow || !(dist < (double)((r - 1) * (r - 1))))) {
-                  Location l = new Location(loc.getWorld(), (double)x, (double)(y + plus_y), (double)z);
+                  Location l = new Location(loc.getWorld(), x, y + plus_y, z);
                   circleblocks.add(l);
                }
             }

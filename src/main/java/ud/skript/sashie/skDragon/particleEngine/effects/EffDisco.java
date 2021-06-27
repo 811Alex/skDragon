@@ -116,6 +116,6 @@ public class EffDisco extends Effect {
       float finalSphereRadius = ((Number)this.inputSphereRadius.getSingle(e)).floatValue();
       int finalSphereDensity = ((Number)this.inputSphereDensity.getSingle(e)).intValue();
       int finalLineDensity = ((Number)this.inputLineDensity.getSingle(e)).intValue();
-      Disco.drawEffect(finalStyle, particle, dataMat, dataID, speed, offset, particle2, dataMat2, dataID2, speed2, offset2, idName, center, players, rainbowMode, finalMaxLines, finalLineLength, finalSphereRadius, finalSphereDensity, finalLineDensity, visibleRange, displacement, 0L, (long)finalPulseTick);
+      Disco.drawEffect(finalStyle, particle, dataMat, dataID, speed, offset, particle2, dataMat2, dataID2, speed2, offset2, idName, center, players, rainbowMode, finalMaxLines, finalLineLength, finalSphereRadius, finalSphereDensity, finalLineDensity, visibleRange, displacement, 0L, finalPulseTick);
    }
 }

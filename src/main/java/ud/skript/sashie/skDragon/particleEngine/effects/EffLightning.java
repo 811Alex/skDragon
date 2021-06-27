@@ -92,16 +92,14 @@ public class EffLightning extends Effect {
       final float density = (float)SkriptHandler.inputInt(10, e, this.density);
       final Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       final byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
-      long finalPulseTick = (long)SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
+      long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
       final double visibleRange = ((Number)this.range.getSingle(e)).doubleValue();
       final Vector displacement = SkriptHandler.inputLocDisplacement(e, this.displaceX, this.displaceY, this.displaceZ);
       final String idName = (String)this.inputIdName.getSingle(e);
       final List locations = new ArrayList();
-      Object[] var27 = center;
-      int var26 = center.length;
 
-      for(int var25 = 0; var25 < var26; ++var25) {
-         Object loc = var27[var25];
+      for(int var25 = 0; var25 < center.length; ++var25) {
+         Object loc = center[var25];
          DynamicLocation location = DynamicLocation.init(loc);
          if (!location.isDynamic()) {
             location.add(displacement.getX(), displacement.getY(), displacement.getZ());

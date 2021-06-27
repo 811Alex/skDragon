@@ -65,7 +65,7 @@ public abstract class ConstructorAccess {
 
             String superclassNameInternal = Modifier.isPublic(modifiers) ? "com/esotericsoftware/reflectasm/PublicConstructorAccess" : "com/esotericsoftware/reflectasm/ConstructorAccess";
             ClassWriter cw = new ClassWriter(0);
-            cw.visit(196653, 33, accessClassNameInternal, (String)null, superclassNameInternal, (String[])null);
+            cw.visit(196653, 33, accessClassNameInternal, null, superclassNameInternal, null);
             insertConstructor(cw, superclassNameInternal);
             insertNewInstance(cw, classNameInternal);
             insertNewInstanceInner(cw, classNameInternal, enclosingClassNameInternal);
@@ -90,7 +90,7 @@ public abstract class ConstructorAccess {
    }
 
    private static void insertConstructor(ClassWriter cw, String superclassNameInternal) {
-      MethodVisitor mv = cw.visitMethod(1, "<init>", "()V", (String)null, (String[])null);
+      MethodVisitor mv = cw.visitMethod(1, "<init>", "()V", null, null);
       mv.visitCode();
       mv.visitVarInsn(25, 0);
       mv.visitMethodInsn(183, superclassNameInternal, "<init>", "()V");
@@ -100,7 +100,7 @@ public abstract class ConstructorAccess {
    }
 
    static void insertNewInstance(ClassWriter cw, String classNameInternal) {
-      MethodVisitor mv = cw.visitMethod(1, "newInstance", "()Ljava/lang/Object;", (String)null, (String[])null);
+      MethodVisitor mv = cw.visitMethod(1, "newInstance", "()Ljava/lang/Object;", null, null);
       mv.visitCode();
       mv.visitTypeInsn(187, classNameInternal);
       mv.visitInsn(89);
@@ -111,7 +111,7 @@ public abstract class ConstructorAccess {
    }
 
    static void insertNewInstanceInner(ClassWriter cw, String classNameInternal, String enclosingClassNameInternal) {
-      MethodVisitor mv = cw.visitMethod(1, "newInstance", "(Ljava/lang/Object;)Ljava/lang/Object;", (String)null, (String[])null);
+      MethodVisitor mv = cw.visitMethod(1, "newInstance", "(Ljava/lang/Object;)Ljava/lang/Object;", null, null);
       mv.visitCode();
       if (enclosingClassNameInternal != null) {
          mv.visitTypeInsn(187, classNameInternal);

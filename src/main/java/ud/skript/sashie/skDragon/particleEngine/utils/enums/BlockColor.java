@@ -85,7 +85,6 @@ public enum BlockColor {
    private final String type;
    private final byte data;
    private final int version;
-   int value;
 
    static {
       BlockColor[] var3;
@@ -105,14 +104,14 @@ public enum BlockColor {
 
    }
 
-   private BlockColor(int id, String type, int data) {
+   BlockColor(int id, String type, int data) {
       this.id = id;
       this.type = type;
       this.data = (byte)data;
       this.version = -1;
    }
 
-   private BlockColor(int id, String type, int data, int version) {
+   BlockColor(int id, String type, int data, int version) {
       this.id = id;
       this.type = type;
       this.data = (byte)data;

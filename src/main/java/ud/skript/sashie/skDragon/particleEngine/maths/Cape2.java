@@ -18,7 +18,6 @@ import ud.skript.sashie.skDragon.particleEngine.utils.VectorUtils;
 
 public class Cape2 extends EffectsLib {
    boolean initialize = false;
-   boolean initImage = false;
    BufferedImage image = null;
    float hue;
    Player p;
@@ -76,7 +75,7 @@ public class Cape2 extends EffectsLib {
             int filter = this.image.getRGB(x, y);
             if (filter != 0 && filter >> 24 != 0 && filter != 16777215) {
                Color color = new Color(filter);
-               this.vectorMap.put((new Vector((double)(this.imgWidth / 2 - x) - 0.5D, (double)(-y), 0.0D)).multiply(this.size), new Vector(color.getRed(), color.getGreen(), color.getBlue()));
+               this.vectorMap.put((new Vector((double)(this.imgWidth / 2 - x) - 0.5D, -y, 0.0D)).multiply(this.size), new Vector(color.getRed(), color.getGreen(), color.getBlue()));
             }
          }
       }
@@ -92,11 +91,7 @@ public class Cape2 extends EffectsLib {
                   Cape2.this.center.update();
                   if (Cape2.this.p != null) {
                      if (skDragonCore.serverVersion >= 9) {
-                        if (Cape2.this.p.isGliding()) {
-                           Cape2.this.isGliding = true;
-                        } else {
-                           Cape2.this.isGliding = false;
-                        }
+                        Cape2.this.isGliding = Cape2.this.p.isGliding();
                      }
 
                      if (rainbowMode) {
@@ -141,8 +136,8 @@ public class Cape2 extends EffectsLib {
                      Entry entry = (Entry)var2.next();
                      Vector v = ((Vector)entry.getKey()).clone();
                      Vector color = (Vector)entry.getValue();
-                     double yaw = Math.toRadians((double)(-1.0F * Cape2.this.center.getYaw() + 180.0F));
-                     double pitch = (double)(-Cape2.this.floatDown);
+                     double yaw = Math.toRadians(-1.0F * Cape2.this.center.getYaw() + 180.0F);
+                     double pitch = -Cape2.this.floatDown;
                      double cosYaw = Math.cos(yaw);
                      double cosPitch = Math.cos(pitch);
                      double sinYaw = Math.sin(yaw);

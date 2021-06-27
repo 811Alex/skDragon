@@ -37,20 +37,14 @@ import wtfplswork.Runnable;
 public class EffectsLib {
    public static final HashMap arraylist = new HashMap();
    public static final HashMap arraylist2 = new HashMap();
-   public static final float PI = 3.1415927F;
-   public static final float PI2 = 6.2831855F;
-   public static final float degreesToRadians = 0.017453292F;
    private static int itStep = 0;
-   public static int taskID;
 
    public static void stopAll() {
       String[] keys = new String[arraylist.keySet().size()];
       arraylist.keySet().toArray(keys);
-      String[] var4 = keys;
-      int var3 = keys.length;
 
-      for(int var2 = 0; var2 < var3; ++var2) {
-         String key = var4[var2];
+      for(int var2 = 0; var2 < keys.length; ++var2) {
+         String key = keys[var2];
          if (key != null) {
             if (!key.contains("Fountain: ")) {
                stopEffect(key);
@@ -78,11 +72,10 @@ public class EffectsLib {
 
       String[] keys2 = new String[arraylist2.keySet().size()];
       arraylist2.keySet().toArray(keys2);
-      String[] var12 = keys2;
       int var11 = keys2.length;
 
-      for(var3 = 0; var3 < var11; ++var3) {
-         String key2 = var12[var3];
+      for(int var3 = 0; var3 < var11; ++var3) {
+         String key2 = keys2[var3];
          stopEffect2(key2);
       }
 
@@ -168,7 +161,7 @@ public class EffectsLib {
             }
 
          }
-      }, (long)delay);
+      }, delay);
    }
 
    public static void stopEffectDelayed(long delay, final int id, final String idName) {
@@ -190,7 +183,7 @@ public class EffectsLib {
                Bukkit.getScheduler().cancelTask(id);
                EffectsLib.arraylist2.remove(idName);
             }
-         }, (long)delay);
+         }, delay);
       }
 
    }
@@ -202,7 +195,7 @@ public class EffectsLib {
             EffectsLib.stopEffect(idName);
             EffectsLib.stopEffect2(idName);
          }
-      }, (long)finalDelay);
+      }, finalDelay);
    }
 
    public static void stopEffectRepeatDelay(final int repeat, int delay, final int id, final String idName) {
@@ -214,7 +207,7 @@ public class EffectsLib {
             }
 
          }
-      }, (long)delay);
+      }, delay);
    }
 
    private static void itStep() {
@@ -259,7 +252,7 @@ public class EffectsLib {
          int normalHalo = Bukkit.getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             float step = 0.0F;
             public float hue;
-            final double angle = (double)(3.1415927F / (float)particleDensity);
+            final double angle = 3.1415927F / (float)particleDensity;
             Location location;
 
             public void run() {
@@ -312,7 +305,7 @@ public class EffectsLib {
                try {
                   this.location = EffectsLib.getLocation(center, idName);
                   this.location.add(disX, disY + 1.0D, disZ);
-                  double angle = (double)(this.step * (6.2831855F / (float)particleDensity));
+                  double angle = this.step * (6.2831855F / (float)particleDensity);
                   this.v = new Vector();
                   this.v.setX(Math.cos(angle) * (double)radius);
                   this.v.setZ(Math.sin(angle) * (double)radius);
@@ -369,7 +362,7 @@ public class EffectsLib {
                      double angle = (double)this.step * this.angularVelocity;
 
                      for(int j = 0; j < orbitalCount; ++j) {
-                        double xRotation = (double)(3.1415927F / (float)orbitalCount * (float)j);
+                        double xRotation = 3.1415927F / (float)orbitalCount * (float)j;
                         Vector v = new Vector();
                         v.setX(Math.sin(angle) * (0.6D + (double)innerRadius));
                         v.setY(Math.cos(angle) * (0.6D + (double)innerRadius));
@@ -416,15 +409,15 @@ public class EffectsLib {
 
                   Vector link = this.target.toVector().subtract(this.location.toVector());
                   float length = (float)link.length();
-                  float pitch = (float)((double)(pitchMuliplier * height) / Math.pow((double)length, 2.0D));
+                  float pitch = (float)((double)(pitchMuliplier * height) / Math.pow(length, 2.0D));
 
                   for(int i = 0; i < particleDensity; ++i) {
                      Vector v = link.clone().normalize().multiply(length * (float)i / (float)particleDensity);
                      float x = (float)i / (float)particleDensity * length - length / 2.0F;
-                     float y = (float)((double)(-pitch) * Math.pow((double)x, 2.0D) + (double)height);
-                     this.location.add(v).add(0.0D, (double)y, 0.0D);
+                     float y = (float)((double)(-pitch) * Math.pow(x, 2.0D) + (double)height);
+                     this.location.add(v).add(0.0D, y, 0.0D);
                      ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
-                     this.location.subtract(0.0D, (double)y, 0.0D).subtract(v);
+                     this.location.subtract(0.0D, y, 0.0D).subtract(v);
                      ++this.step;
                   }
                } catch (NullPointerException var8) {
@@ -448,11 +441,9 @@ public class EffectsLib {
                try {
                   this.location = EffectsLib.getLocation(center, idName);
                   this.location.add(0.0D + disX, 0.30000001192092896D + disY, 0.0D + disZ);
-                  double inc = 6.2831854820251465D;
-                  double angle = 1.0D * inc;
                   Vector v = new Vector();
-                  v.setX(Math.cos(angle) * (double)radius);
-                  v.setZ(Math.sin(angle) * (double)radius);
+                  v.setX(Math.cos(6.2831854820251465D) * (double)radius);
+                  v.setZ(Math.sin(6.2831854820251465D) * (double)radius);
                   VectorUtils.rotateVector(v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
                   if (rainbowMode) {
                      this.hue = ParticleEffect.simpleRainbowHelper(this.hue, particle);
@@ -502,7 +493,7 @@ public class EffectsLib {
                      this.hue = ParticleEffect.simpleRainbowHelper(this.hue, particle);
                   }
 
-                  double angle = (double)(6.2831855F / (float)circleDensity * this.step);
+                  double angle = 6.2831855F / (float)circleDensity * this.step;
                   double y = 0.3D * (double)this.i;
                   if (!clockwise) {
                      this.v = new Vector(Math.sin(angle) * (double)radius, y, Math.cos(angle) * (double)radius);
@@ -738,7 +729,7 @@ public class EffectsLib {
 
             private BufferedImage getImg(int s) throws IOException {
                ArrayList images = new ArrayList();
-               ImageReader reader = (ImageReader)ImageIO.getImageReadersBySuffix("GIF").next();
+               ImageReader reader = ImageIO.getImageReadersBySuffix("GIF").next();
                ImageInputStream in = ImageIO.createImageInputStream(this.gifFile);
                reader.setInput(in);
                int i = 0;
@@ -845,10 +836,10 @@ public class EffectsLib {
                      for(int i = 0; i < finalArcs; ++i) {
                         float pitch = (Float)this.rndF.get(i) * 2.0F * finalArcPitch - finalArcPitch;
                         float x = (float)(this.step % finalParticleCount) * finalLength / (float)finalParticleCount;
-                        float y = (float)((double)pitch * Math.pow((double)x, 2.0D));
+                        float y = (float)((double)pitch * Math.pow(x, 2.0D));
                         Vector v = new Vector(x, y, 0.0F);
                         VectorUtils.rotateAroundAxisX(v, (Double)this.rndAngle.get(i));
-                        VectorUtils.rotateAroundAxisZ(v, (double)(-this.location.getPitch() * 0.017453292F));
+                        VectorUtils.rotateAroundAxisZ(v, -this.location.getPitch() * 0.017453292F);
                         VectorUtils.rotateAroundAxisY(v, -(this.location.getYaw() + 90.0F) * 0.017453292F);
                         ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
                         this.location.subtract(v);
@@ -968,7 +959,7 @@ public class EffectsLib {
                      double angle = (double)this.step * this.angularVelocity;
 
                      for(int j = 0; j < ringCount; ++j) {
-                        double n4 = (double)(3.1415927F / (float)ringCount * (float)j);
+                        double n4 = 3.1415927F / (float)ringCount * (float)j;
                         Vector v = (new Vector(Math.cos(angle), Math.sin(angle), 0.0D)).multiply(radius);
                         VectorUtils.rotateAroundAxisX(v, n4);
                         VectorUtils.rotateAroundAxisY(v, this.rotation);
@@ -1144,7 +1135,7 @@ public class EffectsLib {
                } else if (style == 6) {
                   this.quickSolidSphere(radius);
                } else if (style == 7) {
-                  this.fancySphere((double)radius);
+                  this.fancySphere(radius);
                } else if (style >= 8) {
                   this.halfSphere(radius);
                }
@@ -1319,7 +1310,7 @@ public class EffectsLib {
             public void quickSolidCircle(float radiusx, double y) {
                this.location.add(0.0D, y, 0.0D);
 
-               for(double angle = 0.0D; angle < 6.2831854820251465D; angle += (double)(3.1415927F / (float)ringDensity)) {
+               for(double angle = 0.0D; angle < 6.2831854820251465D; angle += 3.1415927F / (float)ringDensity) {
                   this.x = Math.cos(angle) * (double)radiusx;
                   this.z = Math.sin(angle) * (double)radiusx;
                   this.v = new Vector(this.x, 0.0D, this.z);
@@ -1334,7 +1325,7 @@ public class EffectsLib {
             public void quickRadialWave(float radiusx) {
                this.t += 0.3141592741012573D;
 
-               for(double angle = 0.0D; angle < 6.2831854820251465D; angle += (double)(3.1415927F / (float)ringDensity)) {
+               for(double angle = 0.0D; angle < 6.2831854820251465D; angle += 3.1415927F / (float)ringDensity) {
                   this.x = this.t * Math.cos(angle);
                   double y = Math.exp((double)(-this.stepHeight) * this.t) * Math.sin(this.t) + (double)height;
                   this.z = this.t * Math.sin(angle);
@@ -1353,7 +1344,7 @@ public class EffectsLib {
             public void quickRadialWave2(float radiusx) {
                this.t += 0.3141592741012573D;
 
-               for(double angle = 0.0D; angle < 6.2831854820251465D; angle += (double)(3.1415927F / (float)ringDensity)) {
+               for(double angle = 0.0D; angle < 6.2831854820251465D; angle += 3.1415927F / (float)ringDensity) {
                   this.x = this.t * Math.cos(angle);
                   double y = 2.0D * Math.exp((double)(-this.stepHeight) * this.t) * Math.sin(this.t) + (double)height;
                   this.z = this.t * Math.sin(angle);
@@ -1376,7 +1367,7 @@ public class EffectsLib {
                   double angleY = (double)i * 3.141592653589793D / 2.0D;
 
                   for(int p = 0; p <= ringDensity; ++p) {
-                     this.v = new Vector((double)a, yStep, (double)(radiusx * (float)p / (float)ringDensity - a));
+                     this.v = new Vector(a, yStep, radiusx * (float)p / (float)ringDensity - a);
                      VectorUtils.rotateAroundAxisY(this.v, angleY);
                      VectorUtils.rotateVector(this.v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
                      ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
@@ -1425,10 +1416,10 @@ public class EffectsLib {
                float a = radiusx / 2.0F;
 
                for(int i = 0; i < 10; ++i) {
-                  double angleY = (double)((float)i * 0.62831855F);
+                  double angleY = (float)i * 0.62831855F;
 
                   for(int p = 0; p <= ringDensity; ++p) {
-                     this.v = new Vector((double)a, yStep, (double)(radiusx * (float)p / (float)ringDensity - a));
+                     this.v = new Vector(a, yStep, radiusx * (float)p / (float)ringDensity - a);
                      VectorUtils.rotateAroundAxisY(this.v, angleY);
                      VectorUtils.rotateVector(this.v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
                      ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
@@ -1442,7 +1433,7 @@ public class EffectsLib {
                double angleForward = 2.5132741928100586D;
 
                for(int i = 1; i < 6; ++i) {
-                  double angleY = (double)((float)i * 1.2566371F);
+                  double angleY = (float)i * 1.2566371F;
                   double x = Math.cos(angleY) * (double)radiusx;
                   double z = Math.sin(angleY) * (double)radiusx;
                   this.v = new Vector(x, yStep, z);
@@ -1475,128 +1466,128 @@ public class EffectsLib {
                   }
 
                   if (style <= 1) {
-                     this.quickSolidCircle(radius, (double)this.heightCounter);
+                     this.quickSolidCircle(radius, this.heightCounter);
                      this.heightScan();
                   } else if (style == 2) {
-                     this.quickSolidCircle(radius, (double)this.heightCounterRev);
+                     this.quickSolidCircle(radius, this.heightCounterRev);
                      this.heightScanRev();
                   } else if (style == 3) {
-                     this.quickSolidCircle(this.radiusCounter, (double)this.heightCounter);
+                     this.quickSolidCircle(this.radiusCounter, this.heightCounter);
                      this.radiusScan();
                   } else if (style == 4) {
-                     this.quickSolidCircle(this.radiusCounterRev, (double)this.heightCounter);
+                     this.quickSolidCircle(this.radiusCounterRev, this.heightCounter);
                      this.radiusScanRev();
                   } else if (style == 5) {
-                     this.quickSolidCircle(this.radiusCounter, (double)this.heightCounterRev);
+                     this.quickSolidCircle(this.radiusCounter, this.heightCounterRev);
                      this.heightScanRev();
                      this.radiusScan();
                   } else if (style == 6) {
-                     this.quickSolidCircle(this.radiusCounterRev, (double)this.heightCounter);
+                     this.quickSolidCircle(this.radiusCounterRev, this.heightCounter);
                      this.heightScan();
                      this.radiusScanRev();
                   } else if (style == 7) {
-                     this.quickSolidCircle(radius, (double)this.heightCounter);
-                     this.quickSolidCircle(radius, (double)this.heightCounterRev);
+                     this.quickSolidCircle(radius, this.heightCounter);
+                     this.quickSolidCircle(radius, this.heightCounterRev);
                      this.heightScan();
                      this.heightScanRev();
                   } else if (style == 8) {
-                     this.quickSolidCircle(this.radiusCounter, (double)this.middleCounterUp);
-                     this.quickSolidCircle(this.radiusCounter, (double)this.middleCounterDown);
+                     this.quickSolidCircle(this.radiusCounter, this.middleCounterUp);
+                     this.quickSolidCircle(this.radiusCounter, this.middleCounterDown);
                      this.middleScanUp();
                      this.middleScanDown();
                      this.radiusScan();
                   } else if (style == 9) {
-                     this.quickSolidCircle(this.radiusCounterRev, (double)this.middleCounterUp);
-                     this.quickSolidCircle(this.radiusCounterRev, (double)this.middleCounterDown);
+                     this.quickSolidCircle(this.radiusCounterRev, this.middleCounterUp);
+                     this.quickSolidCircle(this.radiusCounterRev, this.middleCounterDown);
                      this.middleScanUp();
                      this.middleScanDown();
                      this.radiusScanRev();
                   } else if (style == 10) {
-                     this.quickCubedRings(radius, (double)this.heightCounter);
+                     this.quickCubedRings(radius, this.heightCounter);
                      this.heightScan();
                   } else if (style == 11) {
-                     this.quickCubedRings(radius, (double)this.heightCounterRev);
+                     this.quickCubedRings(radius, this.heightCounterRev);
                      this.heightScanRev();
                   } else if (style == 12) {
-                     this.quickCubedRings(this.radiusCounter, (double)this.heightCounter);
+                     this.quickCubedRings(this.radiusCounter, this.heightCounter);
                      this.radiusScan();
                   } else if (style == 13) {
-                     this.quickCubedRings(this.radiusCounterRev, (double)this.heightCounter);
+                     this.quickCubedRings(this.radiusCounterRev, this.heightCounter);
                      this.radiusScanRev();
                   } else if (style == 14) {
-                     this.quickCubedRings(this.radiusCounter, (double)this.heightCounterRev);
+                     this.quickCubedRings(this.radiusCounter, this.heightCounterRev);
                      this.heightScanRev();
                      this.radiusScan();
                   } else if (style == 15) {
-                     this.quickCubedRings(this.radiusCounterRev, (double)this.heightCounterRev);
+                     this.quickCubedRings(this.radiusCounterRev, this.heightCounterRev);
                      this.heightScanRev();
                      this.radiusScanRev();
                   } else if (style == 16) {
-                     this.quickCubedRings(radius, (double)this.heightCounter);
-                     this.quickCubedRings(radius, (double)this.heightCounterRev);
+                     this.quickCubedRings(radius, this.heightCounter);
+                     this.quickCubedRings(radius, this.heightCounterRev);
                      this.heightScan();
                      this.heightScanRev();
                   } else if (style == 17) {
-                     this.quickCubedRings(this.radiusCounter, (double)this.middleCounterUp);
-                     this.quickCubedRings(this.radiusCounter, (double)this.middleCounterDown);
+                     this.quickCubedRings(this.radiusCounter, this.middleCounterUp);
+                     this.quickCubedRings(this.radiusCounter, this.middleCounterDown);
                      this.middleScanUp();
                      this.middleScanDown();
                      this.radiusScan();
                   } else if (style == 18) {
-                     this.quickCubedRings(this.radiusCounterRev, (double)this.middleCounterUp);
-                     this.quickCubedRings(this.radiusCounterRev, (double)this.middleCounterDown);
+                     this.quickCubedRings(this.radiusCounterRev, this.middleCounterUp);
+                     this.quickCubedRings(this.radiusCounterRev, this.middleCounterDown);
                      this.middleScanUp();
                      this.middleScanDown();
                      this.radiusScanRev();
                   } else if (style == 19) {
-                     this.quickStarRing(radius, (double)this.heightCounter);
+                     this.quickStarRing(radius, this.heightCounter);
                      this.heightScan();
                   } else if (style == 20) {
-                     this.quickStarRing(radius, (double)this.heightCounterRev);
+                     this.quickStarRing(radius, this.heightCounterRev);
                      this.heightScanRev();
                   } else if (style == 21) {
-                     this.quickStarRing(this.radiusCounter, (double)this.heightCounter);
+                     this.quickStarRing(this.radiusCounter, this.heightCounter);
                      this.radiusScan();
                   } else if (style == 22) {
-                     this.quickStarRing(this.radiusCounterRev, (double)this.heightCounter);
+                     this.quickStarRing(this.radiusCounterRev, this.heightCounter);
                      this.radiusScanRev();
                   } else if (style == 23) {
-                     this.quickStarRing(this.radiusCounter, (double)this.heightCounterRev);
+                     this.quickStarRing(this.radiusCounter, this.heightCounterRev);
                      this.heightScanRev();
                      this.radiusScan();
                   } else if (style == 24) {
-                     this.quickStarRing(this.radiusCounterRev, (double)this.heightCounterRev);
+                     this.quickStarRing(this.radiusCounterRev, this.heightCounterRev);
                      this.heightScanRev();
                      this.radiusScanRev();
                   } else if (style == 25) {
-                     this.quickStarRing(radius, (double)this.heightCounter);
-                     this.quickStarRing(radius, (double)this.heightCounterRev);
+                     this.quickStarRing(radius, this.heightCounter);
+                     this.quickStarRing(radius, this.heightCounterRev);
                      this.heightScan();
                      this.heightScanRev();
                   } else if (style == 26) {
-                     this.quickStarRing(this.radiusCounter, (double)this.middleCounterUp);
-                     this.quickStarRing(this.radiusCounter, (double)this.middleCounterDown);
+                     this.quickStarRing(this.radiusCounter, this.middleCounterUp);
+                     this.quickStarRing(this.radiusCounter, this.middleCounterDown);
                      this.middleScanUp();
                      this.middleScanDown();
                      this.radiusScan();
                   } else if (style == 27) {
-                     this.quickStarRing(this.radiusCounterRev, (double)this.middleCounterUp);
-                     this.quickStarRing(this.radiusCounterRev, (double)this.middleCounterDown);
+                     this.quickStarRing(this.radiusCounterRev, this.middleCounterUp);
+                     this.quickStarRing(this.radiusCounterRev, this.middleCounterDown);
                      this.middleScanUp();
                      this.middleScanDown();
                      this.radiusScanRev();
                   } else if (style == 28) {
-                     this.quickSolidCircle(this.heightCounter, (double)this.midPoint * Math.cos((double)this.heightCounter) + (double)(this.midPoint / 2.0F));
+                     this.quickSolidCircle(this.heightCounter, (double)this.midPoint * Math.cos(this.heightCounter) + (double)(this.midPoint / 2.0F));
                      this.heightScan();
                   } else if (style == 29) {
-                     this.quickSolidCircle(this.heightCounterRev, (double)this.midPoint * Math.cos((double)this.heightCounterRev) + (double)(this.midPoint / 2.0F));
+                     this.quickSolidCircle(this.heightCounterRev, (double)this.midPoint * Math.cos(this.heightCounterRev) + (double)(this.midPoint / 2.0F));
                      this.heightScanRev();
                   } else if (style == 30) {
-                     this.quickSolidCircle(this.radiusCounter, (double)this.midPoint * Math.cos((double)this.heightCounter) + (double)(this.midPoint / 2.0F));
+                     this.quickSolidCircle(this.radiusCounter, (double)this.midPoint * Math.cos(this.heightCounter) + (double)(this.midPoint / 2.0F));
                      this.heightScan();
                      this.radiusScan();
                   } else if (style == 31) {
-                     this.quickSolidCircle(this.radiusCounterRev, (double)this.midPoint * Math.cos((double)this.heightCounterRev) + (double)(this.midPoint / 2.0F));
+                     this.quickSolidCircle(this.radiusCounterRev, (double)this.midPoint * Math.cos(this.heightCounterRev) + (double)(this.midPoint / 2.0F));
                      this.heightScanRev();
                      this.radiusScanRev();
                   } else if (style == 32) {
@@ -1604,12 +1595,12 @@ public class EffectsLib {
                   } else if (style == 33) {
                      this.quickRadialWave2(radius);
                   } else if (style == 34) {
-                     this.quickDerpRing(this.radiusCounter, (double)this.heightCounter);
+                     this.quickDerpRing(this.radiusCounter, this.heightCounter);
                      this.radiusScan();
                   } else if (style == 35) {
-                     this.quickCubeOutline(radius, (double)height);
+                     this.quickCubeOutline(radius, height);
                   } else if (style >= 36) {
-                     this.quickCubeOutline(this.radiusCounter, (double)this.heightCounter);
+                     this.quickCubeOutline(this.radiusCounter, this.heightCounter);
                      this.heightScan();
                      this.radiusScan();
                   }
@@ -1643,7 +1634,7 @@ public class EffectsLib {
                   this.location = EffectsLib.getLocation(center, idName);
                   World world = Bukkit.getWorld(this.location.getWorld().getName());
                   this.location.add(disX, disY, disZ);
-                  this.angle = (double)((float)this.step * (6.2831855F / (float)finalDensity));
+                  this.angle = (float)this.step * (6.2831855F / (float)finalDensity);
                   this.v.setX(Math.cos(this.angle) * (double)radius);
                   this.v.setY(heightMod);
                   this.v.setZ(Math.sin(this.angle) * (double)radius);
@@ -1656,7 +1647,7 @@ public class EffectsLib {
                      it.setItemMeta(itemMeta);
                      this.i = world.dropItem(this.loc.add(0.0D, 1.0D, 0.0D), it);
                      this.i.setPickupDelay(99999999);
-                     String newID = this.i.getUniqueId().toString() + idName;
+                     String newID = this.i.getUniqueId() + idName;
                      EffectsLib.arraylist.put(newID, 69);
                      skDragonCore.notInUseItems.add(this.i.getUniqueId());
                   }
@@ -1688,7 +1679,7 @@ public class EffectsLib {
             public void run() {
                this.location = EffectsLib.getLocation(center, idName);
                if (style <= 1) {
-                  this.angle = (double)((float)(this.rand.nextInt(361) + 0) * (6.2831855F / (float)density));
+                  this.angle = (float)(this.rand.nextInt(361)) * (6.2831855F / (float)density);
                   this.v.setX(Math.cos(this.angle) * (double)radius);
                   this.v.setY(heightMod);
                   this.v.setZ(Math.sin(this.angle) * (double)radius);
@@ -1699,10 +1690,10 @@ public class EffectsLib {
                      this.v.setY(Math.abs(this.v.getY()));
                   }
                } else if (style >= 3) {
-                  this.step = (float)(this.rand.nextInt(181) + 0);
-                  this.v.setX(Math.cos((double)(6.2831855F / (float)density)) * (double)radius);
+                  this.step = (float)(this.rand.nextInt(181));
+                  this.v.setX(Math.cos(6.2831855F / (float)density) * (double)radius);
                   this.v.setY(heightMod);
-                  this.v.setZ(Math.sin((double)(6.2831855F / (float)density)) * (double)radius);
+                  this.v.setZ(Math.sin(6.2831855F / (float)density) * (double)radius);
                   VectorUtils.rotateVector(this.v, this.angularVelocity * (double)this.step, this.angularVelocity * (double)this.step, this.angularVelocity * (double)this.step);
                }
 
@@ -1823,8 +1814,8 @@ public class EffectsLib {
                               vR = target.toVector().subtract(this.location.toVector());
                               vL = target.toVector().subtract(this.location.toVector());
                               v2 = VectorUtils.getBackVector(this.location);
-                              rightWing = Math.toRadians((double)(this.location.getYaw() + 90.0F - (wingAngle - this.flap)));
-                              leftWing = Math.toRadians((double)(this.location.getYaw() + 90.0F + (wingAngle - this.flap)));
+                              rightWing = Math.toRadians(this.location.getYaw() + 90.0F - (wingAngle - this.flap));
+                              leftWing = Math.toRadians(this.location.getYaw() + 90.0F + (wingAngle - this.flap));
                               vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                               vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                               v2.setY(0).multiply(-0.2D);
@@ -1850,8 +1841,8 @@ public class EffectsLib {
                               vR = target.toVector().subtract(this.location.toVector());
                               vL = target.toVector().subtract(this.location.toVector());
                               v2 = VectorUtils.getBackVector(this.location);
-                              rightWing = Math.toRadians((double)(this.location.getYaw() + 90.0F - (wingAngle - this.flap)));
-                              leftWing = Math.toRadians((double)(this.location.getYaw() + 90.0F + (wingAngle - this.flap)));
+                              rightWing = Math.toRadians(this.location.getYaw() + 90.0F - (wingAngle - this.flap));
+                              leftWing = Math.toRadians(this.location.getYaw() + 90.0F + (wingAngle - this.flap));
                               vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                               vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                               v2.setY(0).multiply(-0.2D);
@@ -1877,8 +1868,8 @@ public class EffectsLib {
                               vR = target.toVector().subtract(this.location.toVector());
                               vL = target.toVector().subtract(this.location.toVector());
                               v2 = VectorUtils.getBackVector(this.location);
-                              rightWing = Math.toRadians((double)(this.location.getYaw() + 90.0F - (wingAngle - this.flap)));
-                              leftWing = Math.toRadians((double)(this.location.getYaw() + 90.0F + (wingAngle - this.flap)));
+                              rightWing = Math.toRadians(this.location.getYaw() + 90.0F - (wingAngle - this.flap));
+                              leftWing = Math.toRadians(this.location.getYaw() + 90.0F + (wingAngle - this.flap));
                               vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                               vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                               v2.setY(0).multiply(-0.2D);
@@ -1960,8 +1951,8 @@ public class EffectsLib {
                            vR = target.toVector().subtract(this.location.toVector());
                            vL = target.toVector().subtract(this.location.toVector());
                            v2 = VectorUtils.getBackVector(this.location);
-                           rightWing = Math.toRadians((double)(this.location.getYaw() + 90.0F - wingAngle - this.flap));
-                           leftWing = Math.toRadians((double)(this.location.getYaw() + 90.0F + wingAngle - this.flap));
+                           rightWing = Math.toRadians(this.location.getYaw() + 90.0F - wingAngle - this.flap);
+                           leftWing = Math.toRadians(this.location.getYaw() + 90.0F + wingAngle - this.flap);
                            vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                            vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                            v2.setY(0).multiply(-0.2D);
@@ -1985,8 +1976,8 @@ public class EffectsLib {
                            vR = target.toVector().subtract(this.location.toVector());
                            vL = target.toVector().subtract(this.location.toVector());
                            v2 = VectorUtils.getBackVector(this.location);
-                           rightWing = Math.toRadians((double)(this.location.getYaw() + 90.0F - wingAngle - this.flap));
-                           leftWing = Math.toRadians((double)(this.location.getYaw() + 90.0F + wingAngle - this.flap));
+                           rightWing = Math.toRadians(this.location.getYaw() + 90.0F - wingAngle - this.flap);
+                           leftWing = Math.toRadians(this.location.getYaw() + 90.0F + wingAngle - this.flap);
                            vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                            vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                            v2.setY(0).multiply(-0.2D);
@@ -2010,8 +2001,8 @@ public class EffectsLib {
                            vR = target.toVector().subtract(this.location.toVector());
                            vL = target.toVector().subtract(this.location.toVector());
                            v2 = VectorUtils.getBackVector(this.location);
-                           rightWing = Math.toRadians((double)(this.location.getYaw() + 90.0F - wingAngle - this.flap));
-                           leftWing = Math.toRadians((double)(this.location.getYaw() + 90.0F + wingAngle - this.flap));
+                           rightWing = Math.toRadians(this.location.getYaw() + 90.0F - wingAngle - this.flap);
+                           leftWing = Math.toRadians(this.location.getYaw() + 90.0F + wingAngle - this.flap);
                            vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                            vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                            v2.setY(0).multiply(-0.2D);
@@ -2035,8 +2026,8 @@ public class EffectsLib {
                            vR = target.toVector().subtract(this.location.toVector());
                            vL = target.toVector().subtract(this.location.toVector());
                            v2 = VectorUtils.getBackVector(this.location);
-                           rightWing = Math.toRadians((double)(this.location.getYaw() + 90.0F - wingAngle - this.flap));
-                           leftWing = Math.toRadians((double)(this.location.getYaw() + 90.0F + wingAngle - this.flap));
+                           rightWing = Math.toRadians(this.location.getYaw() + 90.0F - wingAngle - this.flap);
+                           leftWing = Math.toRadians(this.location.getYaw() + 90.0F + wingAngle - this.flap);
                            vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                            vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                            v2.setY(0).multiply(-0.2D);
@@ -2091,7 +2082,7 @@ public class EffectsLib {
                this.firstStep = false;
                this.cacheGreen.clear();
                this.cacheBlue.clear();
-               int sqrtParticles = (int)Math.sqrt((double)density);
+               int sqrtParticles = (int)Math.sqrt(density);
                float theta = 0.0F;
                float thetaStep = 3.1415927F / (float)sqrtParticles;
                float phiStep = 6.2831855F / (float)sqrtParticles;
@@ -2180,7 +2171,7 @@ public class EffectsLib {
                   double rotX;
                   double rotY;
                   if (enableOrbit) {
-                     rotX = (double)(6.2831855F / orbitalStepDensity);
+                     rotX = 6.2831855F / orbitalStepDensity;
                      rotY = (double)this.orbitalStep * rotX;
                      Vector v2 = new Vector();
                      v2.setX(Math.cos(rotY) * (double)orbitalRadius);
@@ -2436,7 +2427,7 @@ public class EffectsLib {
                   double angle;
                   for(i = 0; i < this.helixes; ++i) {
                      angle = (double)this.step * this.radials + 6.283185307179586D * (double)i / (double)this.helixes;
-                     v = new Vector(Math.cos(angle) * (double)this.radius, (double)((float)this.step * this.grow), Math.sin(angle) * (double)this.radius);
+                     v = new Vector(Math.cos(angle) * (double)this.radius, (float)this.step * this.grow, Math.sin(angle) * (double)this.radius);
                      VectorUtils.rotateAroundAxisX(v, 2.356194257736206D);
                      VectorUtils.rotateAroundAxisY(v, 0.01745329052209854D);
                      loc.add(v);
@@ -2448,7 +2439,7 @@ public class EffectsLib {
 
                   for(i = 0; i < this.helixes2; ++i) {
                      angle = (double)this.step2 * this.radials2 + 6.283185307179586D * (double)i / (double)this.helixes2;
-                     v2 = new Vector(Math.cos(angle) * (double)this.radius2, (double)((float)this.step2 * this.grow2), Math.sin(angle) * (double)this.radius2);
+                     v2 = new Vector(Math.cos(angle) * (double)this.radius2, (float)this.step2 * this.grow2, Math.sin(angle) * (double)this.radius2);
                      VectorUtils.rotateAroundAxisX(v2, 0.7853980660438538D);
                      VectorUtils.rotateAroundAxisY(v2, 0.01745329052209854D);
                      loc2.add(v2);
@@ -2460,8 +2451,8 @@ public class EffectsLib {
 
                   for(i = 0; i < this.helixes3; ++i) {
                      angle = (double)this.step3 * this.radials3 + 6.283185307179586D * (double)i / (double)this.helixes3;
-                     v3 = new Vector(Math.cos(angle) * (double)this.radius3, (double)((float)this.step3 * this.grow3), Math.sin(angle) * (double)this.radius3);
-                     VectorUtils.rotateAroundAxisX(v3, (double)(-loc3.getYaw() * 0.017453292F));
+                     v3 = new Vector(Math.cos(angle) * (double)this.radius3, (float)this.step3 * this.grow3, Math.sin(angle) * (double)this.radius3);
+                     VectorUtils.rotateAroundAxisX(v3, -loc3.getYaw() * 0.017453292F);
                      VectorUtils.rotateAroundAxisY(v3, 0.01745329052209854D);
                      loc3.add(v3);
                      ParticleEffect.flame.display(0.0F, 0.0F, 0.0F, 0.0F, 1, loc3, 50.0D);
@@ -2516,10 +2507,10 @@ public class EffectsLib {
                Vector v = new Vector();
 
                for(int x = 0; (float)x <= this.particles; ++x) {
-                  double y1 = Math.sin((double)(3.1415927F * (float)x / this.particles));
+                  double y1 = Math.sin(3.1415927F * (float)x / this.particles);
 
                   for(int z = 0; (float)z <= this.particles; ++z) {
-                     double y2 = Math.sin((double)(3.1415927F * (float)z / this.particles));
+                     double y2 = Math.sin(3.1415927F * (float)z / this.particles);
                      v.setX(this.edgeLength * (float)x / this.particles).setZ(this.edgeLength * (float)z / this.particles);
                      v.setY((double)this.height * y1 * y2);
                      VectorUtils.rotateAroundAxisY(v, this.yRotation);
@@ -2556,8 +2547,8 @@ public class EffectsLib {
             double yRotation;
 
             {
-               this.stepHeight = (double)(height / (int) vars.get(0));
-               this.stepRadius = (double)(radius / (int) vars.get(0));
+               this.stepHeight = height / (int) vars.get(0);
+               this.stepRadius = radius / (int) vars.get(0);
                this.edgeLength = 6.5F;
                this.yRotation = 0.4487989544868469D;
             }
@@ -2573,7 +2564,7 @@ public class EffectsLib {
                   this.y = this.heightCounter;
                   this.location.add(0.0D, this.y, 0.0D);
 
-                  for(double angle = 0.0D; angle < 6.2831854820251465D; angle += (double)(3.1415927F / (float)ringDensity)) {
+                  for(double angle = 0.0D; angle < 6.2831854820251465D; angle += 3.1415927F / (float)ringDensity) {
                      this.x = Math.cos(angle) * this.radiusCounter;
                      this.z = Math.sin(angle) * this.radiusCounter;
                      this.v = new Vector(this.x, 0.0D, this.z);
@@ -2583,7 +2574,7 @@ public class EffectsLib {
 
                   for(int i = 0; i < ringDensity; ++i) {
                      double anglex = 6.2831854820251465D * (double)i / (double)ringDensity;
-                     double y2 = Math.sin((double)(3.1415927F * (float)i / (float)ringDensity));
+                     double y2 = Math.sin(3.1415927F * (float)i / (float)ringDensity);
                      this.x = Math.cos(anglex) * this.radiusCounter;
                      this.z = Math.sin(anglex) * this.radiusCounter;
                      this.v.setX(this.edgeLength * (float)i / (float)ringDensity).setZ(this.edgeLength * (float)i / (float)ringDensity);
@@ -2612,7 +2603,7 @@ public class EffectsLib {
                      }
 
                      if (this.heightCounter < 0.0D) {
-                        this.heightCounter = (double)height;
+                        this.heightCounter = height;
                      }
 
                      if (this.radiusCounter > (double)radius) {
@@ -2620,7 +2611,7 @@ public class EffectsLib {
                      }
 
                      if (this.radiusCounter < 0.0D) {
-                        this.radiusCounter = (double)radius;
+                        this.radiusCounter = radius;
                      }
                   }
 
@@ -2719,7 +2710,7 @@ public class EffectsLib {
       ArrayList locations = new ArrayList();
 
       for(int i = 1; i < 6; ++i) {
-         double angleY = (double)((float)i * 1.2566371F);
+         double angleY = (float)i * 1.2566371F;
          double x = Math.cos(angleY) * radius;
          double z = Math.sin(angleY) * radius;
          Vector v = new Vector(x, 0.0D, z);
@@ -2743,13 +2734,13 @@ public class EffectsLib {
       return locations;
    }
 
-   public static enum Plane {
+   public enum Plane {
       X,
       Y,
       Z,
       XY,
       XZ,
       XYZ,
-      YZ;
+      YZ
    }
 }

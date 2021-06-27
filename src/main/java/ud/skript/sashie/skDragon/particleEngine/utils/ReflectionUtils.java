@@ -177,7 +177,7 @@ public final class ReflectionUtils {
       setValue(instance, instance.getClass(), declared, fieldName, value);
    }
 
-   public static enum DataType {
+   public enum DataType {
       BYTE(Byte.TYPE, Byte.class),
       SHORT(Short.TYPE, Short.class),
       INTEGER(Integer.TYPE, Integer.class),
@@ -203,7 +203,7 @@ public final class ReflectionUtils {
 
       }
 
-      private DataType(Class primitive, Class reference) {
+      DataType(Class primitive, Class reference) {
          this.primitive = primitive;
          this.reference = reference;
       }
@@ -291,7 +291,7 @@ public final class ReflectionUtils {
       }
    }
 
-   public static enum PackageType {
+   public enum PackageType {
       MINECRAFT_SERVER("MINECRAFT_SERVER", 0, "net.minecraft.server." + getServerVersion()),
       CRAFTBUKKIT("CRAFTBUKKIT", 1, "org.bukkit.craftbukkit." + getServerVersion()),
       CRAFTBUKKIT_BLOCK("CRAFTBUKKIT_BLOCK", 2, CRAFTBUKKIT, "block"),
@@ -329,11 +329,11 @@ public final class ReflectionUtils {
 
       private final String path;
 
-      private PackageType(String s, int n, String path) {
+      PackageType(String s, int n, String path) {
          this.path = path;
       }
 
-      private PackageType(String s, int n, ReflectionUtils.PackageType parent, String path) {
+      PackageType(String s, int n, ReflectionUtils.PackageType parent, String path) {
          this(s, n, parent + "." + path);
       }
 

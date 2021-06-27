@@ -5,16 +5,13 @@ import ch.njol.skript.SkriptAddon;
 import ch.njol.skript.log.ErrorQuality;
 import ch.njol.skript.util.FileUtils;
 import ch.njol.util.coll.iterator.EnumerationIterable;
-import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
@@ -37,7 +34,6 @@ import ud.skript.sashie.skDragon.emotes.SkullEvents1_9;
 import ud.skript.sashie.skDragon.metrics.Metrics;
 import ud.skript.sashie.skDragon.particleEngine.utils.ItemFountainEvents;
 import ud.skript.sashie.skDragon.particleEngine.utils.PlayerEvents;
-import ud.skript.sashie.skDragon.particleEngine.utils.SchedulingManager;
 import ud.skript.sashie.skDragon.registration.AnnotationParser;
 import ud.skript.sashie.skDragon.registration.Documentation;
 import ud.skript.sashie.skDragon.registration.Events;
@@ -111,14 +107,7 @@ public class skDragonCore extends JavaPlugin {
          emoteConfig.initData();
          Bukkit.getPluginManager().registerEvents(new PlayerEvents(), skdragoncore);
          Bukkit.getPluginManager().registerEvents(new ItemFountainEvents(), skdragoncore);
-         if (UpdateCheck) {
-            SchedulingManager.runAsyncDelayed(skdragoncore::updateCheck, 1);
-            if (!UpdateMsgOps) {
-               SchedulingManager.runAsyncRepeating(skdragoncore::updateCheckOp, 1, UpdateTimer);
-            }
-         } else {
-            sendLog("This hacky version of skDragon does not check for updates!");
-         }
+         sendLog("This hacky version of skDragon does not check for updates!");
       } else {
          Bukkit.getPluginManager().disablePlugin(skdragoncore);
          sendLog("Plugin is now disabled. Why you no haz Skript?");
@@ -165,7 +154,7 @@ public class skDragonCore extends JavaPlugin {
    private void startMetrics() {
       Metrics metrics = new Metrics(this);
       metrics.addCustomChart(new Metrics.SimplePie("skript_version", new Callable() {
-         public String call() throws Exception {
+         public String call() {
             return Skript.getVersion().toString();
          }
       }));
@@ -303,15 +292,6 @@ public class skDragonCore extends JavaPlugin {
       } else if (type == 4) {
          Skript.error("[skDragon] v" + version + ": " + string + " (" + className + ".class)", ErrorQuality.SEMANTIC_ERROR);
       }
-
-   }
-
-   private void updateCheck() {
-      String newVer = "";
-      sendLog("This hacky version of skDragon does not check for updates!");
-   }
-
-   private void updateCheckOp() {
 
    }
 }

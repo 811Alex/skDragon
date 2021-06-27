@@ -32,8 +32,6 @@ public class MagicMissiles extends EffectsLib {
             List ent;
             double hitboxRadius;
             Location roughCenter;
-            int nodeNumber = 0;
-            Location tar;
 
             public void handPosition() {
                if (position == 1) {
@@ -67,10 +65,10 @@ public class MagicMissiles extends EffectsLib {
                   for(int i = 0; i < finalArcs; ++i) {
                      float pitch = (Float)this.rndF.get(i) * 2.0F * finalArcPitch - finalArcPitch;
                      float x = (float)(this.timeStep % finalParticleDensity) * finalLength / (float)finalParticleDensity;
-                     float y = (float)((double)pitch * Math.pow((double)x, 2.0D));
+                     float y = (float)((double)pitch * Math.pow(x, 2.0D));
                      this.v = new Vector(x, y, 0.0F);
                      VectorUtils.rotateAroundAxisX(this.v, (Double)this.rndAngle.get(i));
-                     VectorUtils.rotateAroundAxisZ(this.v, (double)locPitch);
+                     VectorUtils.rotateAroundAxisZ(this.v, locPitch);
                      VectorUtils.rotateAroundAxisY(this.v, locYaw);
                      particle.display(idName, dataMat, dataID, player, this.location.clone().add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
                      this.location.subtract(this.v);

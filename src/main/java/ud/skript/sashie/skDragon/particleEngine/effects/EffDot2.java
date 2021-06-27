@@ -96,7 +96,7 @@ public class EffDot2 extends Effect {
       final float coffsetZ = SkriptHandler.inputFloat(0.0F, e, this.coffZ);
       final Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       final byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
-      long finalPulseTick = (long)SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
+      long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
       long finalKeepDelay = SkriptHandler.inputKeepDelay(e, this.inputKeepDelay);
       final double visibleRange = ((Number)this.range.getSingle(e)).doubleValue();
       final Vector displacement = SkriptHandler.inputLocDisplacement(e, this.displaceX, this.displaceY, this.displaceZ);
@@ -112,11 +112,9 @@ public class EffDot2 extends Effect {
       }
 
       final List locations = new ArrayList();
-      Object[] var29 = center;
-      int var28 = center.length;
 
-      for(int var27 = 0; var27 < var28; ++var27) {
-         Object loc = var29[var27];
+      for(int var27 = 0; var27 < center.length; ++var27) {
+         Object loc = center[var27];
          DynamicLocation location = DynamicLocation.init(loc);
          if (!location.isDynamic()) {
             location.add(displacement.getX(), displacement.getY(), displacement.getZ());
@@ -145,65 +143,57 @@ public class EffDot2 extends Effect {
 
             public void run() {
                Iterator var2 = locations.iterator();
+               while(var2.hasNext()) {
+                  DynamicLocation loc = (DynamicLocation)var2.next();
+                  loc.update();
+                  if (loc.isDynamic()) {
+                     loc.add(displacement.getX(), displacement.getY(), displacement.getZ());
+                  }
 
-               while(true) {
-                  while(var2.hasNext()) {
-                     DynamicLocation loc = (DynamicLocation)var2.next();
-                     loc.update();
-                     if (loc.isDynamic()) {
-                        loc.add(displacement.getX(), displacement.getY(), displacement.getZ());
+                  if (randomColor) {
+                     if (!rainbowMode) {
+                        this.finalOffsetX = RandomUtils.randomRangeFloat(0.0F, 255.0F);
                      }
+                     this.finalOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
+                     this.finalOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
+                  }
 
-                     if (randomColor) {
-                        if (rainbowMode) {
-                           this.finalOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                           this.finalOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                        } else {
-                           this.finalOffsetX = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                           this.finalOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                           this.finalOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
-                        }
-                     }
-
-                     if (rainbowMode) {
-                        if (!randomColor) {
-                           this.finalOffsetX = ParticleEffect.simpleRainbowHelper(this.finalOffsetX, particle);
-                        } else {
-                           this.finalOffsetX = ParticleEffect.simpleRainbowHelper(this.finalOffsetX, particle);
-                           if (offsetY == 0.0F) {
-                              this.finalOffsetY = 1.0F;
-                           }
-
-                           if (offsetZ == 0.0F) {
-                              this.finalOffsetZ = 1.0F;
-                           }
-                        }
-                     }
-
-                     if (particle.hasProperty(ParticleEffect.ParticleProperty.COLORABLE)) {
-                        for(int i = 0; i < count; ++i) {
-                           if (coffsetX > 0.0F) {
-                              this.finalColorOffsetX = RandomUtils.randomRangeFloat(-coffsetX, coffsetX);
-                           }
-
-                           if (coffsetY > 0.0F) {
-                              this.finalColorOffsetY = RandomUtils.randomRangeFloat(-coffsetY, coffsetY);
-                           }
-
-                           if (coffsetZ > 0.0F) {
-                              this.finalColorOffsetZ = RandomUtils.randomRangeFloat(-coffsetZ, coffsetZ);
-                           }
-
-                           loc.add((double)this.finalColorOffsetX, (double)this.finalColorOffsetY, (double)this.finalColorOffsetZ);
-                           particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, finalSpeed, 1);
-                           loc.subtract((double)this.finalColorOffsetX, (double)this.finalColorOffsetY, (double)this.finalColorOffsetZ);
-                        }
+                  if (rainbowMode) {
+                     if (!randomColor) {
+                        this.finalOffsetX = ParticleEffect.simpleRainbowHelper(this.finalOffsetX, particle);
                      } else {
-                        particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, finalSpeed, count);
+                        this.finalOffsetX = ParticleEffect.simpleRainbowHelper(this.finalOffsetX, particle);
+                        if (offsetY == 0.0F) {
+                           this.finalOffsetY = 1.0F;
+                        }
+
+                        if (offsetZ == 0.0F) {
+                           this.finalOffsetZ = 1.0F;
+                        }
                      }
                   }
 
-                  return;
+                  if (particle.hasProperty(ParticleEffect.ParticleProperty.COLORABLE)) {
+                     for(int i = 0; i < count; ++i) {
+                        if (coffsetX > 0.0F) {
+                           this.finalColorOffsetX = RandomUtils.randomRangeFloat(-coffsetX, coffsetX);
+                        }
+
+                        if (coffsetY > 0.0F) {
+                           this.finalColorOffsetY = RandomUtils.randomRangeFloat(-coffsetY, coffsetY);
+                        }
+
+                        if (coffsetZ > 0.0F) {
+                           this.finalColorOffsetZ = RandomUtils.randomRangeFloat(-coffsetZ, coffsetZ);
+                        }
+
+                        loc.add(this.finalColorOffsetX, this.finalColorOffsetY, this.finalColorOffsetZ);
+                        particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, finalSpeed, 1);
+                        loc.subtract(this.finalColorOffsetX, this.finalColorOffsetY, this.finalColorOffsetZ);
+                     }
+                  } else {
+                     particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, finalSpeed, count);
+                  }
                }
             }
          }, 0L, finalPulseTick).getTaskId();

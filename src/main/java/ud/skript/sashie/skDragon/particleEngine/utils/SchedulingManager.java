@@ -12,17 +12,17 @@ public class SchedulingManager {
    /** @deprecated */
    @Deprecated
    public static BukkitTask runRepeatingTaskTimer(Runnable runnable, int delay, int period) {
-      return Bukkit.getScheduler().runTaskTimer(skDragonCore.skdragoncore, runnable, (long)delay, (long)period);
+      return Bukkit.getScheduler().runTaskTimer(skDragonCore.skdragoncore, runnable, delay, period);
    }
 
    /** @deprecated */
    @Deprecated
    public static int runSyncDelayed(Runnable runnable, int delay) {
-      return Bukkit.getScheduler().scheduleSyncDelayedTask(skDragonCore.skdragoncore, runnable, (long)delay);
+      return Bukkit.getScheduler().scheduleSyncDelayedTask(skDragonCore.skdragoncore, runnable, delay);
    }
 
    public static BukkitTask runAsyncDelayed(Runnable runnable, int delay) {
-      return Bukkit.getScheduler().runTaskLaterAsynchronously(skDragonCore.skdragoncore, runnable, (long)delay);
+      return Bukkit.getScheduler().runTaskLaterAsynchronously(skDragonCore.skdragoncore, runnable, delay);
    }
 
    /** @deprecated */
@@ -32,11 +32,11 @@ public class SchedulingManager {
    }
 
    public static BukkitTask runAsyncRepeating(Runnable runnable, int delay, int pulse) {
-      return Bukkit.getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, runnable, (long)delay, (long)pulse);
+      return Bukkit.getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, runnable, delay, pulse);
    }
 
    public static BukkitTask runTaskLater(Runnable runnable, int delay) {
-      return Bukkit.getScheduler().runTaskLater(skDragonCore.skdragoncore, runnable, (long)delay);
+      return Bukkit.getScheduler().runTaskLater(skDragonCore.skdragoncore, runnable, delay);
    }
 
    public static void cancel(int id) {

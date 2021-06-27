@@ -19,7 +19,7 @@ public class Types {
    static final boolean $assertionsDisabled = !Types.class.desiredAssertionStatus();
 
    public static void particleEffects() {
-      Classes.registerClass((new ClassInfo(ParticleEffect.class, "particlename")).user(new String[]{"particlename?"}).defaultExpression(new EventValueExpression(ParticleEffect.class)).parser(new Parser() {
+      Classes.registerClass((new ClassInfo(ParticleEffect.class, "particlename")).user("particlename?").defaultExpression(new EventValueExpression(ParticleEffect.class)).parser(new Parser() {
          public String getVariableNamePattern() {
             return ".+";
          }
@@ -58,7 +58,7 @@ public class Types {
          }
 
          protected ParticleEffect deserialize(Object fields) throws StreamCorruptedException {
-            String name = (String)((Fields)fields).getObject("name", String.class);
+            String name = ((Fields)fields).getObject("name", String.class);
             ParticleEffect w = ParticleEffect.valueOf(name);
             if (w == null) {
                throw new StreamCorruptedException("Missing particle effect " + name);
@@ -79,7 +79,7 @@ public class Types {
    }
 
    public static void fontStyle() {
-      Classes.registerClass((new ClassInfo(FontStyleEnum.class, "fontstyle")).user(new String[]{"fontstyle?"}).defaultExpression(new EventValueExpression(FontStyleEnum.class)).parser(new Parser() {
+      Classes.registerClass((new ClassInfo(FontStyleEnum.class, "fontstyle")).user("fontstyle?").defaultExpression(new EventValueExpression(FontStyleEnum.class)).parser(new Parser() {
          public String getVariableNamePattern() {
             return ".+";
          }
@@ -119,7 +119,7 @@ public class Types {
          }
 
          protected FontStyleEnum deserialize(Fields fields) throws StreamCorruptedException {
-            String name = (String)fields.getObject("name", String.class);
+            String name = fields.getObject("name", String.class);
             FontStyleEnum w = FontStyleEnum.valueOf(name);
             if (w == null) {
                throw new StreamCorruptedException("Missing particle effect " + name);
@@ -140,7 +140,7 @@ public class Types {
    }
 
    public static void rotationPlane() {
-      Classes.registerClass((new ClassInfo(PlaneEnum.class, "plane")).user(new String[]{"plane?"}).defaultExpression(new EventValueExpression(PlaneEnum.class)).parser(new Parser() {
+      Classes.registerClass((new ClassInfo(PlaneEnum.class, "plane")).user("plane?").defaultExpression(new EventValueExpression(PlaneEnum.class)).parser(new Parser() {
          public String getVariableNamePattern() {
             return ".+";
          }
@@ -179,7 +179,7 @@ public class Types {
          }
 
          protected PlaneEnum deserialize(Fields fields) throws StreamCorruptedException {
-            String name = (String)fields.getObject("name", String.class);
+            String name = fields.getObject("name", String.class);
             PlaneEnum w = PlaneEnum.valueOf(name);
             if (w == null) {
                throw new StreamCorruptedException("Missing particle effect " + name);
@@ -200,7 +200,7 @@ public class Types {
    }
 
    public static void emotes() {
-      Classes.registerClass((new ClassInfo(EmoteType.class, "emotetype")).user(new String[]{"emotetype?"}).defaultExpression(new EventValueExpression(EmoteType.class)).parser(new Parser() {
+      Classes.registerClass((new ClassInfo(EmoteType.class, "emotetype")).user("emotetype?").defaultExpression(new EventValueExpression(EmoteType.class)).parser(new Parser() {
          public String getVariableNamePattern() {
             return ".+";
          }
@@ -239,7 +239,7 @@ public class Types {
          }
 
          protected EmoteType deserialize(Fields fields) throws StreamCorruptedException {
-            String name = (String)fields.getObject("name", String.class);
+            String name = fields.getObject("name", String.class);
             EmoteType w = EmoteType.valueOf(name);
             if (w == null) {
                throw new StreamCorruptedException("Missing emote effect " + name);

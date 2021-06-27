@@ -39,7 +39,7 @@ public class Cone extends EffectsLib {
 
             {
                this.radius1 = (float) vars.get(0);
-               this.angularVelocity = (double)(3.1415927F / (int) vars.get(1));
+               this.angularVelocity = 3.1415927F / (int) vars.get(1);
                this.step = 0.0F;
                this.particles1 = 40;
                this.speed1 = 25;
@@ -82,8 +82,8 @@ public class Cone extends EffectsLib {
                         angle = (double)this.step * this.angularVelocity + this.rotation;
                         float radius = this.step * this.radiusGrow;
                         float length = this.step * this.lengthGrow;
-                        Vector v = new Vector(Math.cos(angle) * (double)radius, (double)length, Math.sin(angle) * (double)radius);
-                        VectorUtils.rotateAroundAxisX(v, (double)((center.getPitch() + 90.0F) * 0.017453292F));
+                        Vector v = new Vector(Math.cos(angle) * (double)radius, length, Math.sin(angle) * (double)radius);
+                        VectorUtils.rotateAroundAxisX(v, (center.getPitch() + 90.0F) * 0.017453292F);
                         VectorUtils.rotateAroundAxisY(v, -center.getYaw() * 0.017453292F);
                         particle.display(idName, dataMat, dataID, player, center.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
                         center.subtract(v);
@@ -91,7 +91,7 @@ public class Cone extends EffectsLib {
                      }
                   } else if (style == 2) {
                      for(float k = 3.5F; k > 0.0F; k -= 0.1F) {
-                        Vector vx = new Vector((double)k * Math.sin((double)(k * this.step)) / 3.0D, (double)(-k) + 3.8D, (double)k * Math.cos((double)(k * this.step)) / 3.0D);
+                        Vector vx = new Vector((double)k * Math.sin(k * this.step) / 3.0D, (double)(-k) + 3.8D, (double)k * Math.cos(k * this.step) / 3.0D);
                         particle.display(idName, dataMat, dataID, player, center.add(vx), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
                      }
 
@@ -100,8 +100,7 @@ public class Cone extends EffectsLib {
                         this.step = 10.0F;
                      }
                   } else if (style >= 3) {
-                     Location location2 = center;
-                     angle = (double)(6.2831855F * (float)this.i / (float)(this.particles1 * this.speed1));
+                     angle = 6.2831855F * (float)this.i / (float)(this.particles1 * this.speed1);
                      double xx = Math.cos(angle) * (double)this.radius1;
                      double z = Math.sin(angle) * (double)this.radius1;
                      center.add(xx, this.height, z);
@@ -116,12 +115,12 @@ public class Cone extends EffectsLib {
                         this.height = 0.0D;
                      }
 
-                     double angle2 = (double)(6.2831855F * (float)this.i2 / (float)(this.particles2 * this.speed2));
+                     double angle2 = 6.2831855F * (float)this.i2 / (float)(this.particles2 * this.speed2);
                      double x2 = Math.cos(angle2) * (double)(-this.radius2);
                      double z2 = Math.sin(angle2) * (double)(-this.radius2);
-                     location2.add(x2, this.height2, z2);
+                     ((Location) center).add(x2, this.height2, z2);
                      particle.display(idName, dataMat, dataID, player, center, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
-                     location2.subtract(xx, 0.0D, z);
+                     ((Location) center).subtract(xx, 0.0D, z);
                      this.i2 += this.speed2;
                      if ((double)this.radius2 > 0.02D) {
                         this.radius2 = (float)((double)this.radius2 - 0.05D);

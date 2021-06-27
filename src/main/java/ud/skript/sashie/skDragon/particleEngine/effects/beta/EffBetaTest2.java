@@ -15,7 +15,7 @@ public class EffBetaTest2 extends Effect {
    private Expression idName;
 
    static {
-      Skript.registerEffect(EffBetaTest2.class, new String[]{"drawBetaTest2 player %player%, id %string%"});
+      Skript.registerEffect(EffBetaTest2.class, "drawBetaTest2 player %player%, id %string%");
    }
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {

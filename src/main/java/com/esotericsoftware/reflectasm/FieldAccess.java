@@ -146,7 +146,7 @@ public abstract class FieldAccess {
                String accessClassNameInternal = accessClassName.replace('.', '/');
                String classNameInternal = className.replace('.', '/');
                ClassWriter cw = new ClassWriter(0);
-               cw.visit(196653, 33, accessClassNameInternal, (String)null, "com/esotericsoftware/reflectasm/FieldAccess", (String[])null);
+               cw.visit(196653, 33, accessClassNameInternal, null, "com/esotericsoftware/reflectasm/FieldAccess", null);
                insertConstructor(cw);
                insertGetObject(cw, classNameInternal, fields);
                insertSetObject(cw, classNameInternal, fields);
@@ -176,7 +176,7 @@ public abstract class FieldAccess {
             FieldAccess access = (FieldAccess)accessClass.newInstance();
             access.fieldNames = fieldNames;
             access.fieldTypes = fieldTypes;
-            access.fields = (Field[])fields.toArray(new Field[fields.size()]);
+            access.fields = (Field[])fields.toArray(new Field[0]);
             return access;
          } catch (Throwable var13) {
             throw new RuntimeException("Error constructing field access class: " + accessClassName, var13);
@@ -185,7 +185,7 @@ public abstract class FieldAccess {
    }
 
    private static void insertConstructor(ClassWriter cw) {
-      MethodVisitor mv = cw.visitMethod(1, "<init>", "()V", (String)null, (String[])null);
+      MethodVisitor mv = cw.visitMethod(1, "<init>", "()V", null, null);
       mv.visitCode();
       mv.visitVarInsn(25, 0);
       mv.visitMethodInsn(183, "com/esotericsoftware/reflectasm/FieldAccess", "<init>", "()V");
@@ -196,7 +196,7 @@ public abstract class FieldAccess {
 
    private static void insertSetObject(ClassWriter cw, String classNameInternal, ArrayList fields) {
       int maxStack = 6;
-      MethodVisitor mv = cw.visitMethod(1, "set", "(Ljava/lang/Object;ILjava/lang/Object;)V", (String)null, (String[])null);
+      MethodVisitor mv = cw.visitMethod(1, "set", "(Ljava/lang/Object;ILjava/lang/Object;)V", null, null);
       mv.visitCode();
       mv.visitVarInsn(21, 2);
       if (!fields.isEmpty()) {
@@ -216,7 +216,7 @@ public abstract class FieldAccess {
             Field field = (Field)fields.get(i);
             Type fieldType = Type.getType(field.getType());
             mv.visitLabel(labels[i]);
-            mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+            mv.visitFrame(3, 0, null, 0, null);
             mv.visitVarInsn(25, 1);
             mv.visitTypeInsn(192, classNameInternal);
             mv.visitVarInsn(25, 3);
@@ -265,7 +265,7 @@ public abstract class FieldAccess {
          }
 
          mv.visitLabel(defaultLabel);
-         mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+         mv.visitFrame(3, 0, null, 0, null);
       }
 
       mv = insertThrowExceptionForFieldNotFound(mv);
@@ -275,7 +275,7 @@ public abstract class FieldAccess {
 
    private static void insertGetObject(ClassWriter cw, String classNameInternal, ArrayList fields) {
       int maxStack = 6;
-      MethodVisitor mv = cw.visitMethod(1, "get", "(Ljava/lang/Object;I)Ljava/lang/Object;", (String)null, (String[])null);
+      MethodVisitor mv = cw.visitMethod(1, "get", "(Ljava/lang/Object;I)Ljava/lang/Object;", null, null);
       mv.visitCode();
       mv.visitVarInsn(21, 2);
       if (!fields.isEmpty()) {
@@ -294,7 +294,7 @@ public abstract class FieldAccess {
          for(int n = labels.length; i < n; ++i) {
             Field field = (Field)fields.get(i);
             mv.visitLabel(labels[i]);
-            mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+            mv.visitFrame(3, 0, null, 0, null);
             mv.visitVarInsn(25, 1);
             mv.visitTypeInsn(192, classNameInternal);
             mv.visitFieldInsn(180, field.getDeclaringClass().getName().replace('.', '/'), field.getName(), Type.getDescriptor(field.getType()));
@@ -329,7 +329,7 @@ public abstract class FieldAccess {
          }
 
          mv.visitLabel(defaultLabel);
-         mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+         mv.visitFrame(3, 0, null, 0, null);
       }
 
       insertThrowExceptionForFieldNotFound(mv);
@@ -339,7 +339,7 @@ public abstract class FieldAccess {
 
    private static void insertGetString(ClassWriter cw, String classNameInternal, ArrayList fields) {
       int maxStack = 6;
-      MethodVisitor mv = cw.visitMethod(1, "getString", "(Ljava/lang/Object;I)Ljava/lang/String;", (String)null, (String[])null);
+      MethodVisitor mv = cw.visitMethod(1, "getString", "(Ljava/lang/Object;I)Ljava/lang/String;", null, null);
       mv.visitCode();
       mv.visitVarInsn(21, 2);
       if (!fields.isEmpty()) {
@@ -366,7 +366,7 @@ public abstract class FieldAccess {
             if (!labels[i].equals(labelForInvalidTypes)) {
                Field field = (Field)fields.get(i);
                mv.visitLabel(labels[i]);
-               mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+               mv.visitFrame(3, 0, null, 0, null);
                mv.visitVarInsn(25, 1);
                mv.visitTypeInsn(192, classNameInternal);
                mv.visitFieldInsn(180, field.getDeclaringClass().getName().replace('.', '/'), field.getName(), "Ljava/lang/String;");
@@ -376,12 +376,12 @@ public abstract class FieldAccess {
 
          if (hasAnyBadTypeLabel) {
             mv.visitLabel(labelForInvalidTypes);
-            mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+            mv.visitFrame(3, 0, null, 0, null);
             insertThrowExceptionForFieldType(mv, "String");
          }
 
          mv.visitLabel(defaultLabel);
-         mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+         mv.visitFrame(3, 0, null, 0, null);
       }
 
       insertThrowExceptionForFieldNotFound(mv);
@@ -435,7 +435,7 @@ public abstract class FieldAccess {
          loadValueInstruction = 25;
       }
 
-      MethodVisitor mv = cw.visitMethod(1, setterMethodName, "(Ljava/lang/Object;I" + typeNameInternal + ")V", (String)null, (String[])null);
+      MethodVisitor mv = cw.visitMethod(1, setterMethodName, "(Ljava/lang/Object;I" + typeNameInternal + ")V", null, null);
       mv.visitCode();
       mv.visitVarInsn(21, 2);
       if (!fields.isEmpty()) {
@@ -462,7 +462,7 @@ public abstract class FieldAccess {
             if (!labels[i].equals(labelForInvalidTypes)) {
                Field field = (Field)fields.get(i);
                mv.visitLabel(labels[i]);
-               mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+               mv.visitFrame(3, 0, null, 0, null);
                mv.visitVarInsn(25, 1);
                mv.visitTypeInsn(192, classNameInternal);
                mv.visitVarInsn(loadValueInstruction, 3);
@@ -473,12 +473,12 @@ public abstract class FieldAccess {
 
          if (hasAnyBadTypeLabel) {
             mv.visitLabel(labelForInvalidTypes);
-            mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+            mv.visitFrame(3, 0, null, 0, null);
             insertThrowExceptionForFieldType(mv, primitiveType.getClassName());
          }
 
          mv.visitLabel(defaultLabel);
-         mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+         mv.visitFrame(3, 0, null, 0, null);
       }
 
       mv = insertThrowExceptionForFieldNotFound(mv);
@@ -529,7 +529,7 @@ public abstract class FieldAccess {
          returnValueInstruction = 176;
       }
 
-      MethodVisitor mv = cw.visitMethod(1, getterMethodName, "(Ljava/lang/Object;I)" + typeNameInternal, (String)null, (String[])null);
+      MethodVisitor mv = cw.visitMethod(1, getterMethodName, "(Ljava/lang/Object;I)" + typeNameInternal, null, null);
       mv.visitCode();
       mv.visitVarInsn(21, 2);
       if (!fields.isEmpty()) {
@@ -556,7 +556,7 @@ public abstract class FieldAccess {
             Field field = (Field)fields.get(i);
             if (!labels[i].equals(labelForInvalidTypes)) {
                mv.visitLabel(labels[i]);
-               mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+               mv.visitFrame(3, 0, null, 0, null);
                mv.visitVarInsn(25, 1);
                mv.visitTypeInsn(192, classNameInternal);
                mv.visitFieldInsn(180, field.getDeclaringClass().getName().replace('.', '/'), field.getName(), typeNameInternal);
@@ -566,12 +566,12 @@ public abstract class FieldAccess {
 
          if (hasAnyBadTypeLabel) {
             mv.visitLabel(labelForInvalidTypes);
-            mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+            mv.visitFrame(3, 0, null, 0, null);
             insertThrowExceptionForFieldType(mv, primitiveType.getClassName());
          }
 
          mv.visitLabel(defaultLabel);
-         mv.visitFrame(3, 0, (Object[])null, 0, (Object[])null);
+         mv.visitFrame(3, 0, null, 0, null);
       }
 
       mv = insertThrowExceptionForFieldNotFound(mv);

@@ -26,7 +26,7 @@ public enum FontStyleEnum {
 
    }
 
-   private FontStyleEnum(String name) {
+   FontStyleEnum(String name) {
       this.name = name;
    }
 

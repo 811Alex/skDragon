@@ -96,7 +96,7 @@ public class ColorImage2 extends EffectsLib {
                               this.filter = this.image.getRGB(x, y);
                               if ((this.invert || this.filter != 0 && this.filter >> 24 != 0 && this.filter != 16777215) && (!this.invert || this.filter == 0 && this.filter >> 24 == 0 && this.filter != 16777215)) {
                                  Vector v2 = (new Vector((float)this.image.getWidth() / 2.0F - (float)x, (float)this.image.getHeight() / 2.0F - (float)y, 0.0F)).multiply(1.0F / scaleSize);
-                                 v2 = VectorUtils.rotateVector(v2, (double)(this.pitchX * 0.017453292F), (double)(this.yaw * 0.017453292F), (double)(this.pitchZ * 0.017453292F));
+                                 v2 = VectorUtils.rotateVector(v2, this.pitchX * 0.017453292F, this.yaw * 0.017453292F, this.pitchZ * 0.017453292F);
                                  Vector vColor = new Vector((new Color(this.image.getRGB(x, y))).getRed(), (new Color(this.image.getRGB(x, y))).getGreen(), (new Color(this.image.getRGB(x, y))).getBlue());
                                  this.vectorMap.put(v2, vColor);
                               }
@@ -104,7 +104,7 @@ public class ColorImage2 extends EffectsLib {
                         }
                      } else {
                         try {
-                           ImageReader reader = (ImageReader)ImageIO.getImageReadersBySuffix("GIF").next();
+                           ImageReader reader = ImageIO.getImageReadersBySuffix("GIF").next();
                            ImageInputStream in = ImageIO.createImageInputStream(this.gifFile);
                            reader.setInput(in);
                            int i = 0;
@@ -125,7 +125,7 @@ public class ColorImage2 extends EffectsLib {
                                     if ((this.invert || this.filter != 0 && this.filter >> 24 != 0 && this.filter != 16777215) && (!this.invert || this.filter == 0 && this.filter >> 24 == 0 && this.filter != 16777215)) {
                                        Vector v2x = (new Vector((float)this.image.getWidth() / 2.0F - (float)xx, (float)this.image.getHeight() / 2.0F - (float)yx, 0.0F)).multiply(1.0F / scaleSize);
                                        Vector vColorx = new Vector((new Color(this.image.getRGB(xx, yx))).getRed(), (new Color(this.image.getRGB(xx, yx))).getGreen(), (new Color(this.image.getRGB(xx, yx))).getBlue());
-                                       v2x = VectorUtils.rotateVector(v2x, (double)(this.pitchX * 0.017453292F), (double)(this.yaw * 0.017453292F), (double)(this.pitchZ * 0.017453292F));
+                                       v2x = VectorUtils.rotateVector(v2x, this.pitchX * 0.017453292F, this.yaw * 0.017453292F, this.pitchZ * 0.017453292F);
                                        this.vectorMap.put(v2x, vColorx);
                                     }
                                  }

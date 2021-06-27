@@ -103,6 +103,6 @@ public class EffLine extends Effect {
       float length = SkriptHandler.inputFloat(0.0F, e, this.inputLength);
       int zigZagCount = SkriptHandler.inputInt(0, e, this.inputZigZagCount);
       float zigZagHeight = SkriptHandler.inputFloat(0.0F, e, this.inputZigZagHeight);
-      Line.drawEffect(particle, dataMat, dataID, speed, offset, idName, center, target, players, rainbowMode, solid, density, length, zigZagCount, zigZagHeight, visibleRange, displacement, 0L, (long)finalPulseTick);
+      Line.drawEffect(particle, dataMat, dataID, speed, offset, idName, center, target, players, rainbowMode, solid, density, length, zigZagCount, zigZagHeight, visibleRange, displacement, 0L, finalPulseTick);
    }
 }

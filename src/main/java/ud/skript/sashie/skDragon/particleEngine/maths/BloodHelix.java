@@ -36,7 +36,7 @@ public class BloodHelix extends EffectsLib {
 
             {
                this.radius1 = (float) vars.get(0);
-               this.angularVelocity = (double)(3.1415927F / (int) vars.get(1));
+               this.angularVelocity = 3.1415927F / (int) vars.get(1);
                this.step = 0.0F;
                this.particles1 = 40;
                this.speed1 = 25;
@@ -65,8 +65,7 @@ public class BloodHelix extends EffectsLib {
                      this.init = true;
                   }
 
-                  Location location2 = center;
-                  double angle = (double)(6.2831855F * (float)this.i / (float)(this.particles1 * this.speed1));
+                  double angle = 6.2831855F * (float)this.i / (float)(this.particles1 * this.speed1);
                   double x = Math.cos(angle) * (double)this.radius1;
                   double z = Math.sin(angle) * (double)this.radius1;
                   center.add(x, this.height, z);
@@ -81,12 +80,12 @@ public class BloodHelix extends EffectsLib {
                      this.height = 0.0D;
                   }
 
-                  double angle2 = (double)(6.2831855F * (float)this.i2 / (float)(this.particles2 * this.speed2));
+                  double angle2 = 6.2831855F * (float)this.i2 / (float)(this.particles2 * this.speed2);
                   double x2 = Math.cos(angle2) * (double)(-this.radius2);
                   double z2 = Math.sin(angle2) * (double)(-this.radius2);
-                  location2.add(x2, this.height2, z2);
+                  ((Location) center).add(x2, this.height2, z2);
                   particle.display(idName, dataMat, dataID, player, center, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
-                  location2.subtract(x, 0.0D, z);
+                  ((Location) center).subtract(x, 0.0D, z);
                   this.i2 += this.speed2;
                   if ((double)this.radius2 > 0.02D) {
                      this.radius2 = (float)((double)this.radius2 - 0.05D);
