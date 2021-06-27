@@ -144,7 +144,7 @@ public class ClassReader {
                   var2.addSuppressed(var19);
                }
 
-               throw var2;
+               throw new RuntimeException(var2);
             }
          } finally {
             if (close) {
@@ -1163,7 +1163,6 @@ public class ClassReader {
       String annotationDescriptor;
       int currentAnnotationOffset;
       int targetType;
-      String annotationDescriptor;
       String signature;
       while(currentOffset < bytecodeEndOffset) {
          typeAnnotationOffset = currentOffset - bytecodeStartOffset;
@@ -2261,7 +2260,7 @@ public class ClassReader {
          int attributeLength = this.readInt(currentAttributeOffset + 2);
          currentAttributeOffset += 6;
          if ("BootstrapMethods".equals(attributeName)) {
-            int[] currentBootstrapMethodOffsets = new int[this.readUnsignedShort(currentAttributeOffset)];
+            currentBootstrapMethodOffsets = new int[this.readUnsignedShort(currentAttributeOffset)];
             int currentBootstrapMethodOffset = currentAttributeOffset + 2;
 
             for(int j = 0; j < currentBootstrapMethodOffsets.length; ++j) {

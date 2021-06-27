@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.packets.SkullPacket;
+import wtfplswork.Runnable;
 
 public class SkullEffectsLib {
    private static final HashMap emotelist = new HashMap();
@@ -239,8 +240,8 @@ public class SkullEffectsLib {
             boolean repeating;
 
             {
-               this.i = var1;
-               this.repeating = var1 >= 1;
+               this.i = (int) vars.get(0);
+               this.repeating = (int) vars.get(0) >= 1;
             }
 
             public void run() {

@@ -25,11 +25,8 @@ public final class RandomUtils {
    }
 
    public static Vector getRandomVectorline() {
-      int n = true;
-      int n2 = true;
       int n3 = (int)(Math.random() * 10.0D + -5.0D);
       int n4 = (int)(Math.random() * 10.0D + -5.0D);
-      double n5 = -5.0D;
       return (new Vector((double)n4, Math.random() * 4.0D + -5.0D, (double)n3)).normalize();
    }
 

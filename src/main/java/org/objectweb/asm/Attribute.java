@@ -44,10 +44,7 @@ public class Attribute {
 
    final int computeAttributesSize(SymbolTable symbolTable) {
       byte[] code = null;
-      int codeLength = false;
-      int maxStack = true;
-      int maxLocals = true;
-      return this.computeAttributesSize(symbolTable, (byte[])code, 0, -1, -1);
+     return this.computeAttributesSize(symbolTable, (byte[])code, 0, -1, -1);
    }
 
    final int computeAttributesSize(SymbolTable symbolTable, byte[] code, int codeLength, int maxStack, int maxLocals) {
@@ -84,9 +81,6 @@ public class Attribute {
 
    final void putAttributes(SymbolTable symbolTable, ByteVector output) {
       byte[] code = null;
-      int codeLength = false;
-      int maxStack = true;
-      int maxLocals = true;
       this.putAttributes(symbolTable, (byte[])code, 0, -1, -1, output);
    }
 

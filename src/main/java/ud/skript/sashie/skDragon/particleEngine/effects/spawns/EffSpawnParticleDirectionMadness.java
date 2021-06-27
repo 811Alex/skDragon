@@ -22,6 +22,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Description;
 import ud.skript.sashie.skDragon.registration.annotations.Examples;
 import ud.skript.sashie.skDragon.registration.annotations.Name;
 import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
+import wtfplswork.Runnable;
 
 @Name("Spawn more complex directional particle patterns using colorable particles")
 @Description({"Most particles react differently to this effect using their individual built in mojang nature", "Uses any bukkit vector type as input for the direction"})
@@ -136,9 +137,9 @@ public class EffSpawnParticleDirectionMadness extends DragonEffect {
             float finalColorOffsetZ;
 
             {
-               this.finalColorOffsetX = var5;
-               this.finalColorOffsetY = var6;
-               this.finalColorOffsetZ = var7;
+               this.finalColorOffsetX = (float) vars.get(0);
+               this.finalColorOffsetY = (float) vars.get(1);
+               this.finalColorOffsetZ = (float) vars.get(2);
             }
 
             public void run() {

@@ -90,8 +90,6 @@ public class EffRings extends Effect {
       double disY = 0.0D;
       double disZ = 0.0D;
       float finalSpeed = 0.0F;
-      int ringDensity = true;
-      int ringCount = true;
       Long finalDelayTicks = 0L;
       if (this.particleString != null && ParticleEffect.NAME_MAP.containsKey(((String)this.particleString.getSingle(e)).toLowerCase())) {
          particle = ((String)this.particleString.getSingle(e)).toLowerCase();

@@ -9,6 +9,7 @@ import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.particleEngine.utils.DynamicLocation;
 import ud.skript.sashie.skDragon.particleEngine.utils.ParticleEffect;
 import ud.skript.sashie.skDragon.particleEngine.utils.RandomUtils;
+import wtfplswork.Runnable;
 
 public class Disco extends EffectsLib {
    public static void drawEffect(final int style, final ParticleEffect particle, final Material dataMat, final byte dataID, final float speed, Vector offset, final ParticleEffect particle2, final Material dataMat2, final byte dataID2, final float speed2, final Vector offset2, final String idName, final DynamicLocation center, final List players, final boolean rainbowMode, final int maxLines, int lineLength, final float sphereRadius, final int sphereDensity, final int lineDensity, final double visibleRange, final Vector displacement, long delayStart, long delayPulse) {
@@ -24,10 +25,10 @@ public class Disco extends EffectsLib {
             float finalOffsetZ2;
 
             {
-               this.max = var1;
-               this.finalOffsetX = (float)var2.getX();
-               this.finalOffsetY = (float)var2.getY();
-               this.finalOffsetZ = (float)var2.getZ();
+               this.max = (int) vars.get(0);
+               this.finalOffsetX = (float)((Vector) vars.get(1)).getX();
+               this.finalOffsetY = (float)((Vector) vars.get(1)).getY();
+               this.finalOffsetZ = (float)((Vector) vars.get(1)).getZ();
                this.finalOffsetX2 = (float)offset2.getX();
                this.finalOffsetY2 = (float)offset2.getY();
                this.finalOffsetZ2 = (float)offset2.getZ();

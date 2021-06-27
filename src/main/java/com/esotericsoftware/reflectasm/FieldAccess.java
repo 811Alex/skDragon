@@ -112,9 +112,9 @@ public abstract class FieldAccess {
          int i;
          for(Class nextClass = type; nextClass != Object.class; nextClass = nextClass.getSuperclass()) {
             Field[] declaredFields = nextClass.getDeclaredFields();
-            int i = 0;
+            i = 0;
 
-            for(i = declaredFields.length; i < i; ++i) {
+            for(int j = declaredFields.length; i < j; ++i) {
                Field field = declaredFields[i];
                int modifiers = field.getModifiers();
                if (!Modifier.isStatic(modifiers) && !Modifier.isPrivate(modifiers)) {
@@ -204,8 +204,7 @@ public abstract class FieldAccess {
          Label[] labels = new Label[fields.size()];
          int i = 0;
 
-         int i;
-         for(i = labels.length; i < i; ++i) {
+         for(int j = labels.length; i < j; ++i) {
             labels[i] = new Label();
          }
 
@@ -284,8 +283,7 @@ public abstract class FieldAccess {
          Label[] labels = new Label[fields.size()];
          int i = 0;
 
-         int i;
-         for(i = labels.length; i < i; ++i) {
+         for(int j = labels.length; i < j; ++i) {
             labels[i] = new Label();
          }
 
@@ -351,8 +349,7 @@ public abstract class FieldAccess {
          boolean hasAnyBadTypeLabel = false;
          int i = 0;
 
-         int i;
-         for(i = labels.length; i < i; ++i) {
+         for(int j = labels.length; i < j; ++i) {
             if (((Field)fields.get(i)).getType().equals(String.class)) {
                labels[i] = new Label();
             } else {
@@ -448,8 +445,7 @@ public abstract class FieldAccess {
          boolean hasAnyBadTypeLabel = false;
          int i = 0;
 
-         int i;
-         for(i = labels.length; i < i; ++i) {
+         for(int j = labels.length; i < j; ++i) {
             if (Type.getType(((Field)fields.get(i)).getType()).equals(primitiveType)) {
                labels[i] = new Label();
             } else {
@@ -543,8 +539,7 @@ public abstract class FieldAccess {
          boolean hasAnyBadTypeLabel = false;
          int i = 0;
 
-         int i;
-         for(i = labels.length; i < i; ++i) {
+         for(int j = labels.length; i < j; ++i) {
             if (Type.getType(((Field)fields.get(i)).getType()).equals(primitiveType)) {
                labels[i] = new Label();
             } else {

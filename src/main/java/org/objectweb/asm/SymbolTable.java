@@ -342,7 +342,6 @@ final class SymbolTable {
    }
 
    int addConstantNameAndType(String name, String descriptor) {
-      int tag = true;
       int hashCode = hash(12, name, descriptor);
 
       for(SymbolTable.Entry entry = this.get(hashCode); entry != null; entry = entry.next) {
@@ -356,7 +355,6 @@ final class SymbolTable {
    }
 
    private void addConstantNameAndType(int index, String name, String descriptor) {
-      int tag = true;
       this.add(new SymbolTable.Entry(index, 12, name, descriptor, hash(12, name, descriptor)));
    }
 
@@ -378,8 +376,7 @@ final class SymbolTable {
    }
 
    Symbol addConstantMethodHandle(int referenceKind, String owner, String name, String descriptor, boolean isInterface) {
-      int tag = true;
-      int hashCode = hash(15, owner, name, descriptor, referenceKind);
+     int hashCode = hash(15, owner, name, descriptor, referenceKind);
 
       for(SymbolTable.Entry entry = this.get(hashCode); entry != null; entry = entry.next) {
          if (entry.tag == 15 && entry.hashCode == hashCode && entry.data == (long)referenceKind && entry.owner.equals(owner) && entry.name.equals(name) && entry.value.equals(descriptor)) {
@@ -397,8 +394,7 @@ final class SymbolTable {
    }
 
    private void addConstantMethodHandle(int index, int referenceKind, String owner, String name, String descriptor) {
-      int tag = true;
-      int hashCode = hash(15, owner, name, descriptor, referenceKind);
+     int hashCode = hash(15, owner, name, descriptor, referenceKind);
       this.add(new SymbolTable.Entry(index, 15, owner, name, descriptor, (long)referenceKind, hashCode));
    }
 

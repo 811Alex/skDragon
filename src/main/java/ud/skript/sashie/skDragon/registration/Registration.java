@@ -8,8 +8,8 @@ public class Registration {
    private String[] syntax;
    private String[] example;
    public static Comparator COMPARE_BY_NAME = new Comparator() {
-      public int compare(Registration one, Registration other) {
-         return one.name.compareTo(other.name);
+      public int compare(Object one, Object other) {
+         return ((Registration)one).name.compareTo(((Registration)other).name);
       }
    };
 

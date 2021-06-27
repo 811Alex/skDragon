@@ -10,6 +10,7 @@ import ud.skript.sashie.skDragon.particleEngine.utils.DynamicLocation;
 import ud.skript.sashie.skDragon.particleEngine.utils.ParticleEffect;
 import ud.skript.sashie.skDragon.particleEngine.utils.RandomUtils;
 import ud.skript.sashie.skDragon.particleEngine.utils.VectorUtils;
+import wtfplswork.Runnable;
 
 public class Cone extends EffectsLib {
    public static void drawEffect(final int style, final ParticleEffect particle, final float speed, final Material dataMat, final byte dataID, final String idName, final DynamicLocation center, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, float radius, float grow, int circles, int helixes, int particleDensity, double xRotation, double yRotation, double zRotation, final float offsetX, final float offsetY, final float offsetZ, final double disX, final double disY, final double disZ, final double visibleRange, long delayStart, long delayPulse) {
@@ -37,8 +38,8 @@ public class Cone extends EffectsLib {
             public boolean randomize;
 
             {
-               this.radius1 = var1;
-               this.angularVelocity = (double)(3.1415927F / (float)var2);
+               this.radius1 = (float) vars.get(0);
+               this.angularVelocity = (double)(3.1415927F / (float)vars.get(1));
                this.step = 0.0F;
                this.particles1 = 40;
                this.speed1 = 25;
@@ -47,10 +48,10 @@ public class Cone extends EffectsLib {
                this.radius2 = 2.0F;
                this.speed2 = 25;
                this.height2 = 0.0D;
-               this.lengthGrow = var3;
-               this.particles = var4;
-               this.radiusGrow = var1;
-               this.particlesCone = var5;
+               this.lengthGrow = (float) vars.get(2);
+               this.particles = (int) vars.get(3);
+               this.radiusGrow = (float) vars.get(0);
+               this.particlesCone = (int) vars.get(4);
                this.rotation = 0.0D;
                this.randomize = false;
             }

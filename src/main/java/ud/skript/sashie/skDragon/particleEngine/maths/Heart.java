@@ -10,6 +10,7 @@ import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.particleEngine.utils.DynamicLocation;
 import ud.skript.sashie.skDragon.particleEngine.utils.ParticleEffect;
 import ud.skript.sashie.skDragon.particleEngine.utils.VectorUtils;
+import wtfplswork.Runnable;
 
 public class Heart extends EffectsLib {
    public static void drawEffect(final ParticleEffect particle, final float speed, final Material dataMat, final byte dataID, final String idName, final DynamicLocation center, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float spin, double height, double width, double innerSpike, double compress, final int particleDensity, final double xRotation, final double yRotation, final double zRotation, final float offsetX, final float offsetY, final float offsetZ, final double disX, final double disY, final double disZ, final double visibleRange, long delayStart, long delayPulse) {
@@ -26,10 +27,10 @@ public class Heart extends EffectsLib {
             float complication;
 
             {
-               this.yFactor = var1;
-               this.xFactor = var3;
-               this.factorInnerSpike = var5;
-               this.compressYFactorTotal = 1.0D / var7;
+               this.yFactor = (double) vars.get(1);
+               this.xFactor = (double) vars.get(0);
+               this.factorInnerSpike = (double) vars.get(2);
+               this.compressYFactorTotal = 1.0D / (double) vars.get(3);
                this.complication = 2.0F;
             }
 

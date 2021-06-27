@@ -22,6 +22,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Description;
 import ud.skript.sashie.skDragon.registration.annotations.Examples;
 import ud.skript.sashie.skDragon.registration.annotations.Name;
 import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
+import wtfplswork.Runnable;
 
 @Name("drawDot 2")
 @Description({"placeholder"})
@@ -134,7 +135,7 @@ public class EffDot2 extends Effect {
             float finalColorOffsetZ;
 
             {
-               this.finalOffsetX = var2;
+               this.finalOffsetX = (float) vars.get(0);
                this.finalOffsetY = offsetY;
                this.finalOffsetZ = offsetZ;
                this.finalColorOffsetX = coffsetX;

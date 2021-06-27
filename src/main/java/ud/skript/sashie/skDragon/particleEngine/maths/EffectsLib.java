@@ -32,6 +32,7 @@ import ud.skript.sashie.skDragon.particleEngine.utils.ParticleEffect;
 import ud.skript.sashie.skDragon.particleEngine.utils.RandomUtils;
 import ud.skript.sashie.skDragon.particleEngine.utils.SchedulingManager;
 import ud.skript.sashie.skDragon.particleEngine.utils.VectorUtils;
+import wtfplswork.Runnable;
 
 public class EffectsLib {
    public static final HashMap arraylist = new HashMap();
@@ -304,7 +305,7 @@ public class EffectsLib {
             Location location;
 
             {
-               this.step = var1;
+               this.step = (float) vars.get(0);
             }
 
             public void run() {
@@ -346,7 +347,7 @@ public class EffectsLib {
             Location location;
 
             {
-               this.step = var1;
+               this.step = (float) vars.get(0);
             }
 
             public void run() {
@@ -489,7 +490,7 @@ public class EffectsLib {
             Location location;
 
             {
-               this.step = var1;
+               this.step = (float) vars.get(0);
                this.up = true;
             }
 
@@ -623,9 +624,9 @@ public class EffectsLib {
             private static int[] $SWITCH_TABLE$ud$skript$sashie$skDragon$particleEngine$maths$EffectsLib$Plane;
 
             {
-               this.stepX = var1;
-               this.stepY = var2;
-               this.size = 1.0F / (float)var3;
+               this.stepX = (int) vars.get(0);
+               this.stepY = (int) vars.get(1);
+               this.size = 1.0F / (float)vars.get(2);
                this.angularVelocityX = 0.015707964077591896D;
                this.angularVelocityY = 0.018479958176612854D;
                this.angularVelocityZ = 0.020268339663743973D;
@@ -881,7 +882,7 @@ public class EffectsLib {
             public float hue;
 
             {
-               this.sideRatio = var1;
+               this.sideRatio = (float) vars.get(0);
             }
 
             public void run() {
@@ -1182,12 +1183,12 @@ public class EffectsLib {
                this.middleCounterUp = this.midPoint;
                this.middleCounterDown = this.midPoint;
                this.radiusCounterRev = radius;
-               this.stepHeight = height / (float)var3;
-               this.stepHalf = this.midPoint / (float)var3;
-               this.stepRadius = radius / (float)var3;
-               this.stepHeightDown = height / (float)var3;
-               this.stepHalfDown = this.midPoint / (float)var3;
-               this.stepRadiusIn = radius / (float)var3;
+               this.stepHeight = height / (float)vars.get(0);
+               this.stepHalf = this.midPoint / (float)vars.get(0);
+               this.stepRadius = radius / (float)vars.get(0);
+               this.stepHeightDown = height / (float)vars.get(0);
+               this.stepHalfDown = this.midPoint / (float)vars.get(0);
+               this.stepRadiusIn = radius / (float)vars.get(0);
                this.t = 0.0D;
             }
 
@@ -1787,7 +1788,7 @@ public class EffectsLib {
             float stepFlap;
 
             {
-               this.stepFlap = var1;
+               this.stepFlap = (float) vars.get(0);
             }
 
             public void run() {
@@ -1922,7 +1923,7 @@ public class EffectsLib {
             float stepFlap;
 
             {
-               this.stepFlap = var1;
+               this.stepFlap = (float) vars.get(0);
             }
 
             public void run() {
@@ -2555,8 +2556,8 @@ public class EffectsLib {
             double yRotation;
 
             {
-               this.stepHeight = (double)(height / (float)var2);
-               this.stepRadius = (double)(radius / (float)var2);
+               this.stepHeight = (double)(height / (float)vars.get(0));
+               this.stepRadius = (double)(radius / (float)vars.get(0));
                this.edgeLength = 6.5F;
                this.yRotation = 0.4487989544868469D;
             }
@@ -2655,7 +2656,7 @@ public class EffectsLib {
             Location l;
 
             {
-               this.l = var1;
+               this.l = (Location) vars.get(0);
             }
 
             public void run() {

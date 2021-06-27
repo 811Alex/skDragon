@@ -108,8 +108,8 @@ public class Documentation {
    private void insertEach(List regs, String title) throws IOException {
       this.htmlWriter.write("<div class=\"sectionstart\"> " + title + " <span class=\"sectioncount\">(" + regs.size() + ")</span> </div>");
       Collections.sort(regs, new Comparator() {
-         public int compare(Registration one, Registration other) {
-            return one.getName().compareTo(other.getName());
+         public int compare(Object one, Object other) {
+            return ((Registration)one).getName().compareTo(((Registration)other).getName());
          }
       });
       Iterator var4 = regs.iterator();

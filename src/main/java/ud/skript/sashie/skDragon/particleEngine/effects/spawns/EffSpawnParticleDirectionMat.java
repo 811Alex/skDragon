@@ -77,7 +77,6 @@ public class EffSpawnParticleDirectionMat extends DragonEffect {
       final int count = SkriptHandler.inputParticleCount(e, this.partCount);
       ParticleEffect inputParticle = ParticleEffect.happyvillager;
       Material dataMat = Material.DIRT;
-      byte dataID = false;
       if (this.parsedSyntax.contains("blockdust")) {
          inputParticle = ParticleEffect.blockdust;
       } else if (this.parsedSyntax.contains("itemcrack")) {

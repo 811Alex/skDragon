@@ -17,6 +17,7 @@ import ud.skript.sashie.skDragon.particleEngine.utils.DynamicLocation;
 import ud.skript.sashie.skDragon.particleEngine.utils.ParticleEffect;
 import ud.skript.sashie.skDragon.particleEngine.utils.VectorUtils;
 import ud.skript.sashie.skDragon.particleEngine.utils.enums.PlaneEnum;
+import wtfplswork.Runnable;
 
 public class ColorImage2 extends EffectsLib {
    public static void drawEffect(final File file, final String idName, final DynamicLocation center, final List players, final boolean autoFace, final boolean enableRotation, final PlaneEnum plane, Vector xyzSpeed, final int pixelStepX, final int pixelStepY, final float scaleSize, final double visibleRange, Vector axis, final Vector displacement, long delayStart, long delayPulse) {
@@ -48,12 +49,12 @@ public class ColorImage2 extends EffectsLib {
             private static int[] $SWITCH_TABLE$ud$skript$sashie$skDragon$particleEngine$utils$enums$PlaneEnum;
 
             {
-               this.yaw = (float)var1.getY();
-               this.pitchX = (float)var1.getX();
-               this.pitchZ = (float)var1.getZ();
-               this.angularVelocityX = 3.1415927410125732D / var2.getX();
-               this.angularVelocityY = 3.1415927410125732D / var2.getY();
-               this.angularVelocityZ = 3.1415927410125732D / var2.getZ();
+               this.yaw = (float)((Vector)vars.get(0)).getY();
+               this.pitchX = (float)((Vector)vars.get(0)).getX();
+               this.pitchZ = (float)((Vector)vars.get(0)).getZ();
+               this.angularVelocityX = 3.1415927410125732D / ((Vector)vars.get(1)).getX();
+               this.angularVelocityY = 3.1415927410125732D / ((Vector)vars.get(1)).getY();
+               this.angularVelocityZ = 3.1415927410125732D / ((Vector)vars.get(1)).getZ();
                this.image = null;
                this.isGif = false;
                this.gifFile = null;

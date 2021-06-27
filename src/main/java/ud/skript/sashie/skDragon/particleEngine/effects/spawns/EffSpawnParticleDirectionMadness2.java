@@ -27,6 +27,7 @@ import ud.skript.sashie.skDragon.registration.annotations.DontRegister;
 import ud.skript.sashie.skDragon.registration.annotations.Examples;
 import ud.skript.sashie.skDragon.registration.annotations.Name;
 import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
+import wtfplswork.Runnable;
 
 @DontRegister
 @Name("Spawn more complex directional particle patterns")
@@ -140,7 +141,7 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
                   int f;
 
                   {
-                     this.l = var2.clone();
+                     this.l = ((Location)vars.get(0)).clone();
                      this.i = 0;
                      this.f = 0;
                   }
@@ -199,7 +200,7 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
                   int f;
 
                   {
-                     this.l = var2.clone();
+                     this.l = ((Location)vars.get(0)).clone();
                      this.t = 0.0F;
                      this.f = 0;
                   }

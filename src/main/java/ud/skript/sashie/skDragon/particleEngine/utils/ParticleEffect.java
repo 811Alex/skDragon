@@ -374,43 +374,43 @@ public enum ParticleEffect {
                if (rainbowMode) {
                   finalData = new ParticleEffect.NoteColor((int)hue);
                   if (isSinglePlayer) {
-                     this.display(finalData, center, (Player[])(player));
+                     this.display(finalData, center, player);
                   } else {
                      this.display(finalData, center, visibleRange);
                   }
                } else if (isSinglePlayer) {
-                  this.display(new ParticleEffect.NoteColor((int)offsetX), center, (Player[])(player));
+                  this.display(new ParticleEffect.NoteColor((int)offsetX), center, player);
                } else {
                   this.display(new ParticleEffect.NoteColor((int)offsetX), center, visibleRange);
                }
             } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
                if ((this == fallingdust || this == blockcrack || this == blockdust) && dataMat != null) {
                   finalData = null;
-                  ParticleEffect.BlockData finalData;
+                  ParticleEffect.BlockData finalData2;
                   if (skDragonCore.serverVersion >= 14) {
-                     finalData = new ParticleEffect.BlockData(dataMat);
+                     finalData2 = new ParticleEffect.BlockData(dataMat);
                   } else {
-                     finalData = new ParticleEffect.BlockData(dataMat, dataID);
+                     finalData2 = new ParticleEffect.BlockData(dataMat, dataID);
                   }
 
                   if (isSinglePlayer) {
-                     this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, (Player[])(player));
+                     this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, player);
                   } else {
-                     this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
+                     this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                   }
                } else if (this == itemcrack && dataMat != null) {
                   finalData = null;
-                  ParticleEffect.ItemData finalData;
+                  ParticleEffect.ItemData finalData3;
                   if (skDragonCore.serverVersion >= 14) {
-                     finalData = new ParticleEffect.ItemData(dataMat);
+                     finalData3 = new ParticleEffect.ItemData(dataMat);
                   } else {
-                     finalData = new ParticleEffect.ItemData(dataMat, dataID);
+                     finalData3 = new ParticleEffect.ItemData(dataMat, dataID);
                   }
 
                   if (isSinglePlayer) {
-                     this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, (Player[])(player));
+                     this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, (player));
                   } else {
-                     this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
+                     this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                   }
                }
             } else if (isSinglePlayer) {
@@ -419,40 +419,40 @@ public enum ParticleEffect {
                this.display(offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
             }
          } else {
-            int r;
+            int ir;
             if (rainbowMode) {
-               r = Color.HSBtoRGB(hue, 1.0F, 1.0F);
-               float r = (float)(r >> 16 & 255) / 255.0F;
-               float g = (float)(r >> 8 & 255) / 255.0F;
-               float b = (float)(r & 255) / 255.0F;
+               ir = Color.HSBtoRGB(hue, 1.0F, 1.0F);
+               float r = (float)(ir >> 16 & 255) / 255.0F;
+               float g = (float)(ir >> 8 & 255) / 255.0F;
+               float b = (float)(ir & 255) / 255.0F;
                r = r == 0.0F ? 0.001F : r;
                if (this == redstone) {
                   ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
                   if (isSinglePlayer) {
-                     this.display(color, center, (Player[])(player));
+                     this.display(color, center, player);
                   } else {
                      this.display(color, center, visibleRange);
                   }
                } else if (isSinglePlayer) {
-                  this.display(r, g, b, 1.0F, 0, center, (Player)player);
+                  this.display(r, g, b, 1.0F, 0, center, player);
                } else {
                   this.display(r, g, b, 1.0F, 0, center, visibleRange);
                }
             } else {
-               r = Math.round(offsetX);
+               ir = Math.round(offsetX);
                int g = Math.round(offsetY);
                int b = Math.round(offsetZ);
                if (this == redstone) {
-                  ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
+                  ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(ir, g, b), 1.0F);
                   if (isSinglePlayer) {
-                     this.display(color, center, (Player[])(player));
+                     this.display(color, center, (player));
                   } else {
                      this.display(color, center, visibleRange);
                   }
                } else if (isSinglePlayer) {
-                  this.display(new ParticleEffect.OrdinaryColor(r, g, b), center, (Player[])(player));
+                  this.display(new ParticleEffect.OrdinaryColor(ir, g, b), center, (player));
                } else {
-                  this.display(new ParticleEffect.OrdinaryColor(r, g, b), center, visibleRange);
+                  this.display(new ParticleEffect.OrdinaryColor(ir, g, b), center, visibleRange);
                }
             }
          }
@@ -510,7 +510,7 @@ public enum ParticleEffect {
          if (this == redstone) {
             ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
             if (isSinglePlayer) {
-               this.display(color, center, (Player[])(player));
+               this.display(color, center, (player));
             } else {
                this.display(color, center, visibleRange);
             }
@@ -532,14 +532,14 @@ public enum ParticleEffect {
          r2 = r2 == 0.0F ? 0.001F : r2;
          ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r2, g2, b2), 1.0F);
          if (isSinglePlayer) {
-            this.display(color, center, (Player[])(player));
+            this.display(color, center, (player));
          } else {
             this.display(color, center, visibleRange);
          }
       } else {
          ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
          if (isSinglePlayer) {
-            this.display(color, center, (Player[])(player));
+            this.display(color, center, (player));
          } else {
             this.display(color, center, visibleRange);
          }
@@ -552,7 +552,7 @@ public enum ParticleEffect {
          if (this == redstone) {
             ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
             if (isSinglePlayer) {
-               this.display(color, center, (Player[])(player));
+               this.display(color, center, (player));
             } else {
                this.display(color, center, visibleRange);
             }
@@ -609,31 +609,31 @@ public enum ParticleEffect {
             } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
                if ((this == fallingdust || this == blockcrack || this == blockdust) && dataMat != null) {
                   finalData = null;
-                  ParticleEffect.BlockData finalData;
+                  ParticleEffect.BlockData finalData2;
                   if (skDragonCore.serverVersion >= 14) {
-                     finalData = new ParticleEffect.BlockData(dataMat);
+                     finalData2 = new ParticleEffect.BlockData(dataMat);
                   } else {
-                     finalData = new ParticleEffect.BlockData(dataMat, dataID);
+                     finalData2 = new ParticleEffect.BlockData(dataMat, dataID);
                   }
 
                   if (players != null) {
-                     this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
+                     this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
                   } else {
-                     this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
+                     this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                   }
                } else if (this == itemcrack && dataMat != null) {
                   finalData = null;
-                  ParticleEffect.ItemData finalData;
+                  ParticleEffect.ItemData finalData3;
                   if (skDragonCore.serverVersion >= 14) {
-                     finalData = new ParticleEffect.ItemData(dataMat);
+                     finalData3 = new ParticleEffect.ItemData(dataMat);
                   } else {
-                     finalData = new ParticleEffect.ItemData(dataMat, dataID);
+                     finalData3 = new ParticleEffect.ItemData(dataMat, dataID);
                   }
 
                   if (players != null) {
-                     this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
+                     this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
                   } else {
-                     this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
+                     this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                   }
                }
             } else if (players != null) {
@@ -702,31 +702,31 @@ public enum ParticleEffect {
          } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
             if ((this == fallingdust || this == blockcrack || this == blockdust) && dataMat != null) {
                finalData = null;
-               ParticleEffect.BlockData finalData;
+               ParticleEffect.BlockData finalData2;
                if (skDragonCore.serverVersion >= 14) {
-                  finalData = new ParticleEffect.BlockData(dataMat);
+                  finalData2 = new ParticleEffect.BlockData(dataMat);
                } else {
-                  finalData = new ParticleEffect.BlockData(dataMat, dataID);
+                  finalData2 = new ParticleEffect.BlockData(dataMat, dataID);
                }
 
                if (players != null) {
-                  this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
+                  this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
                } else {
-                  this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
+                  this.display(finalData2, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                }
             } else if (this == itemcrack && dataMat != null) {
                finalData = null;
-               ParticleEffect.ItemData finalData;
+               ParticleEffect.ItemData finalData3;
                if (skDragonCore.serverVersion >= 14) {
-                  finalData = new ParticleEffect.ItemData(dataMat);
+                  finalData3 = new ParticleEffect.ItemData(dataMat);
                } else {
-                  finalData = new ParticleEffect.ItemData(dataMat, dataID);
+                  finalData3 = new ParticleEffect.ItemData(dataMat, dataID);
                }
 
                if (players != null) {
-                  this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
+                  this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, (List)players);
                } else {
-                  this.display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
+                  this.display(finalData3, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
                }
             }
          } else if (players != null) {

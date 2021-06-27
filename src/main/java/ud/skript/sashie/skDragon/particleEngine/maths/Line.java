@@ -9,6 +9,7 @@ import org.bukkit.util.Vector;
 import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.particleEngine.utils.DynamicLocation;
 import ud.skript.sashie.skDragon.particleEngine.utils.ParticleEffect;
+import wtfplswork.Runnable;
 
 public class Line extends EffectsLib {
    public static void drawEffect(final ParticleEffect particle, final Material dataMat, final byte dataID, final float speed, final Vector offset, final String idName, final DynamicLocation center, final DynamicLocation inputTarget, final List players, final boolean rainbowMode, final boolean solid, float inputDensity, final float length, final int zigZags, final float zigHeight, final double visibleRange, final Vector displacement, long delayStart, long delayPulse) {
@@ -26,8 +27,8 @@ public class Line extends EffectsLib {
             float deltaStep;
 
             {
-               this.density = var2;
-               this.densityFactor = var2 / 100.0F;
+               this.density = (float) vars.get(0);
+               this.densityFactor = (float) vars.get(0) / 100.0F;
                this.zigs = false;
                this.step = 0.0F;
                this.deltaStep = 0.0F;

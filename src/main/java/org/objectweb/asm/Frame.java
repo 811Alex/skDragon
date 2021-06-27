@@ -218,15 +218,13 @@ class Frame {
 
       numStackTop = 0;
 
-      int i;
-      for(i = 0; i < numStack; ++i) {
+      for(int i = 0; i < numStack; ++i) {
          if (stack[i] == Opcodes.LONG || stack[i] == Opcodes.DOUBLE) {
             ++numStackTop;
          }
       }
 
       this.inputStack = new int[numStack + numStackTop];
-      i = 0;
 
       for(int i = 0; i < numStack; ++i) {
          this.inputStack[i++] = getAbstractTypeFromApiFormat(symbolTable, stack[i]);

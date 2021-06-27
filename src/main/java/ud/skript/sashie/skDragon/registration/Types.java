@@ -33,21 +33,21 @@ public class Types {
             }
          }
 
-         public String toString(ParticleEffect eff, int i) {
-            return eff.getName().toLowerCase().replace("_", "").toLowerCase();
+         public String toString(Object eff, int i) {
+            return ((ParticleEffect)eff).getName().toLowerCase().replace("_", "").toLowerCase();
          }
 
-         public String toVariableNameString(ParticleEffect eff) {
-            return eff.getName().toLowerCase().replace("_", "").toLowerCase();
+         public String toVariableNameString(Object eff) {
+            return ((ParticleEffect)eff).getName().toLowerCase().replace("_", "").toLowerCase();
          }
       }).serializer(new Serializer() {
-         public Fields serialize(ParticleEffect w) {
+         public Fields serialize(Object w) {
             Fields f = new Fields();
-            f.putObject("name", w.getName());
+            f.putObject("name", ((ParticleEffect)w).getName());
             return f;
          }
 
-         public void deserialize(ParticleEffect o, Fields f) {
+         public void deserialize(Object o, Fields f) {
             if (!Types.$assertionsDisabled) {
                throw new AssertionError();
             }
@@ -57,8 +57,8 @@ public class Types {
             return false;
          }
 
-         protected ParticleEffect deserialize(Fields fields) throws StreamCorruptedException {
-            String name = (String)fields.getObject("name", String.class);
+         protected ParticleEffect deserialize(Object fields) throws StreamCorruptedException {
+            String name = (String)((Fields)fields).getObject("name", String.class);
             ParticleEffect w = ParticleEffect.valueOf(name);
             if (w == null) {
                throw new StreamCorruptedException("Missing particle effect " + name);
@@ -93,22 +93,22 @@ public class Types {
             }
          }
 
-         public String toString(FontStyleEnum eff, int i) {
-            System.out.println(FontStyleEnum.valueOf(eff.getName().toLowerCase().trim().toLowerCase()));
-            return eff.getName().toLowerCase();
+         public String toString(Object eff, int i) {
+            System.out.println(FontStyleEnum.valueOf(((FontStyleEnum)eff).getName().toLowerCase().trim().toLowerCase()));
+            return ((FontStyleEnum)eff).getName().toLowerCase();
          }
 
-         public String toVariableNameString(FontStyleEnum eff) {
-            return eff.getName().toLowerCase();
+         public String toVariableNameString(Object eff) {
+            return ((FontStyleEnum)eff).getName().toLowerCase();
          }
       }).serializer(new Serializer() {
-         public Fields serialize(FontStyleEnum w) {
+         public Fields serialize(Object w) {
             Fields f = new Fields();
-            f.putObject("name", w.getName());
+            f.putObject("name", ((FontStyleEnum)w).getName());
             return f;
          }
 
-         public void deserialize(FontStyleEnum o, Fields f) {
+         public void deserialize(Object o, Fields f) {
             if (!Types.$assertionsDisabled) {
                throw new AssertionError();
             }
@@ -154,21 +154,21 @@ public class Types {
             }
          }
 
-         public String toString(PlaneEnum eff, int i) {
-            return eff.getName().toLowerCase();
+         public String toString(Object eff, int i) {
+            return ((PlaneEnum)eff).getName().toLowerCase();
          }
 
-         public String toVariableNameString(PlaneEnum eff) {
-            return eff.getName().toLowerCase();
+         public String toVariableNameString(Object eff) {
+            return ((PlaneEnum)eff).getName().toLowerCase();
          }
       }).serializer(new Serializer() {
-         public Fields serialize(PlaneEnum w) {
+         public Fields serialize(Object w) {
             Fields f = new Fields();
-            f.putObject("name", w.getName());
+            f.putObject("name", ((PlaneEnum)w).getName());
             return f;
          }
 
-         public void deserialize(PlaneEnum o, Fields f) {
+         public void deserialize(Object o, Fields f) {
             if (!Types.$assertionsDisabled) {
                throw new AssertionError();
             }
@@ -214,21 +214,21 @@ public class Types {
             }
          }
 
-         public String toString(EmoteType eff, int i) {
-            return eff.getName().toLowerCase().replace("_", " ").toLowerCase();
+         public String toString(Object eff, int i) {
+            return ((EmoteType)eff).getName().toLowerCase().replace("_", " ").toLowerCase();
          }
 
-         public String toVariableNameString(EmoteType eff) {
-            return eff.getName().toLowerCase().replace("_", " ").toLowerCase();
+         public String toVariableNameString(Object eff) {
+            return ((EmoteType)eff).getName().toLowerCase().replace("_", " ").toLowerCase();
          }
       }).serializer(new Serializer() {
-         public Fields serialize(EmoteType w) {
+         public Fields serialize(Object w) {
             Fields f = new Fields();
-            f.putObject("name", w.getName());
+            f.putObject("name", ((EmoteType)w).getName());
             return f;
          }
 
-         public void deserialize(EmoteType o, Fields f) {
+         public void deserialize(Object o, Fields f) {
             if (!Types.$assertionsDisabled) {
                throw new AssertionError();
             }
