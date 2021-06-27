@@ -36,7 +36,7 @@ public class BloodHelix extends EffectsLib {
 
             {
                this.radius1 = (float) vars.get(0);
-               this.angularVelocity = (double)(3.1415927F / (float)vars.get(1));
+               this.angularVelocity = (double)(3.1415927F / (int) vars.get(1));
                this.step = 0.0F;
                this.particles1 = 40;
                this.speed1 = 25;

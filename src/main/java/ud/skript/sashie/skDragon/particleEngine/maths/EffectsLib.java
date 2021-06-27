@@ -626,7 +626,7 @@ public class EffectsLib {
             {
                this.stepX = (int) vars.get(0);
                this.stepY = (int) vars.get(1);
-               this.size = 1.0F / (float)vars.get(2);
+               this.size = 1.0F / (long) vars.get(2);
                this.angularVelocityX = 0.015707964077591896D;
                this.angularVelocityY = 0.018479958176612854D;
                this.angularVelocityZ = 0.020268339663743973D;
@@ -1183,12 +1183,12 @@ public class EffectsLib {
                this.middleCounterUp = this.midPoint;
                this.middleCounterDown = this.midPoint;
                this.radiusCounterRev = radius;
-               this.stepHeight = height / (float)vars.get(0);
-               this.stepHalf = this.midPoint / (float)vars.get(0);
-               this.stepRadius = radius / (float)vars.get(0);
-               this.stepHeightDown = height / (float)vars.get(0);
-               this.stepHalfDown = this.midPoint / (float)vars.get(0);
-               this.stepRadiusIn = radius / (float)vars.get(0);
+               this.stepHeight = height / (int) vars.get(0);
+               this.stepHalf = this.midPoint / (int) vars.get(0);
+               this.stepRadius = radius / (int) vars.get(0);
+               this.stepHeightDown = height / (int) vars.get(0);
+               this.stepHalfDown = this.midPoint / (int) vars.get(0);
+               this.stepRadiusIn = radius / (int) vars.get(0);
                this.t = 0.0D;
             }
 
@@ -2556,8 +2556,8 @@ public class EffectsLib {
             double yRotation;
 
             {
-               this.stepHeight = (double)(height / (float)vars.get(0));
-               this.stepRadius = (double)(radius / (float)vars.get(0));
+               this.stepHeight = (double)(height / (int) vars.get(0));
+               this.stepRadius = (double)(radius / (int) vars.get(0));
                this.edgeLength = 6.5F;
                this.yRotation = 0.4487989544868469D;
             }
