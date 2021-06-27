@@ -4,12 +4,13 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.event.Event;
 import ud.skript.sashie.skDragon.registration.annotations.Description;
 import ud.skript.sashie.skDragon.registration.annotations.Examples;
 import ud.skript.sashie.skDragon.registration.annotations.Name;
 import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
+
+import javax.annotation.Nullable;
 
 @Name("Emotes - All effects")
 @Description({"Lists all currently running effects"})
