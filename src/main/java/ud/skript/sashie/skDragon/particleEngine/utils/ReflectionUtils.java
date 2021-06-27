@@ -319,7 +319,12 @@ public final class ReflectionUtils {
       BUKKIT_BLOCK("BUKKIT_BLOCK", 24, BUKKIT, "block"),
       BUKKIT_BLOCK_DATA("BUKKIT_BLOCK_DATA", 25, BUKKIT, "block.data"),
       BUKKIT_BLOCK_TYPE("BUKKIT_BLOCK_TYPE", 26, BUKKIT, "block.data.type"),
-      BUKKIT_MATERIAL("BUKKIT_MATERIAL", 27, BUKKIT, "material");
+      BUKKIT_MATERIAL("BUKKIT_MATERIAL", 27, BUKKIT, "material"),
+      MINECRAFT_NETWORK_PROTOCOL_GAME("MINECRAFT_NETWORK_PROTOCOL_GAME", 28, "net.minecraft.network.protocol.game"),
+      MINECRAFT_LEVEL("MINECRAFT_LEVEL", 29, "net.minecraft.server.level"),
+      MINECRAFT_SERVER_NETWORK("MINECRAFT_SERVER_NETWORK", 30, "net.minecraft.server.network"),
+      MINECRAFT_CORE_PARTICLES("MINECRAFT_CORE_PARTICLES", 31, "net.minecraft.core.particles"),
+      MINECRAFT_NETWORK_PROTOCOL("MINECRAFT_NETWORK_PROTOCOL_GAME", 32, "net.minecraft.network.protocol");
 
       private final String path;
 

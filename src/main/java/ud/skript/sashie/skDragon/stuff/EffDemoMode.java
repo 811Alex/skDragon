@@ -6,7 +6,9 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
@@ -32,7 +34,8 @@ public class EffDemoMode extends Effect {
          Constructor playOutConstructor = PacketPlayOutGameStateChange.getConstructor(Integer.TYPE, Float.TYPE);
          Method getHandleMethod = cPlayer.getMethod("getHandle");
          Object handle = getHandleMethod.invoke(cPlayer.cast(this.u.getSingle(e)));
-         Object pc = handle.getClass().getField("playerConnection").get(handle);
+          Field plyConnField = Arrays.stream(handle.getClass().getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
+         Object pc = handle.getClass().getField(plyConnField.getName()).get(handle);
          Method sPM = pc.getClass().getMethod("sendPacket", Class.forName("net.minecraft.server." + ver + ".Packet"));
          sPM.invoke(pc, playOutConstructor.newInstance(5, 0));
       } catch (Exception var11) {

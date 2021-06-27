@@ -2,7 +2,10 @@ package ud.skript.sashie.skDragon.packets;
 
 import com.esotericsoftware.reflectasm.FieldAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
+
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -18,6 +21,7 @@ public abstract class ASMPacket {
    private static MethodAccess sendPacket;
    private static int sendPacketIndex;
    protected Object packet;
+   private static int version;
 
    public ASMPacket() throws IllegalArgumentException {
       this.preInitialize();
@@ -29,11 +33,16 @@ public abstract class ASMPacket {
       if (!initialized) {
          try {
             this.initialize();
+            version = Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(3)));
+            if (version == 1 && Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(4))) >= 0) {
+               version = Integer.parseInt(String.valueOf(Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(3)))) + Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(4))));
+            }
             getHandle = ReflectionUtils.getMethod("CraftPlayer", ReflectionUtils.PackageType.CRAFTBUKKIT_ENTITY, "getHandle");
-            Class entityPlayerClass = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("EntityPlayer");
-            playerConnection = FieldAccess.get(entityPlayerClass);
-            playerConnectionIndex = playerConnection.getIndex("playerConnection");
-            sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("PlayerConnection"));
+            Class entityPlayerClass = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_LEVEL).getClass("EntityPlayer");
+           Field plyConnField = Arrays.stream(entityPlayerClass.getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
+           playerConnection = FieldAccess.get(entityPlayerClass);
+            playerConnectionIndex = ASMPacket.playerConnection.getIndex(plyConnField.getName());
+            sendPacket = MethodAccess.get((version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK).getClass("PlayerConnection"));
             sendPacketIndex = sendPacket.getIndex("sendPacket", ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("Packet"));
          } catch (Exception var2) {
             throw new VersionIncompatibleException("Your current bukkit version seems to be incompatible with this library", var2);

@@ -4,6 +4,7 @@ import com.esotericsoftware.reflectasm.FieldAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
 import java.awt.Color;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -1018,15 +1019,20 @@ public enum ParticleEffect {
                   version = Integer.parseInt(String.valueOf(Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(3)))) + Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(4))));
                }
 
-               Class packetClass = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass(version < 7 ? "Packet63WorldParticles" : "PacketPlayOutWorldParticles");
+               Class packetClass = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL_GAME).getClass(version < 7 ? "Packet63WorldParticles" : "PacketPlayOutWorldParticles");
                getHandle = ReflectionUtils.getMethod("CraftPlayer", ReflectionUtils.PackageType.CRAFTBUKKIT_ENTITY, "getHandle");
-               Class entityPlayerClass = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("EntityPlayer");
+               Class entityPlayerClass = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_LEVEL).getClass("EntityPlayer");
+              Field plyConnField = Arrays.stream(entityPlayerClass.getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
                playerConnection = FieldAccess.get(entityPlayerClass);
-               playerConnectionIndex = playerConnection.getIndex("playerConnection");
-               sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("PlayerConnection"));
-               sendPacketIndex = sendPacket.getIndex("sendPacket", ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("Packet"));
+               playerConnectionIndex = playerConnection.getIndex(plyConnField.getName());
+               sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK.getClass("PlayerConnection"));
+               sendPacketIndex = sendPacket.getIndex("sendPacket", (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL).getClass("Packet"));
                Class particleParam;
-               if (version >= 15) {
+               if(version >= 17){
+                 enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
+                 particleParam = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("ParticleParam");
+                 packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
+               }else if(version >= 15) {
                   enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
                   particleParam = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParam");
                   packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
@@ -1070,13 +1076,13 @@ public enum ParticleEffect {
                   ReflectionUtils.setValue(this.packet, true, "a", name);
                } else if (version >= 13) {
                   Particle particle = Particle.values()[this.effect.newID];
-                  Class particleParam = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParam");
+                  Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                   Method toNMS = null;
                   Object param = null;
                   Class materialDataClass;
                   Constructor materialDataConstructor;
                   if (this.effect == ParticleEffect.redstone) {
-                     materialDataClass = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParamRedstone");
+                     materialDataClass = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParamRedstone");
                      materialDataConstructor = ReflectionUtils.getConstructor(materialDataClass, Float.class, Float.class, Float.class, Float.class);
                      param = materialDataConstructor.newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB(), this.colorData.getSize());
                   } else {

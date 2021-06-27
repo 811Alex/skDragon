@@ -3,6 +3,7 @@ package ud.skript.sashie.skDragon.packets;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -28,7 +29,8 @@ public abstract class ReflectionPacket {
          try {
             this.initialize();
             getHandle = ReflectionUtils.getMethod("CraftPlayer", ReflectionUtils.PackageType.CRAFTBUKKIT_ENTITY, "getHandle");
-            playerConnection = ReflectionUtils.getField("EntityPlayer", ReflectionUtils.PackageType.MINECRAFT_SERVER, false, "playerConnection");
+           Field plyConnField = Arrays.stream(ReflectionUtils.PackageType.MINECRAFT_LEVEL.getClass("EntityPlayer").getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
+            playerConnection = ReflectionUtils.getField("EntityPlayer", ReflectionUtils.PackageType.MINECRAFT_LEVEL, false, plyConnField.getName());
             sendPacket = ReflectionUtils.getMethod(playerConnection.getType(), "sendPacket", ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("Packet"));
          } catch (Exception var2) {
             throw new VersionIncompatibleException("Your current bukkit version seems to be incompatible with this library", var2);
