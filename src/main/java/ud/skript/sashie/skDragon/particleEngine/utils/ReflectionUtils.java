@@ -324,7 +324,8 @@ public final class ReflectionUtils {
       MINECRAFT_LEVEL("MINECRAFT_LEVEL", 29, "net.minecraft.server.level"),
       MINECRAFT_SERVER_NETWORK("MINECRAFT_SERVER_NETWORK", 30, "net.minecraft.server.network"),
       MINECRAFT_CORE_PARTICLES("MINECRAFT_CORE_PARTICLES", 31, "net.minecraft.core.particles"),
-      MINECRAFT_NETWORK_PROTOCOL("MINECRAFT_NETWORK_PROTOCOL_GAME", 32, "net.minecraft.network.protocol");
+      MINECRAFT_NETWORK_PROTOCOL("MINECRAFT_NETWORK_PROTOCOL_GAME", 32, "net.minecraft.network.protocol"),
+      MOJANG_MATH("MOJANG_MATH", 33, "com.mojang.math");
 
       private final String path;
 
