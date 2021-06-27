@@ -7,6 +7,8 @@ import ch.njol.util.Kleenean;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import ud.skript.sashie.skDragon.particleEngine.utils.SkriptHandler;
@@ -32,17 +34,6 @@ public class EffToggleTint extends Effect {
    }
 
    protected void execute(@Nullable Event e) {
-      List players = SkriptHandler.inputPlayers(e, this.inputPlayers);
-      SkriptHandler.inputInt(5, e, this.inputFadeTime);
-      SkriptHandler.inputInt(2, e, this.inputIntensity);
-      SkriptHandler.inputInt(2, e, this.inputMinHealth);
-      SkriptHandler.inputBoolean(true, e, this.inputDamageMode);
-      Iterator var8 = players.iterator();
-
-      while(var8.hasNext()) {
-         Player p = (Player)var8.next();
-         TintAPI.tintUtils.togglePlayerTint(p);
-      }
-
+     throw new NotImplementedException("Tint is not supported on this hacky skDragon version!");
    }
 }

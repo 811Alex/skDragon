@@ -7,6 +7,8 @@ import ch.njol.util.Kleenean;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import ud.skript.sashie.skDragon.particleEngine.utils.SkriptHandler;
@@ -32,15 +34,6 @@ public class EffRemoveTint extends Effect {
    }
 
    protected void execute(@Nullable Event e) {
-      List players = SkriptHandler.inputPlayers(e, this.inputPlayers);
-      if (players != null) {
-         Iterator var4 = players.iterator();
-
-         while(var4.hasNext()) {
-            Player p = (Player)var4.next();
-            TintAPI.tintUtils.removeBorder(p);
-         }
-      }
-
+      throw new NotImplementedException("Tint is not supported on this hacky skDragon version!");
    }
 }

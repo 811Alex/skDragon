@@ -7,6 +7,8 @@ import ch.njol.util.Kleenean;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import ud.skript.sashie.skDragon.particleEngine.utils.SkriptHandler;
@@ -38,26 +40,6 @@ public class EffSendPlayersTint extends Effect {
    }
 
    protected void execute(@Nullable Event e) {
-      List players = SkriptHandler.inputPlayers(e, this.inputPlayers);
-      int fadeTime = SkriptHandler.inputInt(5, e, this.inputFadeTime);
-      int intensity = SkriptHandler.inputInt(2, e, this.inputIntensity);
-      boolean damageMode = SkriptHandler.inputBoolean(true, e, this.inputDamageMode);
-      Player p;
-      int percentage;
-      if (players != null) {
-         for(Iterator var7 = players.iterator(); var7.hasNext(); TintAPI.tintUtils.sendBorder(p, percentage, fadeTime, intensity)) {
-            p = (Player)var7.next();
-            int health = TintAPI.tintUtils.getPlayerHealth(p);
-            int maxhealth = TintAPI.tintUtils.getMaxPlayerHealth(p);
-            if (damageMode) {
-               health = (int)p.getLastDamage();
-               percentage = 100 - health * 100 / maxhealth;
-            } else {
-               health -= (int)p.getLastDamage();
-               percentage = health * 100 / maxhealth;
-            }
-         }
-      }
-
+     throw new NotImplementedException("Tint is not supported on this hacky skDragon version!");
    }
 }
