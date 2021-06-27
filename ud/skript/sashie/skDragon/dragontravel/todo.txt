@@ -1,0 +1,16 @@
+
+getting all stations,
+
+the delete stationary dragon thing doesnt seem to work (didnt test it very much but),
+
+moving stationary dragons from point A to B with speed based on their "name",
+
+change flight speed during (if possible),
+
+getting station locations
+
+also creating a stationary dragon caused it to spawn water at the spawn location which could break shit
+
+get station display name from station name
+
+check if players dragon home is set
