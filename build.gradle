@@ -1,13 +1,15 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'xyz.jpenilla.run-paper' version '1.0.6'
 }
 
+def mcver = '1.18'
 def javaVer = JavaVersion.VERSION_17
 targetCompatibility = sourceCompatibility = javaVer
 
 group = 'ud.skript.sashie'
-version = '0.17-alex-MC1.18-hack'
+version = "0.17-alex-MC${mcver}-hack"
 description = 'skDragon'
 
 repositories {
@@ -35,7 +37,7 @@ dependencies {
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'com.google.common:google-collect:1.0'
     implementation 'net.md-5:bungeecord-chat:1.16-R0.4'
-    compileOnly 'io.papermc.paper:paper-api:1.18-R0.1-SNAPSHOT'
+    compileOnly "io.papermc.paper:paper-api:${mcver}-R0.1-SNAPSHOT"
     compileOnly 'com.mojang:authlib:1.11'
 }
 
@@ -49,4 +51,10 @@ publishing {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+tasks {
+    runServer {
+        minecraftVersion(mcver)
+    }
 }
