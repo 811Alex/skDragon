@@ -70,6 +70,7 @@ public class skDragonCore extends JavaPlugin {
       if (skript != null) {
          this.addon = Skript.registerAddon(skdragoncore);
          sendLog("Plugin has been Enabled");
+         sendLog("Alex811's hacky version loaded, enjoy! (but update to the official version when it releases)");
          if (isDragonTravelEnabled()) {
             sendLog("DragonTravel was found and registered into Skript!");
             Events.dragonTravelEvents();

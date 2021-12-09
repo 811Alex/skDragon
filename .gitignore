@@ -120,3 +120,4 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 libs/*
+run/
