@@ -2,15 +2,18 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'xyz.jpenilla.run-paper' version '1.0.6'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
 }
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
 
 def mcver = '1.18'
 def javaVer = JavaVersion.VERSION_17
 targetCompatibility = sourceCompatibility = javaVer
 
 group = 'ud.skript.sashie'
-version = "0.17-alex-MC${mcver}-hack"
-description = 'skDragon'
+version ='0.17-alex-MC' + mcver + '-hack'
+description = name
 
 repositories {
     flatDir {dirs 'libs'}
@@ -26,10 +29,17 @@ repositories {
     //maven {url 'https://maven.phiwa.eu/'} // borked cert?
 }
 
+configurations {
+    shade
+    implementation.extendsFrom shade
+}
+
 dependencies {
     implementation 'com.github.SkriptLang:Skript:2.6-beta3'
     implementation 'org.bstats:bstats-bukkit:2.2.1'
-    implementation 'org.enginehub:squirrelid:0.3.0'
+    implementation('org.enginehub:squirrelid:0.3.0') {
+        transitive = false
+    }
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     //implementation 'eu.phiwa.dt:DragonTravel:01.008.02' repo issue
     implementation name: 'DragonTravel-01.008.02'   // libs dir, temp: https://maven.phiwa.eu/eu/phiwa/dt/DragonTravel/01.008.02/DragonTravel-01.008.02.jar
@@ -37,8 +47,28 @@ dependencies {
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'com.google.common:google-collect:1.0'
     implementation 'net.md-5:bungeecord-chat:1.16-R0.4'
+    shade 'org.ow2.asm:asm:4.0'
+    shade 'com.esotericsoftware:reflectasm:1.11.9'
     compileOnly "io.papermc.paper:paper-api:${mcver}-R0.1-SNAPSHOT"
     compileOnly 'com.mojang:authlib:1.11'
+}
+
+jar {
+    archiveClassifier.set('unshaded')
+}
+
+shadowJar {
+    configurations = [project.configurations.shade]
+    archiveClassifier.set('')
+}
+
+task relocateShadowJar(type: ConfigureShadowRelocation) {
+    target = tasks.shadowJar
+    prefix = project.group + '.' + project.name + '.shaded'
+}
+
+artifacts {
+    archives shadowJar
 }
 
 publishing {
@@ -58,3 +88,6 @@ tasks {
         minecraftVersion(mcver)
     }
 }
+
+tasks.shadowJar.dependsOn tasks.relocateShadowJar
+tasks.build.dependsOn tasks.shadowJar
