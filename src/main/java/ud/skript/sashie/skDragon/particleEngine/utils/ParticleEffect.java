@@ -1009,7 +1009,15 @@ public enum ParticleEffect {
                playerConnection = FieldAccess.get(entityPlayerClass);
                playerConnectionIndex = playerConnection.getIndex(plyConnField.getName());
                sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK.getClass("PlayerConnection"));
-               sendPacketIndex = sendPacket.getIndex("sendPacket", (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL).getClass("Packet"));
+               Class packet = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL).getClass("Packet");
+               String sendPacketName = "sendPacket";
+               if(version > 17 && !Arrays.asList(sendPacket.getMethodNames()).contains(sendPacketName))  // sendPacket() not currently named in 1.18, search for it
+                  for (int i = 0; i < sendPacket.getParameterTypes().length; i++)
+                     if (sendPacket.getParameterTypes()[i].length == 1 && sendPacket.getParameterTypes()[i][0].equals(packet)){
+                        sendPacketName = sendPacket.getMethodNames()[i];
+                        break;
+                     }
+               sendPacketIndex = sendPacket.getIndex(sendPacketName, packet);
                Class particleParam;
                if(version >= 17){
                   enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
