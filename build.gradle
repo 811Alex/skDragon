@@ -8,7 +8,7 @@ plugins {
 import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
 
 def mcver = '1.17'
-def javaVer = JavaVersion.VERSION_17
+def javaVer = JavaVersion.VERSION_16
 targetCompatibility = sourceCompatibility = javaVer
 
 group = 'ud.skript.sashie'
