@@ -1066,7 +1066,7 @@ public enum ParticleEffect {
 
                   ReflectionUtils.setValue(this.packet, true, "a", name);
                } else if (version >= 13) {
-                  Particle particle = Particle.values()[this.effect.newID];
+                  Particle particle = Particle.values()[this.effect.newID - (version > 17 ? (this.effect.newID > 34 ? 1 : 0) : 0)];
                   Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                   Method toNMS = null;
                   Object param = null;
