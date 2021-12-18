@@ -1,0 +1,176 @@
+options:
+	particle-test-duration: 10 ticks
+	draw-test-duration: 10 ticks
+
+variables:
+	{test.particle::0} = "explosion"
+	{test.particle::1} = "explosionlarge"
+	{test.particle::2} = "explosionhuge"
+	{test.particle::3} = "fireworkspark"
+	{test.particle::4} = "waterbubble"
+	{test.particle::5} = "watersplash"
+	{test.particle::6} = "waterwake"
+	{test.particle::7} = "suspended"
+	{test.particle::8} = "suspenddepth"
+	{test.particle::9} = "crit"
+	{test.particle::10} = "critmagic"
+	{test.particle::11} = "smoke"
+	{test.particle::12} = "smokelarge"
+	{test.particle::13} = "spell"
+	{test.particle::14} = "spellinstant"
+	{test.particle::15} = "mobspell"
+	{test.particle::16} = "mobspellambient"
+	{test.particle::17} = "witchspell"
+	{test.particle::18} = "waterdrip"
+	{test.particle::19} = "lavadrip"
+	{test.particle::20} = "angryvillager"
+	{test.particle::21} = "happyvillager"
+	{test.particle::22} = "townaura"
+	{test.particle::23} = "note"
+	{test.particle::24} = "portal"
+	{test.particle::25} = "enchantmenttable"
+	{test.particle::26} = "flame"
+	{test.particle::27} = "lava"
+	{test.particle::28} = "footstep"
+	{test.particle::29} = "cloud"
+	{test.particle::30} = "redstone"
+	{test.particle::31} = "snowball"
+	{test.particle::32} = "snowshovel"
+	{test.particle::33} = "slime"
+	{test.particle::34} = "heart"
+	{test.particle::35} = "barrier"
+	{test.particle::36} = "itemcrack"
+	{test.particle::37} = "blockcrack"
+	{test.particle::38} = "blockdust"
+	{test.particle::39} = "waterdrop"
+	{test.particle::40} = "itemtake"
+	{test.particle::41} = "mobappearance"
+
+	{test.draw::0} = "draw"
+	{test.draw::1} = "drawArc"
+	{test.draw::2} = "drawAtom"
+	{test.draw::3} = "drawBand"
+	{test.draw::4} = "drawCape"
+	{test.draw::5} = "drawComplexCircle"
+	{test.draw::6} = "drawComplexSpiral"
+	{test.draw::7} = "drawCylinder"
+	#{test.draw::8} = "drawDisco"
+	{test.draw::9} = "drawDot"
+	{test.draw::10} = "drawDragonBreath"
+	{test.draw::11} = "drawHalo"
+	#{test.draw::12} = "drawHeart"
+	{test.draw::13} = "drawImage"
+	#{test.draw::14} = "drawImage2"
+	{test.draw::15} = "drawItemFountain"
+	#{test.draw::16} = "drawLine"
+	{test.draw::17} = "drawNyanCat"
+	{test.draw::18} = "drawPlanet"
+	{test.draw::19} = "drawRings"
+	{test.draw::20} = "drawSphere"
+	#{test.draw::21} = "drawSpircle"
+	#{test.draw::22} = "drawText"
+	{test.draw::23} = "drawWarpRings"
+	{test.draw::24} = "drawWings"
+	#{test.draw::25} = "drawWings69"
+
+command /crashtest:
+	trigger:
+		set {_loc} to location 2 above 3 east of player
+		testParticles({_loc})
+		loop {test.particle::*}:	# block thread
+			wait {@particle-test-duration}
+		broadcast "Cooldown..."
+		wait 2 seconds
+		testDraws(location 2 below {_loc})
+		loop {test.draw::*}:	# block thread
+			wait {@draw-test-duration}
+		broadcast "Done!"
+
+command /crashtestparticles [<text>]:
+	trigger:
+		set {_loc} to location 2 above 3 east of player
+		if argument 1 is set:
+			emitParticle(argument 1, {_loc})
+			wait {@particle-test-duration}
+		else:
+			testParticles({_loc})
+			loop {test.particle::*}:	# block thread
+				wait {@particle-test-duration}
+		broadcast "Done!"
+
+command /crashtestdraws [<text>]:
+	trigger:
+		set {_loc} to location 3 east of player
+		if argument 1 is set:
+			drawMethod(argument 1, {_loc})
+			wait {@draw-test-duration}
+			stopEffect argument 1
+		else:
+			testDraws({_loc})
+			loop {test.draw::*}:	# block thread
+				wait {@draw-test-duration}
+		broadcast "Done!"
+
+command /crashtestclear:
+	trigger:
+		set {_ids::*} to id names
+		stopEffect {_ids::*}
+
+function testParticles(loc: location):
+	broadcast "Testing all particles..."
+	loop {test.particle::*}:
+		emitParticle(loop-value, {_loc})
+		wait {@particle-test-duration}
+
+function emitParticle(n: text, loc: location):
+	if {test.particle::*} doesn't contain {_n}:
+		broadcast "Unknown particle: %{_n}%"
+		stop
+	broadcast "p: %{_n}%"
+	drawDot count 8, particle "%{_n}%", material diamond block, center {_loc}, rainbowMode false, visibleRange 32, pulseDelay 1, keepFor {@particle-test-duration}
+
+function testDraws(loc: location):
+	broadcast "Testing all draw methods..."
+	loop {test.draw::*}:
+		drawMethod(loop-value, {_loc})
+		wait {@draw-test-duration}
+
+function drawMethod(n: text, loc: location):
+	if {test.draw::*} doesn't contain {_n}:
+		broadcast "Unknown draw method: %{_n}%"
+		stop
+	draw 2 rainbow colored directional itemcrack particles at {_loc} with direction vector 0.5, 0.5, 0.5 and speed .6, id drawCommon("draw") if {_n} is "draw"
+	drawArc particle "redstone", center {_loc}, target 3 south of {_loc}, id drawCommon("drawArc"), rainbowMode true, density 50, height 2, pitchMultiplier 4, visibleRange 30 if {_n} is "drawArc"
+	drawAtom particle1 "redstone", particle2 "redstone", center {_loc}, id drawCommon("drawAtom"), rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15 if {_n} is "drawAtom"
+	drawBand particle "redstone", RGB 0, 255, 255, center {_loc}, id drawCommon("drawBand"), rainbowMode true, visibleRange 30 if {_n} is "drawBand"
+	drawCape file "dragon.png", center {_loc}, id drawCommon("drawCape"), rainbowMode false, dynamicMode true, visibleRange 32, pulseDelay 1 if {_n} is "drawCape"
+	drawComplexCircle particle "redstone", center {_loc}, id drawCommon("drawComplexCircle"), rainbowMode true, randomRotation true, radius 1.5, density 20, start 0, visibleRange 30 if {_n} is "drawComplexCircle"
+	drawComplexSpiral particle "redstone", center {_loc}, id drawCommon("drawComplexSpiral"), rainbowMode true, clockwise true, scan true, radius 1.5, density 50, height 6, effectMod .05, start 0, visibleRange 30 if {_n} is "drawComplexSpiral"
+	drawCylinder particle "redstone", center {_loc}, id drawCommon("drawCylinder"), randomRotation false, isSolid true, radius 1, density 100, height 3, sideRatio 0, visibleRange 30 if {_n} is "drawCylinder"
+	#drawDisco style 2, particle "redstone", RGB 255, 0, 255, particle2 "redstone", RGB2 0, 255, 255, center {_loc}, id drawCommon("drawDisco"), maxLines 7, lineLength 5, sphereRadius .6, sphereDensity 30, lineDensity 30, visibleRange 32 if {_n} is "drawDisco"
+	drawDot count 8, particle "itemcrack", material diamond, center {_loc}, id drawCommon("drawDot"), rainbowMode false, visibleRange 32, pulseDelay 1 if {_n} is "drawDot"
+	drawDragonBreath particle "redstone", center {_loc}, id drawCommon("drawDragonBreath"), rainbowMode true, arcPitch .1, arcCount 40, arcDensity 50, arcSteps 3, arcLength 6, visibleRange 30 if {_n} is "drawDragonBreath"
+	drawHalo particle "redstone", RGB 255, 255, 0, center {_loc}, id drawCommon("drawHalo"), rainbowMode true, solid true, visibleRange 32 if {_n} is "drawHalo"
+	#drawHeart particle "redstone", center {_loc}, id drawCommon("drawHeart"), rainbowMode true, ySpin 1, width 3, height 3, innerSpike 1, compress 1, density 5, visibleRange 32 if {_n} is "drawHeart"
+	drawImage file "Awk.png", center {_loc}, id drawCommon("drawImage"), pixelStepX 1, pixelStepY 1, scale 112, visibleRange 300, xR 0, yR 90, zR 0 if {_n} is "drawImage"
+	#drawImage2 file "Awk.png", center {_loc}, id drawCommon("drawImage2"), randomRotation true, "y", pixelStepX 5, pixelStepY 5, scale 20, visibleRange 300 if {_n} is "drawImage2"
+	drawItemFountain diamonds, style 1, center {_loc}, id drawCommon("drawItemFountain"), itemTime 1 tick, yVelocity 2, radius 2, density 40, displacementXYZ 0, 0, 0, pulseDelay 3 if {_n} is "drawItemFountain"
+	#drawLine particle "redstone", RGB 0, 255, 0, center {_loc}, target 3 south of {_loc}, id drawCommon("drawLine"), rainbowMode true, solid true, density 5, length 0, zigZag count 0, height 0, visibleRange 32, displacementXYZ 0, 1.2, 0, pulseDelay 1 if {_n} is "drawLine"
+	drawNyanCat center {_loc}, id drawCommon("drawNyanCat"), visibleRange 30 if {_n} is "drawNyanCat"
+	drawPlanet particle1 "redstone", RGB 0, 0, 255, particle2 "redstone", RGB2 255, 0, 0, center {_loc}, id drawCommon("drawPlanet"), rotation true, plane "x", rotationSpeed 1, orbit true, orbitalRadius 2, orbitalStep 360, xRotation 45, yRotation 0, zRotation 0, radius .25, density 150, precision 100, bumpHeight .25, visibleRange 30 if {_n} is "drawPlanet"
+	drawRings particle "redstone", RGB 255, 0, 0, center {_loc}, id drawCommon("drawRings"), rainbowMode true, randomRotation true, animated false, radius 1, ringCount 4, ringDensity 10, visibleRange 32, pulseDelay 2 if {_n} is "drawRings"
+	drawSphere style 1, particle "redstone", center {_loc}, id drawCommon("drawSphere"), rainbowMode true, radius 1, density 100, visibleRange 32, pulseDelay 1 if {_n} is "drawSphere"
+	#drawSpircle 1 "redstone" particle at {_loc} with id drawCommon("drawSpircle"), 2 points, density 4, radius 3 and speed 2 if {_n} is "drawSpircle"
+	#drawText "UwU", particle "redstone", RGB 255, 0, 255, center {_loc}, id drawCommon("drawText"), rainbowMode false, autoFace false, invert false, fontName "Arial", fontStyle plain, fontSize 10, scale 7, visibleRange 32, RotationXYZ 0, 0, 0, displacementXYZ 0, 0, 0, pulseDelay 0 if {_n} is "drawText"
+	drawWarpRings style 28, particle "redstone", RGB 0, 255, 255, center {_loc}, id drawCommon("drawWarpRings"), rainbowMode true, scan true, height 2, radius 2, ringCount 40, ringDensity 20, visibleRange 32 if {_n} is "drawWarpRings"
+	drawWings style 17, particle1 "redstone", speed 0, XYZ 0, 0, 0, particle2 "redstone", particle3 "redstone", center {_loc}, id drawCommon("drawWings"), rainbowMode true, flapSpeed 2, flapRange 30, angle 120, height 0, space 0.2, visibleRange 30 if {_n} is "drawWings"
+	#drawWings69 style 17, particle1 "redstone", speed 0, XYZ 0, 0, 0, particle2 "redstone", particle3 "redstone", center {_loc}, id drawCommon("drawWings69"), rainbowMode true, flapSpeed 2, flapRange 30, angle 120, height 0, space 0.2, visibleRange 30 if {_n} is "drawWings69"
+
+function drawCommon(n: text) :: text:
+	broadcast "d: %{_n}%"
+	drawClear({_n})
+	return {_n}
+
+function drawClear(n: text):
+	wait {@draw-test-duration}
+	stopEffect {_n}

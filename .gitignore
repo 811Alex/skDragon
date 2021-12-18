@@ -121,3 +121,6 @@ gradle-app.setting
 
 libs/*
 run/
+!run/server.properties
+!run/plugins/Skript/scripts/test.sk
+!run/plugins/skDragon/Awk.png
