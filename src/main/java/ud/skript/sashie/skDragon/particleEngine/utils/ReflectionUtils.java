@@ -350,7 +350,12 @@ public final class ReflectionUtils {
       }
 
       public static String getServerVersion() {
-         return Bukkit.getServer().getClass().getPackage().getName().substring(23);
+         String name = Bukkit.getServer().getClass().getPackage().getName();
+         return name.substring(name.lastIndexOf(".") + 1);
+      }
+
+      public static int getServerVersionMinor(){
+         return Integer.parseInt(getServerVersion().split("_")[1]);
       }
    }
 }

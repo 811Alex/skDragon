@@ -33,10 +33,7 @@ public abstract class ASMPacket {
       if (!initialized) {
          try {
             this.initialize();
-            version = Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(3)));
-            if (version == 1 && Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(4))) >= 0) {
-               version = Integer.parseInt(String.valueOf(Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(3)))) + Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(4))));
-            }
+            version = ReflectionUtils.PackageType.getServerVersionMinor();
             getHandle = ReflectionUtils.getMethod("CraftPlayer", ReflectionUtils.PackageType.CRAFTBUKKIT_ENTITY, "getHandle");
             Class entityPlayerClass = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_LEVEL).getClass("EntityPlayer");
             Field plyConnField = Arrays.stream(entityPlayerClass.getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();

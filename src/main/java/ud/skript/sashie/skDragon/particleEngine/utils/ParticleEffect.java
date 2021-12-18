@@ -997,10 +997,7 @@ public enum ParticleEffect {
       public static void initialize() throws ParticleEffect.ParticlePacket.VersionIncompatibleException {
          if (!initialized) {
             try {
-               version = Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(3)));
-               if (version == 1 && Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(4))) >= 0) {
-                  version = Integer.parseInt(String.valueOf(Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(3)))) + Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(4))));
-               }
+               version = ReflectionUtils.PackageType.getServerVersionMinor();
 
                Class packetClass = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL_GAME).getClass(version < 7 ? "Packet63WorldParticles" : "PacketPlayOutWorldParticles");
                getHandle = ReflectionUtils.getMethod("CraftPlayer", ReflectionUtils.PackageType.CRAFTBUKKIT_ENTITY, "getHandle");

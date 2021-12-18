@@ -64,10 +64,7 @@ public class ParticlePacket extends ASMPacket {
    }
 
    void initialize() throws Exception {
-      this.version = Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(3)));
-      if (this.version == 1 && Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(4))) >= 0) {
-         this.version = Integer.parseInt(String.valueOf(Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(3)))) + Integer.parseInt(Character.toString(ReflectionUtils.PackageType.getServerVersion().charAt(4))));
-      }
+      version = ReflectionUtils.PackageType.getServerVersionMinor();
 
       Class packetClass = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass(this.version < 7 ? "Packet63WorldParticles" : "PacketPlayOutWorldParticles");
       Class particleParam;
