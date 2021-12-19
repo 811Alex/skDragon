@@ -6,12 +6,11 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import javax.annotation.Nullable;
-import org.bukkit.Bukkit;
+
 import org.bukkit.event.Event;
+import ud.skript.sashie.skDragon.particleEngine.utils.ReflectionUtils;
 import ud.skript.sashie.skDragon.registration.annotations.Description;
 import ud.skript.sashie.skDragon.registration.annotations.Examples;
 import ud.skript.sashie.skDragon.registration.annotations.Name;
@@ -25,23 +24,36 @@ public class EffDemoMode extends Effect {
    private Expression u;
 
    protected void execute(@Nullable Event e) {
-      String p = Bukkit.getServer().getClass().getPackage().getName();
-      String ver = p.substring(p.lastIndexOf(".") + 1);
+      String ver = ReflectionUtils.PackageType.getServerVersion();
+      int verMinor = ReflectionUtils.PackageType.getServerVersionMinor();
 
       try {
-         Class cPlayer = Class.forName("org.bukkit.craftbukkit." + ver + ".entity.CraftPlayer");
-         Class PacketPlayOutGameStateChange = Class.forName("net.minecraft.server." + ver + ".PacketPlayOutGameStateChange");
-         Constructor playOutConstructor = PacketPlayOutGameStateChange.getConstructor(Integer.TYPE, Float.TYPE);
+         Class cPlayer = ReflectionUtils.PackageType.CRAFTBUKKIT_ENTITY.getClass("CraftPlayer");
          Method getHandleMethod = cPlayer.getMethod("getHandle");
          Object handle = getHandleMethod.invoke(cPlayer.cast(this.u.getSingle(e)));
-         Field plyConnField = Arrays.stream(handle.getClass().getFields()).filter(f -> f.getType().getSimpleName().equals("PlayerConnection")).findFirst().orElseThrow();
-         Object pc = handle.getClass().getField(plyConnField.getName()).get(handle);
-         Method sPM = pc.getClass().getMethod("sendPacket", Class.forName("net.minecraft.server." + ver + ".Packet"));
-         sPM.invoke(pc, playOutConstructor.newInstance(5, 0));
+         Class PacketPlayOutGameStateChange, packet;
+         Constructor playOutConstructor;
+         Object playOutConstructorParam, pc;
+         if(verMinor < 17){
+            PacketPlayOutGameStateChange = Class.forName("net.minecraft.server." + ver + ".PacketPlayOutGameStateChange");
+            playOutConstructor = PacketPlayOutGameStateChange.getConstructor(Integer.TYPE, Float.TYPE);
+            playOutConstructorParam = 5;
+            packet = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("Packet");
+            pc = handle.getClass().getField("playerConnection").get(handle);
+         }else{
+            PacketPlayOutGameStateChange = Class.forName("net.minecraft.network.protocol.game.PacketPlayOutGameStateChange");
+            Class PacketPlayOutGameStateChangeA = Class.forName("net.minecraft.network.protocol.game.PacketPlayOutGameStateChange$a");
+            Constructor playOutAConstructor = PacketPlayOutGameStateChangeA.getConstructor(Integer.TYPE);
+            playOutConstructor = PacketPlayOutGameStateChange.getConstructor(PacketPlayOutGameStateChangeA, Float.TYPE);
+            playOutConstructorParam = playOutAConstructor.newInstance(5);
+            packet = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet");
+            pc = handle.getClass().getField("b").get(handle);
+         }
+         Method sPM = pc.getClass().getMethod(verMinor < 18 ? "sendPacket" : "a", packet);
+         sPM.invoke(pc, playOutConstructor.newInstance(playOutConstructorParam, 0));
       } catch (Exception var11) {
          Skript.warning("[skDragon] Error: Player didn't have a compatible version of Minecraft!");
       }
-
    }
 
    public boolean init(Expression[] e, int i, Kleenean k, ParseResult p) {

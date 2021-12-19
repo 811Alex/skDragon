@@ -2,8 +2,6 @@ package ud.skript.sashie.skDragon.dragontravel.events;
 
 import eu.phiwa.dragontravel.api.events.DragonPostPlayerMountEvent;
 import eu.phiwa.dragontravel.api.events.DragonPrePlayerMountEvent;
-import eu.phiwa.dragontravel.core.hooks.server.IRyeDragon;
-import eu.phiwa.dragontravel.core.movement.DragonType;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

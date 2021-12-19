@@ -116,6 +116,10 @@ command /crashtestclear:
 		set {_ids::*} to id names
 		stopEffect {_ids::*}
 
+command /crashtestfake:
+	trigger:
+		send fake trial packet to player
+
 function testParticles(loc: location):
 	broadcast "Testing all particles..."
 	loop {test.particle::*}:

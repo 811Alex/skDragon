@@ -123,3 +123,4 @@ libs/*
 run/
 !run/plugins/Skript/scripts/test.sk
 !run/plugins/skDragon/Awk.png
+run/server.properties
