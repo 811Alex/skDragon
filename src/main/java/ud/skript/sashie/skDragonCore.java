@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
@@ -27,6 +28,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import ud.skript.sashie.skDragon.commands.CommandSkdragon;
 import ud.skript.sashie.skDragon.emotes.SkullConfig;
 import ud.skript.sashie.skDragon.emotes.SkullEvents1_12;
 import ud.skript.sashie.skDragon.emotes.SkullEvents1_8;
@@ -108,6 +110,7 @@ public class skDragonCore extends JavaPlugin {
          emoteConfig.initData();
          Bukkit.getPluginManager().registerEvents(new PlayerEvents(), skdragoncore);
          Bukkit.getPluginManager().registerEvents(new ItemFountainEvents(), skdragoncore);
+         Objects.requireNonNull(getCommand("skdragon")).setExecutor(new CommandSkdragon());
          sendLog("This hacky version of skDragon does not check for updates!");
       } else {
          Bukkit.getPluginManager().disablePlugin(skdragoncore);

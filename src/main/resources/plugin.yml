@@ -6,3 +6,8 @@ version: 0.17
 main: ud.skript.sashie.skDragonCore
 depend: [Skript]
 softdepend: [DragonTravel]
+commands:
+  skdragon:
+    description: skDragon's main command
+    usage: /skdragon <help|version|particles>
+    permission: skdragon.command

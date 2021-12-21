@@ -160,6 +160,14 @@ public enum ParticleEffect {
       return id.isPresent();
    }
 
+   public static List<String> getSupported(){
+      return Arrays.stream(ParticleEffect.values())
+              .filter(ParticleEffect::isSupported)
+              .map(ParticleEffect::getName)
+              .filter(n -> !n.equals("null"))
+              .collect(Collectors.toList());
+   }
+
    public boolean hasProperty(ParticleEffect.ParticleProperty property) {
       return this.properties.contains(property);
    }
