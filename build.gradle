@@ -71,6 +71,14 @@ artifacts {
     archives shadowJar
 }
 
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching('plugin.yml') {
+        expand 'version': project.version
+    }
+}
+
 publishing {
     publications {
         maven(MavenPublication) {

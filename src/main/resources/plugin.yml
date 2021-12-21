@@ -2,7 +2,7 @@ name: skDragon
 author: Sashie
 description: Adds DragonTravel hooks, particle effects and emotes to Skript
 api-version: 1.13
-version: 0.17
+version: ${version}
 main: ud.skript.sashie.skDragonCore
 depend: [Skript]
 softdepend: [DragonTravel]

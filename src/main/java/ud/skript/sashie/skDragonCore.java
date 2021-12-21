@@ -36,6 +36,7 @@ import ud.skript.sashie.skDragon.emotes.SkullEvents1_9;
 import ud.skript.sashie.skDragon.metrics.Metrics;
 import ud.skript.sashie.skDragon.particleEngine.utils.ItemFountainEvents;
 import ud.skript.sashie.skDragon.particleEngine.utils.PlayerEvents;
+import ud.skript.sashie.skDragon.particleEngine.utils.ReflectionUtils;
 import ud.skript.sashie.skDragon.registration.AnnotationParser;
 import ud.skript.sashie.skDragon.registration.Documentation;
 import ud.skript.sashie.skDragon.registration.Events;
@@ -57,11 +58,7 @@ public class skDragonCore extends JavaPlugin {
    public void onEnable() {
       skdragoncore = this;
       version = this.getDescription().getVersion();
-      String initServerVer = Bukkit.getServer().getClass().getPackage().getName().substring(23);
-      serverVersion = Integer.parseInt(Character.toString(initServerVer.charAt(3)));
-      if (serverVersion == 1 && Integer.parseInt(Character.toString(initServerVer.charAt(4))) >= 0) {
-         serverVersion = Integer.parseInt(String.valueOf(Integer.parseInt(Character.toString(initServerVer.charAt(3)))) + Integer.parseInt(Character.toString(initServerVer.charAt(4))));
-      }
+      serverVersion = ReflectionUtils.PackageType.getServerVersionMinor();
 
       this.startMetrics();
       this.updateConfigFile();
