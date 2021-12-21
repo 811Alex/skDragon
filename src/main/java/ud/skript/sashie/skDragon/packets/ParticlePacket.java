@@ -93,7 +93,7 @@ public class ParticlePacket extends ASMPacket {
 
          ReflectionUtils.setValue(packet, true, "a", name);
       } else if (this.version >= 13) {
-         Particle particle = Particle.values()[this.effect.getNewID()];
+         Particle particle = Particle.values()[this.effect.getID()];
          Class particleParam = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParam");
          Method toNMS = null;
          Object param = null;
@@ -117,12 +117,6 @@ public class ParticlePacket extends ASMPacket {
                      param = toNMS.invoke(particleParam, particle);
                   }
                } else {
-                  if (this.version == 14) {
-                     particle = Particle.values()[this.effect.getNewID() + 8];
-                  } else if (this.version == 15) {
-                     particle = Particle.values()[this.effect.getNewID() + 12];
-                  }
-
                   materialDataClass = ReflectionUtils.PackageType.BUKKIT_MATERIAL.getClass("MaterialData");
                   materialDataConstructor = ReflectionUtils.getConstructor(materialDataClass, Material.class);
                   materialData = materialDataConstructor.newInstance(this.data.getMaterial());
@@ -145,9 +139,9 @@ public class ParticlePacket extends ASMPacket {
          }
       } else if (this.data != null) {
          int[] packetData = this.data.getPacketData();
-         packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getId()], this.longDistance, (float)this.center.getX(), (float)this.center.getY(), (float)this.center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, this.effect == ParticleEffect.itemcrack ? packetData : new int[]{packetData[0] | packetData[1] << 12});
+         packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getID()], this.longDistance, (float)this.center.getX(), (float)this.center.getY(), (float)this.center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, this.effect == ParticleEffect.itemcrack ? packetData : new int[]{packetData[0] | packetData[1] << 12});
       } else {
-         packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getId()], this.longDistance, (float)this.center.getX(), (float)this.center.getY(), (float)this.center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, new int[1]);
+         packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getID()], this.longDistance, (float)this.center.getX(), (float)this.center.getY(), (float)this.center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, new int[1]);
       }
 
    }

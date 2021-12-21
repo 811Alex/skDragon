@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,93 +25,93 @@ import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.particleEngine.maths.EffectsLib;
 
 public enum ParticleEffect {
-   explosion("explosion", 0, 0, -1, ParticleProperty.DIRECTIONAL),
-   explosionlarge("explosionlarge", 1, 1, -1),
-   explosionhuge("explosionhuge", 2, 2, -1),
-   fireworkspark("fireworkspark", 3, 3, -1, ParticleProperty.DIRECTIONAL),
-   waterbubble("waterbubble", 4, 4, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.USES_WATER),
-   watersplash("watersplash", 5, 5, -1, ParticleProperty.DIRECTIONAL),
-   waterwake("waterwake", 6, 6, 7, ParticleProperty.DIRECTIONAL),
-   suspended("suspended", 7, 7, -1, ParticleProperty.USES_WATER),
-   suspenddepth("suspenddepth", 8, 8, -1, ParticleProperty.DIRECTIONAL),
-   crit("crit", 9, 9, -1, ParticleProperty.DIRECTIONAL),
-   critmagic("critmagic", 10, 10, -1, ParticleProperty.DIRECTIONAL),
-   smoke("smoke", 11, 11, -1, ParticleProperty.DIRECTIONAL),
-   smokelarge("smokelarge", 12, 12, -1, ParticleProperty.DIRECTIONAL),
-   spell("spell", 13, 13, -1),
-   spellinstant("spellinstant", 14, 14, -1),
-   mobspell("mobspell", 15, 15, -1, ParticleProperty.COLORABLE),
-   mobspellambient("mobspellambient", 16, 16, -1, ParticleProperty.COLORABLE),
-   witchspell("witchspell", 17, 17, -1),
-   waterdrip("waterdrip", 18, 18, -1),
-   lavadrip("lavadrip", 19, 19, -1),
-   angryvillager("angryvillager", 20, 20, -1),
-   happyvillager("happyvillager", 21, 21, -1, ParticleProperty.DIRECTIONAL),
-   townaura("townaura", 22, 22, -1, ParticleProperty.DIRECTIONAL),
-   note("note", 23, 23, -1, ParticleProperty.COLORABLE),
-   portal("portal", 24, 24, -1, ParticleProperty.DIRECTIONAL),
-   enchantmenttable("enchantmenttable", 25, 25, -1, ParticleProperty.DIRECTIONAL),
-   flame("flame", 26, 26, -1, ParticleProperty.DIRECTIONAL),
-   lava("lava", 27, 27, -1),
-   footstep("footstep", 28, -1),
-   cloud("cloud", 29, 28, -1, ParticleProperty.DIRECTIONAL),
-   redstone("redstone", 30, 29, -1, ParticleProperty.COLORABLE),
-   snowball("snowball", 31, 30, -1),
-   snowshovel("snowshovel", 32, 31, -1, ParticleProperty.DIRECTIONAL),
-   slime("slime", 33, 32, -1),
-   heart("heart", 34, 33, -1),
-   barrier("barrier", 35, 34, 8),
-   itemcrack("itemcrack", 36, 35, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
-   blockcrack("blockcrack", 37, 36, -1, ParticleProperty.REQUIRES_DATA),
-   blockdust("blockdust", 38, 37, 7, ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
-   waterdrop("waterdrop", 39, 38, 8),
-   itemtake("itemtake", 40, 8),
-   mobappearance("mobappearance", 41, 39, 8),
-   dragonbreath("dragonbreath", 42, 40, 9, ParticleProperty.DIRECTIONAL),
-   endrod("endrod", 43, 41, 9, ParticleProperty.DIRECTIONAL),
-   damage("damage", 44, 42, 9, ParticleProperty.DIRECTIONAL),
-   sweep("sweep", 45, 43, 9),
-   fallingdust("fallingdust", 46, 44, 10, ParticleProperty.REQUIRES_DATA),
-   totem("totem", 47, 45, 11, ParticleProperty.DIRECTIONAL),
-   spit("spit", 48, 46, 11, ParticleProperty.DIRECTIONAL),
-   squidink("squidink", 47, 13, ParticleProperty.DIRECTIONAL),
-   bubblepop("bubblepop", 48, 13, ParticleProperty.DIRECTIONAL),
-   bubblecurrentdown("bubblecurrentdown", 49, 13, ParticleProperty.DIRECTIONAL),
-   bubblecurrentup("bubblecurrentup", 50, 13, ParticleProperty.DIRECTIONAL),
-   nautilus("nautilus", 51, 13, ParticleProperty.DIRECTIONAL),
-   dolphin("dolphin", 52, 13, ParticleProperty.DIRECTIONAL),
-   sneeze("sneeze", 53, 14, ParticleProperty.DIRECTIONAL),
-   campfirecozy("campfirecozy", 54, 14, ParticleProperty.DIRECTIONAL),
-   campfiresignal("campfiresignal", 55, 14, ParticleProperty.DIRECTIONAL),
-   composter("composter", 56, 14, ParticleProperty.DIRECTIONAL),
-   flash("flash", 57, 14, ParticleProperty.DIRECTIONAL),
-   fallinglava("fallinglava", 58, 14, ParticleProperty.DIRECTIONAL),
-   landinglava("landinglava", 59, 14, ParticleProperty.DIRECTIONAL),
-   fallingwater("fallingwater", 60, 14, ParticleProperty.DIRECTIONAL),
-   drippinghoney("drippinghoney", 61, 15, ParticleProperty.DIRECTIONAL),
-   fallinghoney("fallinghoney", 62, 15, ParticleProperty.DIRECTIONAL),
-   landinghoney("landinghoney", 63, 15, ParticleProperty.DIRECTIONAL),
-   fallingnectar("fallingnectar", 64, 15, ParticleProperty.DIRECTIONAL),
-   soulfireflame("soulfireflame", 65, 16, ParticleProperty.DIRECTIONAL),
-   ash("ash", 66, 16, ParticleProperty.DIRECTIONAL),
-   crimsonspore("crimsonspore", 67, 16, ParticleProperty.DIRECTIONAL),
-   warpedspore("warpedspore", 68, 16, ParticleProperty.DIRECTIONAL),
-   soul("soul", 69, 16, ParticleProperty.DIRECTIONAL),
-   drippingtear("drippingtear", 70, 16, ParticleProperty.DIRECTIONAL),
-   fallingtear("fallingtear", 71, 16, ParticleProperty.DIRECTIONAL),
-   landingtear("landingtear", 72, 16, ParticleProperty.DIRECTIONAL),
-   reverseportal("reverseportal", 73, 16, ParticleProperty.DIRECTIONAL),
-   whiteash("whiteash", 74, 16, ParticleProperty.DIRECTIONAL),
-   legacyblockcrack("legacyblockcrack", 53, 13, ParticleProperty.REQUIRES_DATA),
-   legacyblockdust("legacyblockdust", 54, 13, ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
-   legacyfallingdust("legacyfallingdust", 55, 13, ParticleProperty.REQUIRES_DATA),
-   NULL("null", 99, -1);
+   explosion("explosion", "18 -> 9: 0", ParticleProperty.DIRECTIONAL),
+   explosionlarge("explosionlarge", "17 -> 9: 1"),
+   explosionhuge("explosionhuge", "16 -> 9: 2"),
+   fireworkspark("fireworkspark", "0 -> 9: 3", ParticleProperty.DIRECTIONAL),
+   waterbubble("waterbubble", "9: 4", ParticleProperty.DIRECTIONAL, ParticleProperty.USES_WATER),
+   watersplash("watersplash", "14 -> 9: 5", ParticleProperty.DIRECTIONAL),
+   waterwake("waterwake", "9: 6", ParticleProperty.DIRECTIONAL),
+   suspended("suspended", "9: 7", ParticleProperty.USES_WATER),
+   suspenddepth("suspenddepth", "9: 8", ParticleProperty.DIRECTIONAL),
+   crit("crit", "1 -> 9: 9", ParticleProperty.DIRECTIONAL),
+   critmagic("critmagic", "2 -> 9: 10", ParticleProperty.DIRECTIONAL),
+   smoke("smoke", "20 -> 9: 11", ParticleProperty.DIRECTIONAL),
+   smokelarge("smokelarge", "31 -> 9: 12", ParticleProperty.DIRECTIONAL),
+   spell("spell", "5 -> 9: 13"),
+   spellinstant("spellinstant", "6 -> 9: 14"),
+   mobspell("mobspell", "9: 15", ParticleProperty.COLORABLE),
+   mobspellambient("mobspellambient", "9: 16", ParticleProperty.COLORABLE),
+   witchspell("witchspell", "7 -> 9: 17"),
+   waterdrip("waterdrip", "24 -> 9: 18"),
+   lavadrip("lavadrip", "25 -> 9: 19"),
+   angryvillager("angryvillager", "29 -> 9: 20"),
+   happyvillager("happyvillager", "30 -> 9: 21", ParticleProperty.DIRECTIONAL),
+   townaura("townaura", "9: 22", ParticleProperty.DIRECTIONAL),
+   note("note", "8 -> 9: 23", ParticleProperty.COLORABLE),
+   portal("portal", "9 -> 9: 24", ParticleProperty.DIRECTIONAL),
+   enchantmenttable("enchantmenttable", "10 -> 9: 25", ParticleProperty.DIRECTIONAL),
+   flame("flame", "11 -> 9: 26", ParticleProperty.DIRECTIONAL),
+   lava("lava", "12 -> 9: 27"),
+   footstep("footstep", "13 -> 9: 28 -> 13: -1"),
+   cloud("cloud", "21 -> 9: 29 -> 13: 28", ParticleProperty.DIRECTIONAL),
+   redstone("redstone", "22 -> 9: 30 -> 13: 29", ParticleProperty.COLORABLE),
+   snowball("snowball", "23 -> 9: 31 -> 13: 30"),
+   snowshovel("snowshovel", "26 -> 9: 32 -> 13: 31", ParticleProperty.DIRECTIONAL),
+   slime("slime", "27 -> 9: 33 -> 13: 32"),
+   heart("heart", "28 -> 9: 34 -> 13: 33"),
+   barrier("barrier", "9: 35 -> 13: 34"),
+   itemcrack("itemcrack", "32 -> 9: 36 -> 13: 35", ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
+   blockcrack("blockcrack", "33 -> 9: 37 -> 13: 36", ParticleProperty.REQUIRES_DATA),
+   blockdust("blockdust", "34 -> 9: 38 -> 13: 37", ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
+   waterdrop("waterdrop", "24 -> 9: 39 -> 13: 38"),
+   itemtake("itemtake", "9: 40 -> 13: -1"),
+   mobappearance("mobappearance", "9: 41 -> 13: 39"),
+   dragonbreath("dragonbreath", "9: 42 -> 13: 40", ParticleProperty.DIRECTIONAL),
+   endrod("endrod", "9: 43 -> 13: 41", ParticleProperty.DIRECTIONAL),
+   damage("damage", "9: 44 -> 13: 42", ParticleProperty.DIRECTIONAL),
+   sweep("sweep", "9: 45 -> 13: 43"),
+   fallingdust("fallingdust", "10: 46 -> 13: 44", ParticleProperty.REQUIRES_DATA),
+   totem("totem", "11: 47 -> 13: 45", ParticleProperty.DIRECTIONAL),
+   spit("spit", "11: 48 -> 13: 46", ParticleProperty.DIRECTIONAL),
+   squidink("squidink", "13: 47", ParticleProperty.DIRECTIONAL),
+   bubblepop("bubblepop", "13: 48", ParticleProperty.DIRECTIONAL),
+   bubblecurrentdown("bubblecurrentdown", "13: 49", ParticleProperty.DIRECTIONAL),
+   bubblecurrentup("bubblecurrentup", "13: 50", ParticleProperty.DIRECTIONAL),
+   nautilus("nautilus", "13: 51", ParticleProperty.DIRECTIONAL),
+   dolphin("dolphin", "13: 52", ParticleProperty.DIRECTIONAL),
+   sneeze("sneeze", "14: 53", ParticleProperty.DIRECTIONAL),
+   campfirecozy("campfirecozy", "14: 54", ParticleProperty.DIRECTIONAL),
+   campfiresignal("campfiresignal", "14: 55", ParticleProperty.DIRECTIONAL),
+   composter("composter", "14: 56", ParticleProperty.DIRECTIONAL),
+   flash("flash", "14: 57", ParticleProperty.DIRECTIONAL),
+   fallinglava("fallinglava", "14: 58", ParticleProperty.DIRECTIONAL),
+   landinglava("landinglava", "14: 59", ParticleProperty.DIRECTIONAL),
+   fallingwater("fallingwater", "14: 60", ParticleProperty.DIRECTIONAL),
+   drippinghoney("drippinghoney", "15: 61", ParticleProperty.DIRECTIONAL),
+   fallinghoney("fallinghoney", "15: 62", ParticleProperty.DIRECTIONAL),
+   landinghoney("landinghoney", "15: 63", ParticleProperty.DIRECTIONAL),
+   fallingnectar("fallingnectar", "15: 64", ParticleProperty.DIRECTIONAL),
+   soulfireflame("soulfireflame", "16: 65", ParticleProperty.DIRECTIONAL),
+   ash("ash", "16: 66", ParticleProperty.DIRECTIONAL),
+   crimsonspore("crimsonspore", "16: 67", ParticleProperty.DIRECTIONAL),
+   warpedspore("warpedspore", "16: 68", ParticleProperty.DIRECTIONAL),
+   soul("soul", "16: 69", ParticleProperty.DIRECTIONAL),
+   drippingtear("drippingtear", "16: 70", ParticleProperty.DIRECTIONAL),
+   fallingtear("fallingtear", "16: 71", ParticleProperty.DIRECTIONAL),
+   landingtear("landingtear", "16: 72", ParticleProperty.DIRECTIONAL),
+   reverseportal("reverseportal", "16: 73", ParticleProperty.DIRECTIONAL),
+   whiteash("whiteash", "16: 74", ParticleProperty.DIRECTIONAL),
+   legacyblockcrack("legacyblockcrack", "13: 53 -> 14: 61 -> 15: 65 -> 16: 75", ParticleProperty.REQUIRES_DATA),
+   legacyblockdust("legacyblockdust", "13: 54 -> 14: 62 -> 15: 66 -> 16: 76", ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
+   legacyfallingdust("legacyfallingdust", "13: 55 -> 14: 63 -> 15: 67 -> 16: 77", ParticleProperty.REQUIRES_DATA),
+   NULL("null", "99");
 
-   public static final Map NAME_MAP = new HashMap();
+   public static final Map<String, ParticleEffect> NAME_MAP = new HashMap<>();
+   private final int version = ReflectionUtils.PackageType.getServerVersionMinor();
    private final String name;
-   private final int oldID;
-   private final int newID;
-   private final int requiredVersion;
+   private final Map<Integer, Integer> IDs;
+   private final Optional<Integer> id;
    private final List properties;
 
    static {
@@ -120,39 +122,42 @@ public enum ParticleEffect {
          ParticleEffect effect = var3[var1];
          NAME_MAP.put(effect.name, effect);
       }
-
    }
 
-   ParticleEffect(String name, int id, int requiredVersion, ParticleEffect.ParticleProperty... properties) {
+   ParticleEffect(String name, String IDMap, ParticleEffect.ParticleProperty... properties) {
       this.name = name;
-      this.oldID = id;
-      this.newID = id;
-      this.requiredVersion = requiredVersion;
       this.properties = Arrays.asList(properties);
-   }
-
-   ParticleEffect(String name, int id, int newID, int requiredVersion, ParticleEffect.ParticleProperty... properties) {
-      this.name = name;
-      this.oldID = id;
-      this.newID = newID;
-      this.requiredVersion = requiredVersion;
-      this.properties = Arrays.asList(properties);
+      this.IDs = Arrays.stream(ID.parse(IDMap)).collect(Collectors.toMap(ID::getVersion, ID::getId));
+      this.id = getIDOptional();
    }
 
    public String getName() {
       return this.name;
    }
 
-   public int getId() {
-      return this.oldID;
+   public Optional<Integer> getIDOptional(){
+      return IDs.entrySet().stream()
+              .filter(entry -> entry.getKey() <= version)   // is/was supported
+              .max(Entry.comparingByKey())                  // get most recent
+              .map(Entry::getValue)                         // get actual ID
+              .filter(n -> n >= 0);                         // not deleted
    }
 
-   public int getNewID() {
-      return this.newID;
+   public int getID() {
+      return id.orElseThrow(() -> new UnsupportedOperationException("Particle not available in this version!")) + (version < 9 ? 17 : 0); // in < 9, they're in the Effect class, together with sounds etc.
    }
 
-   public int getRequiredVersion() {
-      return this.requiredVersion;
+   public int getMinVersion() {
+      return IDs.keySet().stream().reduce(Integer::min).orElseThrow();
+   }
+
+   public int getMaxVersion() {
+      Integer ver = IDs.keySet().stream().reduce(Integer::max).orElseThrow();
+      return ver - (IDs.get(ver) < 0 ? -1 : 0); // if deleted, return previous version
+   }
+
+   public boolean isSupported() {
+      return id.isPresent();
    }
 
    public boolean hasProperty(ParticleEffect.ParticleProperty property) {
@@ -162,15 +167,6 @@ public enum ParticleEffect {
    public List getProperties() {
       return this.properties;
    }
-
-   public boolean isSupported() {
-      if (this.requiredVersion == -1) {
-         return true;
-      } else {
-         return ParticleEffect.ParticlePacket.getVersion() >= this.requiredVersion;
-      }
-   }
-
    public static ParticleEffect fromName(String name) {
       Iterator var2 = NAME_MAP.entrySet().iterator();
 
@@ -368,6 +364,7 @@ public enum ParticleEffect {
    public void display(String idName, Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float hue, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
       if (!this.isSupported()) {
          EffectsLib.stopEffect(idName);
+         throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else {
          if (this != redstone && this != mobspell && this != mobspellambient) {
             ParticleEffect.NoteColor finalData;
@@ -1063,7 +1060,7 @@ public enum ParticleEffect {
 
                   ReflectionUtils.setValue(this.packet, true, "a", name);
                } else if (version >= 13) {
-                  Particle particle = Particle.values()[this.effect.newID];
+                  Particle particle = Particle.values()[this.effect.getID()];
                   Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                   Method toNMS = null;
                   Object param = null;
@@ -1096,14 +1093,6 @@ public enum ParticleEffect {
                               param = toNMS.invoke(particleParam, particle);
                            }
                         } else {
-                           if (version == 14) {
-                              particle = Particle.values()[this.effect.newID + 8];
-                           } else if (version == 15) {
-                              particle = Particle.values()[this.effect.newID + 12];
-                           } else if (version == 16) {
-                              particle = Particle.values()[this.effect.newID + 22];
-                           }
-
                            materialDataClass = ReflectionUtils.PackageType.BUKKIT_MATERIAL.getClass("MaterialData");
                            materialDataConstructor = ReflectionUtils.getConstructor(materialDataClass, Material.class);
                            materialData = materialDataConstructor.newInstance(this.data.getMaterial());
@@ -1126,9 +1115,9 @@ public enum ParticleEffect {
                   }
                } else if (this.data != null) {
                   int[] packetData = this.data.getPacketData();
-                  this.packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getId()], this.longDistance, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, this.effect == ParticleEffect.itemcrack ? packetData : new int[]{packetData[0] | packetData[1] << 12});
+                  this.packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getID()], this.longDistance, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, this.effect == ParticleEffect.itemcrack ? packetData : new int[]{packetData[0] | packetData[1] << 12});
                } else {
-                  this.packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getId()], this.longDistance, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, new int[0]);
+                  this.packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getID()], this.longDistance, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, new int[0]);
                }
 
             } catch (Exception var9) {
@@ -1235,6 +1224,36 @@ public enum ParticleEffect {
 
       public float getSize() {
          return this.size;
+      }
+   }
+
+   public static final class ID {
+      private final int version; // by convention, -1 = any version
+      private final int id;      // by convention, -1 = deleted on this version
+
+      public ID(int version, int id) {
+         this.version = version;
+         this.id = id;
+      }
+
+      public ID(int id) {
+         this(-1, id);
+      }
+
+      public int getId() {
+         return id;
+      }
+
+      public int getVersion() {
+         return version;
+      }
+
+      public static ID[] parse(String map){
+         return Arrays.stream(map.replaceAll("\\s+", "").split("->")).map(v -> { // ignore spaces, split versions (->)
+            String[] params = v.split(":");                                      // split version & id (:)
+            if(params.length < 2) return new ID(Integer.parseInt(params[0]));          // only id, set ver to -1 (any)
+            return new ID(Integer.parseInt(params[0]), Integer.parseInt(params[1]));
+         }).toArray(ID[]::new);
       }
    }
 }
