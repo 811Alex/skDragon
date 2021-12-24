@@ -127,7 +127,7 @@ function testParticles(loc: location):
 		wait {@particle-test-duration}
 
 function emitParticle(n: text, loc: location):
-	if {test.particle::*} doesn't contain {_n}:
+	if supported particles don't contain {_n}:
 		broadcast "Unknown particle: %{_n}%"
 		stop
 	broadcast "p: %{_n}%"
