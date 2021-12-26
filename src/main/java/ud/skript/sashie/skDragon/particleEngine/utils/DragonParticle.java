@@ -572,7 +572,16 @@ public class DragonParticle implements Serializable {
    }
 
    public void displayDirectional(String idName, List players, Location center, Vector direction) {
-      if (this.particle.isSupported() && this.particle.hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
+      if (!this.particle.isSupported()) {
+         EffectsLib.stopEffect(idName);
+         throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
+      } else if (this.particle.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
+         EffectsLib.stopEffect(idName);
+         throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
+      } else if (!this.particle.hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
+         EffectsLib.stopEffect(idName);
+         throw new ParticleEffect.ParticleDirectionalException("This particle effect is not directional");
+      } else {
          if (this.particle == ParticleEffect.blockdust && this.material != null) {
             ParticleEffect.BlockData finalData = new ParticleEffect.BlockData(this.getMaterial(), this.getMaterialId());
             if (players != null) {
@@ -592,9 +601,6 @@ public class DragonParticle implements Serializable {
          } else {
             this.particle.display(direction, this.speed, center, this.range);
          }
-
-      } else {
-         EffectsLib.stopEffect(idName);
       }
    }
 

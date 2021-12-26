@@ -913,7 +913,7 @@ public enum ParticleEffect {
       public abstract float getB();
    }
 
-   private static final class ParticleColorException extends RuntimeException {
+   public static final class ParticleColorException extends RuntimeException {
       private static final long serialVersionUID = 3203085387160737484L;
 
       public ParticleColorException(String message) {
@@ -953,7 +953,7 @@ public enum ParticleEffect {
       }
    }
 
-   private static final class ParticleDataException extends RuntimeException {
+   public static final class ParticleDataException extends RuntimeException {
       private static final long serialVersionUID = 3203085387160737484L;
 
       public ParticleDataException(String message) {
@@ -1228,10 +1228,18 @@ public enum ParticleEffect {
       VIBRATION
    }
 
-   private static final class ParticleVersionException extends RuntimeException {
+   public static final class ParticleVersionException extends RuntimeException {
       private static final long serialVersionUID = 3203085387160737484L;
 
       public ParticleVersionException(String message) {
+         super(message);
+      }
+   }
+
+   public static final class ParticleDirectionalException extends RuntimeException {
+      private static final long serialVersionUID = 3203085387160737484L;
+
+      public ParticleDirectionalException(String message) {
          super(message);
       }
    }
