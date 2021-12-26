@@ -98,6 +98,16 @@ command /crashtestparticles [<text>]:
 				wait {@particle-test-duration}
 		broadcast "Done!"
 
+command /crashtestdirectional <particlename>:
+	trigger:
+		if supported particles don't contain "%argument 1%":
+			broadcast "Unknown particle: %argument 1%"
+			stop
+		broadcast "p: %argument 1%"
+		draw 8 argument 1 particles at location 2 above 3 east of player with direction vector 0.5, 0.5, 0.5 and speed .6, keepFor {@particle-test-duration}
+		wait {@particle-test-duration}
+		broadcast "Done!"
+
 command /crashtestdraws [<text>]:
 	trigger:
 		set {_loc} to location 3 east of player
