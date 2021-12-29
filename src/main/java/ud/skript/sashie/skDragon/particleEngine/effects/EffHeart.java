@@ -49,31 +49,32 @@ public class EffHeart extends Effect {
    private Expression ticks;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.inputParticle = exprs[0];
-      this.inputParticleData = exprs[1];
-      this.speed = exprs[2];
-      this.offX = exprs[3];
-      this.offY = exprs[4];
-      this.offZ = exprs[5];
-      this.entLoc = exprs[6];
-      this.InputIdName = exprs[7];
-      this.singlePlayer = exprs[8];
-      this.player = exprs[9];
-      this.rainbMode = exprs[10];
-      this.spin = exprs[11];
-      this.inputWidth = exprs[12];
-      this.inputHeight = exprs[13];
-      this.inputInnerSpike = exprs[14];
-      this.inputCompress = exprs[15];
-      this.inputDensity = exprs[16];
-      this.range = exprs[17];
-      this.xRot = exprs[18];
-      this.yRot = exprs[19];
-      this.zRot = exprs[20];
-      this.displaceX = exprs[21];
-      this.displaceY = exprs[22];
-      this.displaceZ = exprs[23];
-      this.ticks = exprs[24];
+      int i = 0;
+      this.inputParticle = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.speed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.InputIdName = exprs[i++];
+      this.singlePlayer = exprs[i++];
+      this.player = exprs[i++];
+      this.rainbMode = exprs[i++];
+      this.spin = exprs[i++];
+      this.inputWidth = exprs[i++];
+      this.inputHeight = exprs[i++];
+      this.inputInnerSpike = exprs[i++];
+      this.inputCompress = exprs[i++];
+      this.inputDensity = exprs[i++];
+      this.range = exprs[i++];
+      this.xRot = exprs[i++];
+      this.yRot = exprs[i++];
+      this.zRot = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.ticks = exprs[i++];
       return true;
    }
 

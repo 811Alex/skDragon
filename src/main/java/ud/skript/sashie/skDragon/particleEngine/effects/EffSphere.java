@@ -42,25 +42,26 @@ public class EffSphere extends Effect {
    private Expression ticks;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.style = exprs[0];
-      this.particleString = exprs[1];
-      this.inputParticleData = exprs[2];
-      this.speed = exprs[3];
-      this.offX = exprs[4];
-      this.offY = exprs[5];
-      this.offZ = exprs[6];
-      this.entLoc = exprs[7];
-      this.InputIdName = exprs[8];
-      this.singlePlayer = exprs[9];
-      this.player = exprs[10];
-      this.rainbMode = exprs[11];
-      this.radius = exprs[12];
-      this.InputRingDensity = exprs[13];
-      this.range = exprs[14];
-      this.displaceX = exprs[15];
-      this.displaceY = exprs[16];
-      this.displaceZ = exprs[17];
-      this.ticks = exprs[18];
+      int i = 0;
+      this.style = exprs[i++];
+      this.particleString = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.speed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.InputIdName = exprs[i++];
+      this.singlePlayer = exprs[i++];
+      this.player = exprs[i++];
+      this.rainbMode = exprs[i++];
+      this.radius = exprs[i++];
+      this.InputRingDensity = exprs[i++];
+      this.range = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.ticks = exprs[i++];
       return true;
    }
 

@@ -52,27 +52,28 @@ public class EffDot2 extends Effect {
    private Expression inputKeepDelay;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.partCount = exprs[0];
-      this.particleName = exprs[1];
-      this.inputParticleData = exprs[2];
-      this.inputParticleSpeed = exprs[3];
-      this.offX = exprs[4];
-      this.offY = exprs[5];
-      this.offZ = exprs[6];
-      this.coffX = exprs[7];
-      this.coffY = exprs[8];
-      this.coffZ = exprs[9];
-      this.entLoc = exprs[10];
-      this.inputIdName = exprs[11];
-      this.inputPlayers = exprs[12];
-      this.isRainbowTrue = exprs[13];
-      this.inputRandomColor = exprs[14];
-      this.range = exprs[15];
-      this.displaceX = exprs[16];
-      this.displaceY = exprs[17];
-      this.displaceZ = exprs[18];
-      this.inputPulseDelay = exprs[19];
-      this.inputKeepDelay = exprs[20];
+      int i = 0;
+      this.partCount = exprs[i++];
+      this.particleName = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.inputParticleSpeed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.coffX = exprs[i++];
+      this.coffY = exprs[i++];
+      this.coffZ = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.isRainbowTrue = exprs[i++];
+      this.inputRandomColor = exprs[i++];
+      this.range = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.inputPulseDelay = exprs[i++];
+      this.inputKeepDelay = exprs[i++];
       return true;
    }
 

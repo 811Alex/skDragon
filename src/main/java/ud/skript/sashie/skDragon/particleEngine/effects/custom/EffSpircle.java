@@ -48,23 +48,24 @@ public class EffSpircle extends DragonEffect {
    private String parsedSyntax = "";
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.partCount = exprs[0];
-      this.inputParticleName = exprs[1];
-      this.entLoc = exprs[2];
-      this.inputIdName = exprs[3];
-      this.inputPoints = exprs[4];
-      this.inputDensity = exprs[5];
-      this.inputRadius = exprs[6];
-      this.inputSpeed = exprs[7];
-      this.offX = exprs[8];
-      this.offY = exprs[9];
-      this.offZ = exprs[10];
-      this.rotX = exprs[11];
-      this.rotY = exprs[12];
-      this.rotZ = exprs[13];
-      this.inputPlayers = exprs[14];
-      this.inputRange = exprs[15];
-      this.inputPulseDelay = exprs[16];
+      int i = 0;
+      this.partCount = exprs[i++];
+      this.inputParticleName = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.inputPoints = exprs[i++];
+      this.inputDensity = exprs[i++];
+      this.inputRadius = exprs[i++];
+      this.inputSpeed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.rotX = exprs[i++];
+      this.rotY = exprs[i++];
+      this.rotZ = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.inputRange = exprs[i++];
+      this.inputPulseDelay = exprs[i++];
       this.parsedSyntax = parseResult.expr;
       return true;
    }

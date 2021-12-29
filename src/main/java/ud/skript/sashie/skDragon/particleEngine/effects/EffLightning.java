@@ -49,26 +49,27 @@ public class EffLightning extends Effect {
    private Expression inputPulseDelay;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.inputIdName = exprs[0];
-      this.entLoc = exprs[1];
-      this.particleName = exprs[2];
-      this.inputParticleData = exprs[3];
-      this.inputParticleSpeed = exprs[4];
-      this.offX = exprs[5];
-      this.offY = exprs[6];
-      this.offZ = exprs[7];
-      this.axisX = exprs[8];
-      this.axisY = exprs[9];
-      this.axisZ = exprs[10];
-      this.radius = exprs[11];
-      this.density = exprs[12];
-      this.inputPlayers = exprs[13];
-      this.rainbowMode = exprs[14];
-      this.range = exprs[15];
-      this.displaceX = exprs[16];
-      this.displaceY = exprs[17];
-      this.displaceZ = exprs[18];
-      this.inputPulseDelay = exprs[19];
+      int i = 0;
+      this.inputIdName = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.particleName = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.inputParticleSpeed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.axisX = exprs[i++];
+      this.axisY = exprs[i++];
+      this.axisZ = exprs[i++];
+      this.radius = exprs[i++];
+      this.density = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.rainbowMode = exprs[i++];
+      this.range = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.inputPulseDelay = exprs[i++];
       return true;
    }
 

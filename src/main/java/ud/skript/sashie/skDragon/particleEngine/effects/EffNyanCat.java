@@ -27,13 +27,14 @@ public class EffNyanCat extends Effect {
    private Expression seconds;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.entLoc = exprs[0];
-      this.idName = exprs[1];
-      this.singlePlayer = exprs[2];
-      this.player = exprs[3];
-      this.range = exprs[4];
-      this.ticks = exprs[5];
-      this.seconds = exprs[6];
+      int i = 0;
+      this.entLoc = exprs[i++];
+      this.idName = exprs[i++];
+      this.singlePlayer = exprs[i++];
+      this.player = exprs[i++];
+      this.range = exprs[i++];
+      this.ticks = exprs[i++];
+      this.seconds = exprs[i++];
       return true;
    }
 

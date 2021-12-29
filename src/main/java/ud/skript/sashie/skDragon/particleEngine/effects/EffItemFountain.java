@@ -34,18 +34,19 @@ public class EffItemFountain extends Effect {
    private Expression ticks;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.data = exprs[0];
-      this.inputStyle = exprs[1];
-      this.entLoc = exprs[2];
-      this.idName = exprs[3];
-      this.itemTimer = exprs[4];
-      this.heightMod = exprs[5];
-      this.radius = exprs[6];
-      this.pDensity = exprs[7];
-      this.displaceX = exprs[8];
-      this.displaceY = exprs[9];
-      this.displaceZ = exprs[10];
-      this.ticks = exprs[11];
+      int i = 0;
+      this.data = exprs[i++];
+      this.inputStyle = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.idName = exprs[i++];
+      this.itemTimer = exprs[i++];
+      this.heightMod = exprs[i++];
+      this.radius = exprs[i++];
+      this.pDensity = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.ticks = exprs[i++];
       return true;
    }
 

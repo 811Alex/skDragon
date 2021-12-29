@@ -50,24 +50,25 @@ public class EffSpawnParticleDirectionMadness extends DragonEffect {
    private String parsedSyntax = "";
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.partCount = exprs[0];
-      this.inputStyle = exprs[1];
-      this.entLoc = exprs[2];
-      this.inputDirection = exprs[3];
-      this.inputSpeed = exprs[4];
-      this.coffX = exprs[5];
-      this.coffY = exprs[6];
-      this.coffZ = exprs[7];
-      this.offX = exprs[8];
-      this.offY = exprs[9];
-      this.offZ = exprs[10];
-      this.inputIdName = exprs[11];
-      this.isRainbowTrue = exprs[12];
-      this.inputRandomColor = exprs[13];
-      this.inputPlayers = exprs[14];
-      this.inputRange = exprs[15];
-      this.inputPulseDelay = exprs[16];
-      this.inputKeepDelay = exprs[17];
+      int i = 0;
+      this.partCount = exprs[i++];
+      this.inputStyle = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.inputDirection = exprs[i++];
+      this.inputSpeed = exprs[i++];
+      this.coffX = exprs[i++];
+      this.coffY = exprs[i++];
+      this.coffZ = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.isRainbowTrue = exprs[i++];
+      this.inputRandomColor = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.inputRange = exprs[i++];
+      this.inputPulseDelay = exprs[i++];
+      this.inputKeepDelay = exprs[i++];
       this.parsedSyntax = parseResult.expr;
       return true;
    }

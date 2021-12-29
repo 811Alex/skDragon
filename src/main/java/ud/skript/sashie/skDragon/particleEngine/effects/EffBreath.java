@@ -45,28 +45,29 @@ public class EffBreath extends Effect {
    private Expression seconds;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.particleString = exprs[0];
-      this.data = exprs[1];
-      this.speed = exprs[2];
-      this.offX = exprs[3];
-      this.offY = exprs[4];
-      this.offZ = exprs[5];
-      this.entLoc = exprs[6];
-      this.idName = exprs[7];
-      this.singlePlayer = exprs[8];
-      this.player = exprs[9];
-      this.rainbMode = exprs[10];
-      this.arcPitch = exprs[11];
-      this.arcCount = exprs[12];
-      this.pDensity = exprs[13];
-      this.stepsPerIt = exprs[14];
-      this.arcLength = exprs[15];
-      this.range = exprs[16];
-      this.displaceX = exprs[17];
-      this.displaceY = exprs[18];
-      this.displaceZ = exprs[19];
-      this.ticks = exprs[20];
-      this.seconds = exprs[21];
+      int i = 0;
+      this.particleString = exprs[i++];
+      this.data = exprs[i++];
+      this.speed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.idName = exprs[i++];
+      this.singlePlayer = exprs[i++];
+      this.player = exprs[i++];
+      this.rainbMode = exprs[i++];
+      this.arcPitch = exprs[i++];
+      this.arcCount = exprs[i++];
+      this.pDensity = exprs[i++];
+      this.stepsPerIt = exprs[i++];
+      this.arcLength = exprs[i++];
+      this.range = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.ticks = exprs[i++];
+      this.seconds = exprs[i++];
       return true;
    }
 

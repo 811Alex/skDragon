@@ -51,31 +51,32 @@ public class EffCone extends Effect {
    private Expression inputStyle;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.inputParticle = exprs[0];
-      this.inputParticleData = exprs[1];
-      this.speed = exprs[2];
-      this.offX = exprs[3];
-      this.offY = exprs[4];
-      this.offZ = exprs[5];
-      this.entLoc = exprs[6];
-      this.InputIdName = exprs[7];
-      this.singlePlayer = exprs[8];
-      this.player = exprs[9];
-      this.rainbMode = exprs[10];
-      this.inputRadius = exprs[11];
-      this.inputGrowth = exprs[12];
-      this.inputCircles = exprs[13];
-      this.inputHelixes = exprs[14];
-      this.inputDensity = exprs[15];
-      this.range = exprs[16];
-      this.xRot = exprs[17];
-      this.yRot = exprs[18];
-      this.zRot = exprs[19];
-      this.displaceX = exprs[20];
-      this.displaceY = exprs[21];
-      this.displaceZ = exprs[22];
-      this.ticks = exprs[23];
-      this.inputStyle = exprs[24];
+      int i = 0;
+      this.inputParticle = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.speed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.InputIdName = exprs[i++];
+      this.singlePlayer = exprs[i++];
+      this.player = exprs[i++];
+      this.rainbMode = exprs[i++];
+      this.inputRadius = exprs[i++];
+      this.inputGrowth = exprs[i++];
+      this.inputCircles = exprs[i++];
+      this.inputHelixes = exprs[i++];
+      this.inputDensity = exprs[i++];
+      this.range = exprs[i++];
+      this.xRot = exprs[i++];
+      this.yRot = exprs[i++];
+      this.zRot = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.ticks = exprs[i++];
+      this.inputStyle = exprs[i++];
       return true;
    }
 

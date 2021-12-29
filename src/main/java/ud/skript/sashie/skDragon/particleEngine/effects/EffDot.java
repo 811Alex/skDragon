@@ -48,24 +48,25 @@ public class EffDot extends Effect {
    private Expression inputKeepDelay;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.partCount = exprs[0];
-      this.inputParticleString = exprs[1];
-      this.inputParticleData = exprs[2];
-      this.inputParticleSpeed = exprs[3];
-      this.offX = exprs[4];
-      this.offY = exprs[5];
-      this.offZ = exprs[6];
-      this.entLoc = exprs[7];
-      this.inputIdName = exprs[8];
-      this.isSingle = exprs[9];
-      this.inputPlayers = exprs[10];
-      this.isRainbowTrue = exprs[11];
-      this.range = exprs[12];
-      this.displaceX = exprs[13];
-      this.displaceY = exprs[14];
-      this.displaceZ = exprs[15];
-      this.inputPulseDelay = exprs[16];
-      this.inputKeepDelay = exprs[17];
+      int i = 0;
+      this.partCount = exprs[i++];
+      this.inputParticleString = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.inputParticleSpeed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.isSingle = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.isRainbowTrue = exprs[i++];
+      this.range = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.inputPulseDelay = exprs[i++];
+      this.inputKeepDelay = exprs[i++];
       return true;
    }
 

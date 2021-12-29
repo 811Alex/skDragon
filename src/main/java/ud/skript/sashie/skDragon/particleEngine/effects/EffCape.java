@@ -36,18 +36,19 @@ public class EffCape extends Effect {
    private Expression ticks;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.fileName = exprs[0];
-      this.entLoc = exprs[1];
-      this.idName = exprs[2];
-      this.singlePlayer = exprs[3];
-      this.player = exprs[4];
-      this.rainbMode = exprs[5];
-      this.dynMode = exprs[6];
-      this.inputScale = exprs[7];
-      this.inputBack = exprs[8];
-      this.inputGrav = exprs[9];
-      this.range = exprs[10];
-      this.ticks = exprs[11];
+      int i = 0;
+      this.fileName = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.idName = exprs[i++];
+      this.singlePlayer = exprs[i++];
+      this.player = exprs[i++];
+      this.rainbMode = exprs[i++];
+      this.dynMode = exprs[i++];
+      this.inputScale = exprs[i++];
+      this.inputBack = exprs[i++];
+      this.inputGrav = exprs[i++];
+      this.range = exprs[i++];
+      this.ticks = exprs[i++];
       return true;
    }
 

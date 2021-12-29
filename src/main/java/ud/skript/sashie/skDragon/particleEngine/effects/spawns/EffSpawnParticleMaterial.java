@@ -41,18 +41,19 @@ public class EffSpawnParticleMaterial extends Effect {
    private String parsedSyntax;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.partCount = exprs[0];
-      this.inputParticleData = exprs[1];
-      this.entLoc = exprs[2];
-      this.inputParticleSpeed = exprs[3];
-      this.offX = exprs[4];
-      this.offY = exprs[5];
-      this.offZ = exprs[6];
-      this.inputIdName = exprs[7];
-      this.inputPlayers = exprs[8];
-      this.inputRange = exprs[9];
-      this.inputPulseDelay = exprs[10];
-      this.inputKeepDelay = exprs[11];
+      int i = 0;
+      this.partCount = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.inputParticleSpeed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.inputRange = exprs[i++];
+      this.inputPulseDelay = exprs[i++];
+      this.inputKeepDelay = exprs[i++];
       this.parsedSyntax = parseResult.expr;
       return true;
    }

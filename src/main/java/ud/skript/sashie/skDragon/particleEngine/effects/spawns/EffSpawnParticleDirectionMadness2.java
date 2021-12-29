@@ -51,20 +51,21 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
    private Expression inputKeepDelay;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.partCount = exprs[0];
-      this.inputStyle = exprs[1];
-      this.particleName = exprs[2];
-      this.entLoc = exprs[3];
-      this.inputDirection = exprs[4];
-      this.inputSpeed = exprs[5];
-      this.offX = exprs[6];
-      this.offY = exprs[7];
-      this.offZ = exprs[8];
-      this.inputIdName = exprs[9];
-      this.inputPlayers = exprs[10];
-      this.inputRange = exprs[11];
-      this.inputPulseDelay = exprs[12];
-      this.inputKeepDelay = exprs[13];
+      int i = 0;
+      this.partCount = exprs[i++];
+      this.inputStyle = exprs[i++];
+      this.particleName = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.inputDirection = exprs[i++];
+      this.inputSpeed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.inputRange = exprs[i++];
+      this.inputPulseDelay = exprs[i++];
+      this.inputKeepDelay = exprs[i++];
       return true;
    }
 

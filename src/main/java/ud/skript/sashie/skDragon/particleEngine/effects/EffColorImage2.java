@@ -46,26 +46,27 @@ public class EffColorImage2 extends Effect {
    private Expression inputPulseTick;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.fileName = exprs[0];
-      this.entLoc = exprs[1];
-      this.inputIdName = exprs[2];
-      this.inputPlayers = exprs[3];
-      this.inputAutoFace = exprs[4];
-      this.inputPlane = exprs[5];
-      this.xSpeed = exprs[6];
-      this.ySpeed = exprs[7];
-      this.zSpeed = exprs[8];
-      this.pixelX = exprs[9];
-      this.pixelY = exprs[10];
-      this.scale = exprs[11];
-      this.range = exprs[12];
-      this.xRot = exprs[13];
-      this.yRot = exprs[14];
-      this.zRot = exprs[15];
-      this.displaceX = exprs[16];
-      this.displaceY = exprs[17];
-      this.displaceZ = exprs[18];
-      this.inputPulseTick = exprs[19];
+      int i = 0;
+      this.fileName = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.inputAutoFace = exprs[i++];
+      this.inputPlane = exprs[i++];
+      this.xSpeed = exprs[i++];
+      this.ySpeed = exprs[i++];
+      this.zSpeed = exprs[i++];
+      this.pixelX = exprs[i++];
+      this.pixelY = exprs[i++];
+      this.scale = exprs[i++];
+      this.range = exprs[i++];
+      this.xRot = exprs[i++];
+      this.yRot = exprs[i++];
+      this.zRot = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.inputPulseTick = exprs[i++];
       return true;
    }
 

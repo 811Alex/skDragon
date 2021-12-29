@@ -51,31 +51,32 @@ public class EffText extends Effect {
    private Expression inputPulseTick;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.inputText = exprs[0];
-      this.particleName = exprs[1];
-      this.inputParticleData = exprs[2];
-      this.inputParticleSpeed = exprs[3];
-      this.offX = exprs[4];
-      this.offY = exprs[5];
-      this.offZ = exprs[6];
-      this.entLoc = exprs[7];
-      this.inputIdName = exprs[8];
-      this.inputPlayers = exprs[9];
-      this.inputRainbowMode = exprs[10];
-      this.inputAutoFace = exprs[11];
-      this.inputInvert = exprs[12];
-      this.inputFontName = exprs[13];
-      this.inputFontStyle = exprs[14];
-      this.inputFontSize = exprs[15];
-      this.scale = exprs[16];
-      this.range = exprs[17];
-      this.xRot = exprs[18];
-      this.yRot = exprs[19];
-      this.zRot = exprs[20];
-      this.displaceX = exprs[21];
-      this.displaceY = exprs[22];
-      this.displaceZ = exprs[23];
-      this.inputPulseTick = exprs[24];
+      int i = 0;
+      this.inputText = exprs[i++];
+      this.particleName = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.inputParticleSpeed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.inputRainbowMode = exprs[i++];
+      this.inputAutoFace = exprs[i++];
+      this.inputInvert = exprs[i++];
+      this.inputFontName = exprs[i++];
+      this.inputFontStyle = exprs[i++];
+      this.inputFontSize = exprs[i++];
+      this.scale = exprs[i++];
+      this.range = exprs[i++];
+      this.xRot = exprs[i++];
+      this.yRot = exprs[i++];
+      this.zRot = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.inputPulseTick = exprs[i++];
       return true;
    }
 

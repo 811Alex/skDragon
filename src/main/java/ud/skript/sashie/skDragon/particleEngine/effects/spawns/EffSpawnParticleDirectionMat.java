@@ -44,19 +44,20 @@ public class EffSpawnParticleDirectionMat extends DragonEffect {
    private String parsedSyntax = "";
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.partCount = exprs[0];
-      this.inputParticleData = exprs[1];
-      this.entLoc = exprs[2];
-      this.inputDirection = exprs[3];
-      this.inputSpeed = exprs[4];
-      this.offX = exprs[5];
-      this.offY = exprs[6];
-      this.offZ = exprs[7];
-      this.inputIdName = exprs[8];
-      this.inputPlayers = exprs[9];
-      this.inputRange = exprs[10];
-      this.inputPulseDelay = exprs[11];
-      this.inputKeepDelay = exprs[12];
+      int i = 0;
+      this.partCount = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.inputDirection = exprs[i++];
+      this.inputSpeed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.inputRange = exprs[i++];
+      this.inputPulseDelay = exprs[i++];
+      this.inputKeepDelay = exprs[i++];
       this.parsedSyntax = parseResult.expr;
       return true;
    }

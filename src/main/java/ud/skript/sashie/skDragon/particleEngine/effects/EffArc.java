@@ -47,30 +47,31 @@ public class EffArc extends Effect {
    private Expression seconds;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.particleString = exprs[0];
-      this.data = exprs[1];
-      this.speed = exprs[2];
-      this.offX = exprs[3];
-      this.offY = exprs[4];
-      this.offZ = exprs[5];
-      this.entLoc = exprs[6];
-      this.tarLoc = exprs[7];
-      this.idName = exprs[8];
-      this.singlePlayer = exprs[9];
-      this.player = exprs[10];
-      this.rainbMode = exprs[11];
-      this.pDensity = exprs[12];
-      this.height = exprs[13];
-      this.pitch = exprs[14];
-      this.range = exprs[15];
-      this.displaceX = exprs[16];
-      this.displaceY = exprs[17];
-      this.displaceZ = exprs[18];
-      this.displaceX2 = exprs[19];
-      this.displaceY2 = exprs[20];
-      this.displaceZ2 = exprs[21];
-      this.ticks = exprs[22];
-      this.seconds = exprs[23];
+      int i = 0;
+      this.particleString = exprs[i++];
+      this.data = exprs[i++];
+      this.speed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.tarLoc = exprs[i++];
+      this.idName = exprs[i++];
+      this.singlePlayer = exprs[i++];
+      this.player = exprs[i++];
+      this.rainbMode = exprs[i++];
+      this.pDensity = exprs[i++];
+      this.height = exprs[i++];
+      this.pitch = exprs[i++];
+      this.range = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.displaceX2 = exprs[i++];
+      this.displaceY2 = exprs[i++];
+      this.displaceZ2 = exprs[i++];
+      this.ticks = exprs[i++];
+      this.seconds = exprs[i++];
       return true;
    }
 

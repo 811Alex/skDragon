@@ -46,27 +46,28 @@ public class EffLine extends Effect {
    private Expression inputPulseTick;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.particleName = exprs[0];
-      this.inputParticleData = exprs[1];
-      this.inputParticleSpeed = exprs[2];
-      this.offX = exprs[3];
-      this.offY = exprs[4];
-      this.offZ = exprs[5];
-      this.entLoc = exprs[6];
-      this.tarLoc = exprs[7];
-      this.inputIdName = exprs[8];
-      this.inputPlayers = exprs[9];
-      this.inputRainbowMode = exprs[10];
-      this.inputSolid = exprs[11];
-      this.inputDensity = exprs[12];
-      this.inputLength = exprs[13];
-      this.inputZigZagCount = exprs[14];
-      this.inputZigZagHeight = exprs[15];
-      this.range = exprs[16];
-      this.displaceX = exprs[17];
-      this.displaceY = exprs[18];
-      this.displaceZ = exprs[19];
-      this.inputPulseTick = exprs[20];
+      int i = 0;
+      this.particleName = exprs[i++];
+      this.inputParticleData = exprs[i++];
+      this.inputParticleSpeed = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.tarLoc = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.inputRainbowMode = exprs[i++];
+      this.inputSolid = exprs[i++];
+      this.inputDensity = exprs[i++];
+      this.inputLength = exprs[i++];
+      this.inputZigZagCount = exprs[i++];
+      this.inputZigZagHeight = exprs[i++];
+      this.range = exprs[i++];
+      this.displaceX = exprs[i++];
+      this.displaceY = exprs[i++];
+      this.displaceZ = exprs[i++];
+      this.inputPulseTick = exprs[i++];
       return true;
    }
 

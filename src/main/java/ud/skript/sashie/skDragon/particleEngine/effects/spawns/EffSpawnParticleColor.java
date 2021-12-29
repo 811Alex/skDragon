@@ -44,21 +44,22 @@ public class EffSpawnParticleColor extends DragonEffect {
    private String parsedSyntax;
 
    public boolean init(Expression[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-      this.partCount = exprs[0];
-      this.entLoc = exprs[1];
-      this.offX = exprs[2];
-      this.offY = exprs[3];
-      this.offZ = exprs[4];
-      this.coffX = exprs[5];
-      this.coffY = exprs[6];
-      this.coffZ = exprs[7];
-      this.inputIdName = exprs[8];
-      this.isRainbowTrue = exprs[9];
-      this.inputRandomColor = exprs[10];
-      this.inputPlayers = exprs[11];
-      this.inputRange = exprs[12];
-      this.inputPulseDelay = exprs[13];
-      this.inputKeepDelay = exprs[14];
+      int i = 0;
+      this.partCount = exprs[i++];
+      this.entLoc = exprs[i++];
+      this.offX = exprs[i++];
+      this.offY = exprs[i++];
+      this.offZ = exprs[i++];
+      this.coffX = exprs[i++];
+      this.coffY = exprs[i++];
+      this.coffZ = exprs[i++];
+      this.inputIdName = exprs[i++];
+      this.isRainbowTrue = exprs[i++];
+      this.inputRandomColor = exprs[i++];
+      this.inputPlayers = exprs[i++];
+      this.inputRange = exprs[i++];
+      this.inputPulseDelay = exprs[i++];
+      this.inputKeepDelay = exprs[i++];
       this.parsedSyntax = parseResult.expr;
       return true;
    }
