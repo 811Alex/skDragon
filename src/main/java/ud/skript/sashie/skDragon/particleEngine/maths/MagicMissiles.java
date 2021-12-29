@@ -16,7 +16,7 @@ import ud.skript.sashie.skDragon.particleEngine.utils.RandomUtils;
 import ud.skript.sashie.skDragon.particleEngine.utils.VectorUtils;
 
 public class MagicMissiles extends EffectsLib {
-   public static void drawEffect(final int style, final ParticleEffect particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final int position, final float finalArcPitch, final int finalArcs, final int finalParticleDensity, final int finalStepPerIteration, final float finalLength, final double damageValue, final double visibleRange, final double disX, final double disY, final double disZ, long delayStart, long delayPulse) {
+   public static void drawEffect(final int style, final ParticleEffect particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final int position, final float finalArcPitch, final int finalArcs, final int finalParticleDensity, final int finalStepPerIteration, final float finalLength, final double damageValue, final double visibleRange, final double disX, final double disY, final double disZ, long delayStart, long delayPulse) {
       if (!EffectsLib.arraylist.containsKey(idName)) {
          int missile = Bukkit.getServer().getScheduler().runTaskTimer(skDragonCore.skdragoncore, new Runnable() {
             protected int timeStep = 0;
@@ -70,7 +70,7 @@ public class MagicMissiles extends EffectsLib {
                      VectorUtils.rotateAroundAxisX(this.v, (Double)this.rndAngle.get(i));
                      VectorUtils.rotateAroundAxisZ(this.v, locPitch);
                      VectorUtils.rotateAroundAxisY(this.v, locYaw);
-                     particle.display(idName, dataMat, dataID, player, this.location.clone().add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     particle.display(idName, dataMat, dataID, player, this.location.clone().add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      this.location.subtract(this.v);
                   }
 
@@ -85,7 +85,7 @@ public class MagicMissiles extends EffectsLib {
                double y = this.dir.getY() * this.t + 1.5D;
                double z = this.dir.getZ() * this.t;
                this.location.add(x, y, z);
-               particle.display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+               particle.display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                this.ent = this.location.getWorld().getLivingEntities();
                Iterator var8 = this.ent.iterator();
 
@@ -107,7 +107,7 @@ public class MagicMissiles extends EffectsLib {
                double y = this.dir.getY() * this.t + 1.5D;
                double z = this.dir.getZ() * this.t;
                this.location.add(x, y, z);
-               particle.display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+               particle.display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                this.collisionCheck();
                this.location.subtract(x, y, z);
             }

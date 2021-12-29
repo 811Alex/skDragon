@@ -21,7 +21,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawText")
 @Description({"Draws text at a location or a player, it can also auto face where the player looks Uses system fonts(most fonts/unicodes show up as squares)"})
-@Syntaxes({"drawText %string%, particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, (only[ ]for|visible[ ]to) %-players%][, r[ainbow]M[ode] %-boolean%][, autoFace %-boolean%][, invert %-boolean%][, f[ont]Name %-string%, f[ont]Style %-fontstyle%, f[ont]Size %-number%], scale %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
+@Syntaxes({"drawText %string%, particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, (only[ ]for|visible[ ]to) %-players%][, r[ainbow]M[ode] %-boolean%][, autoFace %-boolean%][, invert %-boolean%][, f[ont]Name %-string%, f[ont]Style %-fontstyle%, f[ont]Size %-number%], scale %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
 @Examples({"drawText \"this works but �, �, � doesn't\", particle redstone, RGB 20, 100, 227, center location of player, id \"%player%\", rainbowMode false, autoFace false, invert false, fontName \"Arial\", fontStyle plain, fontSize 10, scale 7, visibleRange 32, RotationXYZ 0, 0, 0, displacementXYZ 0, 0, 0, pulseDelay 0"})
 public class EffText extends Effect {
    private Expression inputText;
@@ -31,6 +31,9 @@ public class EffText extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression inputIdName;
    private Expression inputPlayers;
@@ -59,6 +62,9 @@ public class EffText extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.inputIdName = exprs[i++];
       this.inputPlayers = exprs[i++];
@@ -81,7 +87,7 @@ public class EffText extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawText %string%, particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%][, autoFace %-boolean%][, invert %-boolean%][, f[ont]Name %-string%, f[ont]Style %-fontstyle%, f[ont]Size %-number%], scale %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+      return "drawText %string%, particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%][, autoFace %-boolean%][, invert %-boolean%][, f[ont]Name %-string%, f[ont]Style %-fontstyle%, f[ont]Size %-number%], scale %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -95,6 +101,7 @@ public class EffText extends Effect {
       ParticleEffect particle = (ParticleEffect)this.particleName.getSingle(e);
       float speed = SkriptHandler.inputParticleSpeed(e, this.inputParticleSpeed);
       Vector offset = SkriptHandler.inputParticleOffset(e, this.offX, this.offY, this.offZ);
+      Vector offsetTrans = SkriptHandler.inputParticleOffset(e, this.offXT, this.offYT, this.offZT);
       Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
       boolean rainbowMode = SkriptHandler.inputRainbowMode(e, this.inputRainbowMode);
@@ -113,7 +120,7 @@ public class EffText extends Effect {
       Font font = SkriptHandler.inputFont(e, this.inputFontName, this.inputFontStyle, this.inputFontSize);
       String text = (String)this.inputText.getSingle(e);
       int finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseTick);
-      Text effect = new Text(text, font, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, invert, autoFace, 1.0F, 1.0F, (float)scaleSize, visibleRange, axis, displacement, 0L, finalPulseTick);
+      Text effect = new Text(text, font, particle, dataMat, dataID, speed, offset, offsetTrans, idName, center, players, rainbowMode, invert, autoFace, 1.0F, 1.0F, (float)scaleSize, visibleRange, axis, displacement, 0L, finalPulseTick);
       effect.draw();
    }
 }

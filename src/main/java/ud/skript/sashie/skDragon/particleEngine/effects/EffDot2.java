@@ -26,7 +26,7 @@ import wtfplswork.Runnable;
 
 @Name("drawDot 2")
 @Description({"placeholder"})
-@Syntaxes({"drawDot[ count %-number%,] particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, colo[u]rOffset %-number%, %-number%, %-number%], center %objects%[, id %-string%][, isClientside %-players%][, r[ainbow]M[ode] %-boolean%][, randomColor %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%][, keepFor %-timespan%]"})
+@Syntaxes({"drawDot[ count %-number%,] particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, colo[u]rOffset %-number%, %-number%, %-number%], center %objects%[, id %-string%][, isClientside %-players%][, r[ainbow]M[ode] %-boolean%][, randomColor %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%][, keepFor %-timespan%]"})
 @Examples({"placeholder"})
 public class EffDot2 extends Effect {
    private Expression partCount;
@@ -36,6 +36,9 @@ public class EffDot2 extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression coffX;
    private Expression coffY;
    private Expression coffZ;
@@ -60,6 +63,9 @@ public class EffDot2 extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.coffX = exprs[i++];
       this.coffY = exprs[i++];
       this.coffZ = exprs[i++];
@@ -78,7 +84,7 @@ public class EffDot2 extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawDot[ count %-number%,] particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, colo[u]rOffset %-number%, %-number%, %-number%], center %entites/locations%[, id %string%][, (visibleTo|isClientside) %-players%][, r[ainbow]M[ode] %-boolean%][, randomColor %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%][, keepFor %-timespan%]";
+      return "drawDot[ count %-number%,] particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, colo[u]rOffset %-number%, %-number%, %-number%], center %entites/locations%[, id %string%][, (visibleTo|isClientside) %-players%][, r[ainbow]M[ode] %-boolean%][, randomColor %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%][, keepFor %-timespan%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -92,6 +98,9 @@ public class EffDot2 extends Effect {
       float offsetX = SkriptHandler.inputParticleOffset(e, this.offX);
       final float offsetY = SkriptHandler.inputParticleOffset(e, this.offY);
       final float offsetZ = SkriptHandler.inputParticleOffset(e, this.offZ);
+      float offsetXT = SkriptHandler.inputParticleOffset(e, this.offXT);
+      final float offsetYT = SkriptHandler.inputParticleOffset(e, this.offYT);
+      final float offsetZT = SkriptHandler.inputParticleOffset(e, this.offZT);
       final float coffsetX = SkriptHandler.inputFloat(0.0F, e, this.coffX);
       final float coffsetY = SkriptHandler.inputFloat(0.0F, e, this.coffY);
       final float coffsetZ = SkriptHandler.inputFloat(0.0F, e, this.coffZ);
@@ -125,10 +134,13 @@ public class EffDot2 extends Effect {
       }
 
       if (!EffectsLib.arraylist.containsKey(idName)) {
-         int dotGo = Bukkit.getServer().getScheduler().runTaskTimer(skDragonCore.skdragoncore, new Runnable(offsetX) {
+         int dotGo = Bukkit.getServer().getScheduler().runTaskTimer(skDragonCore.skdragoncore, new Runnable(offsetX, offsetXT) {
             float finalOffsetX;
             float finalOffsetY;
             float finalOffsetZ;
+            float finalOffsetXT;
+            float finalOffsetYT;
+            float finalOffsetZT;
             float finalColorOffsetX;
             float finalColorOffsetY;
             float finalColorOffsetZ;
@@ -137,6 +149,9 @@ public class EffDot2 extends Effect {
                this.finalOffsetX = (float) vars.get(0);
                this.finalOffsetY = offsetY;
                this.finalOffsetZ = offsetZ;
+               this.finalOffsetXT = (float) vars.get(1);
+               this.finalOffsetYT = offsetYT;
+               this.finalOffsetZT = offsetZT;
                this.finalColorOffsetX = coffsetX;
                this.finalColorOffsetY = coffsetY;
                this.finalColorOffsetZ = coffsetZ;
@@ -154,22 +169,30 @@ public class EffDot2 extends Effect {
                   if (randomColor) {
                      if (!rainbowMode) {
                         this.finalOffsetX = RandomUtils.randomRangeFloat(0.0F, 255.0F);
+                        this.finalOffsetXT = RandomUtils.randomRangeFloat(0.0F, 255.0F);
                      }
                      this.finalOffsetY = RandomUtils.randomRangeFloat(0.0F, 255.0F);
+                     this.finalOffsetYT = RandomUtils.randomRangeFloat(0.0F, 255.0F);
                      this.finalOffsetZ = RandomUtils.randomRangeFloat(0.0F, 255.0F);
+                     this.finalOffsetZT = RandomUtils.randomRangeFloat(0.0F, 255.0F);
                   }
 
                   if (rainbowMode) {
-                     if (!randomColor) {
-                        this.finalOffsetX = ParticleEffect.simpleRainbowHelper(this.finalOffsetX, particle);
-                     } else {
-                        this.finalOffsetX = ParticleEffect.simpleRainbowHelper(this.finalOffsetX, particle);
+                     this.finalOffsetX = ParticleEffect.simpleRainbowHelper(this.finalOffsetX, particle);
+                     this.finalOffsetXT = ParticleEffect.simpleRainbowHelper(this.finalOffsetXT, particle);
+                     if (randomColor) {
                         if (offsetY == 0.0F) {
                            this.finalOffsetY = 1.0F;
+                        }
+                        if (offsetYT == 0.0F) {
+                           this.finalOffsetYT = 1.0F;
                         }
 
                         if (offsetZ == 0.0F) {
                            this.finalOffsetZ = 1.0F;
+                        }
+                        if (offsetZT == 0.0F) {
+                           this.finalOffsetZT = 1.0F;
                         }
                      }
                   }
@@ -189,11 +212,11 @@ public class EffDot2 extends Effect {
                         }
 
                         loc.add(this.finalColorOffsetX, this.finalColorOffsetY, this.finalColorOffsetZ);
-                        particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, finalSpeed, 1);
+                        particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, this.finalOffsetXT, this.finalOffsetYT, this.finalOffsetZT, finalSpeed, 1);
                         loc.subtract(this.finalColorOffsetX, this.finalColorOffsetY, this.finalColorOffsetZ);
                      }
                   } else {
-                     particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, finalSpeed, count);
+                     particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, this.finalOffsetXT, this.finalOffsetYT, this.finalOffsetZT, finalSpeed, count);
                   }
                }
             }

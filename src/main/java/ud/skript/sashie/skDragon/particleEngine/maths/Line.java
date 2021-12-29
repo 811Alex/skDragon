@@ -12,13 +12,16 @@ import ud.skript.sashie.skDragon.particleEngine.utils.ParticleEffect;
 import wtfplswork.Runnable;
 
 public class Line extends EffectsLib {
-   public static void drawEffect(final ParticleEffect particle, final Material dataMat, final byte dataID, final float speed, final Vector offset, final String idName, final DynamicLocation center, final DynamicLocation inputTarget, final List players, final boolean rainbowMode, final boolean solid, float inputDensity, final float length, final int zigZags, final float zigHeight, final double visibleRange, final Vector displacement, long delayStart, long delayPulse) {
+   public static void drawEffect(final ParticleEffect particle, final Material dataMat, final byte dataID, final float speed, final Vector offset, final Vector offsetTrans, final String idName, final DynamicLocation center, final DynamicLocation inputTarget, final List players, final boolean rainbowMode, final boolean solid, float inputDensity, final float length, final int zigZags, final float zigHeight, final double visibleRange, final Vector displacement, long delayStart, long delayPulse) {
       if (!EffectsLib.arraylist.containsKey(idName)) {
          int line = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(inputDensity) {
             boolean init = false;
             float finalOffsetX = (float)offset.getX();
             float finalOffsetY = (float)offset.getY();
             float finalOffsetZ = (float)offset.getZ();
+            float finalOffsetXT = (float)offsetTrans.getX();
+            float finalOffsetYT = (float)offsetTrans.getY();
+            float finalOffsetZT = (float)offsetTrans.getZ();
             Location target;
             float density;
             float densityFactor;
@@ -48,12 +51,19 @@ public class Line extends EffectsLib {
 
                   if (rainbowMode) {
                      this.finalOffsetX = ParticleEffect.simpleRainbowHelper(this.finalOffsetX, particle);
+                     this.finalOffsetXT = ParticleEffect.simpleRainbowHelper(this.finalOffsetXT, particle);
                      if (offset.getY() == 0.0D) {
                         this.finalOffsetY = 1.0F;
+                     }
+                     if (offsetTrans.getY() == 0.0D) {
+                        this.finalOffsetYT = 1.0F;
                      }
 
                      if (offset.getZ() == 0.0D) {
                         this.finalOffsetZ = 1.0F;
+                     }
+                     if (offsetTrans.getZ() == 0.0D) {
+                        this.finalOffsetZT = 1.0F;
                      }
                   }
 
@@ -116,7 +126,7 @@ public class Line extends EffectsLib {
                      }
 
                      finalLoc.add(line);
-                     particle.display(idName, dataMat, dataID, players, finalLoc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, speed, 1);
+                     particle.display(idName, dataMat, dataID, players, finalLoc, visibleRange, rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, this.finalOffsetXT, this.finalOffsetYT, this.finalOffsetZT, speed, 1);
                      if (!solid) {
                         finalLoc.subtract(line);
                      }

@@ -18,7 +18,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawArc")
 @Description({"Draws an arc from one location or player to another. New as of v0.06.33-BETA"})
-@Syntaxes({"drawArc particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, target %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], density %number%, height %number%, p[itch]M[ultiplier] %number%, visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, dis[placement]X2 %-number%, dis[placement]Y2 %-number%, dis[placement]Z2 %-number%][, tps %-number%, second %-number%]"})
+@Syntaxes({"drawArc particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, target %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], density %number%, height %number%, p[itch]M[ultiplier] %number%, visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, dis[placement]X2 %-number%, dis[placement]Y2 %-number%, dis[placement]Z2 %-number%][, tps %-number%, second %-number%]"})
 @Examples({"drawArc particle \"redstone\", center player, target location of player, id \"%player%\", rainbowMode true, density 50, height 2, pitchMultiplier 4, visibleRange 30", "drawArc particle \"redstone\", center player, target target block, id \"%player%\", rainbowMode true, density 50, height 2, pitchMultiplier 4, visibleRange 30", "drawArc particle \"redstone\", center player, target target block, id \"%player%\", rainbowMode true, density 50, height 2, pitchMultiplier 8, visibleRange 30, displacementX 0, displacementY 4, displacementZ 0", "drawArc particle \"redstone\", center player, target target block, id \"%player%\", rainbowMode true, density 50, height -3, pitchMultiplier 4, visibleRange 30", "drawArc particle \"redstone\", center player, target target block, id \"%player%\", rainbowMode true, density 50, height o, pitchMultiplier 4, visibleRange 30"})
 public class EffArc extends Effect {
    private Expression particleString;
@@ -27,6 +27,9 @@ public class EffArc extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression tarLoc;
    private Expression idName;
@@ -54,6 +57,9 @@ public class EffArc extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.tarLoc = exprs[i++];
       this.idName = exprs[i++];
@@ -76,7 +82,7 @@ public class EffArc extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawArc particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, target %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], density %number%, height %number%, p[itch]M[ultiplier] %number%, visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, dis[placement]X2 %-number%, dis[placement]Y2 %-number%, dis[placement]Z2 %-number%][, tps %-number%, second %-number%]";
+      return "drawArc particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, target %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], density %number%, height %number%, p[itch]M[ultiplier] %number%, visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, dis[placement]X2 %-number%, dis[placement]Y2 %-number%, dis[placement]Z2 %-number%][, tps %-number%, second %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -84,6 +90,9 @@ public class EffArc extends Effect {
       float offsetX = 0.0F;
       float offsetY = 0.0F;
       float offsetZ = 0.0F;
+      float offsetXT = 0.0F;
+      float offsetYT = 0.0F;
+      float offsetZT = 0.0F;
       double disX = 0.0D;
       double disY = 0.0D;
       double disZ = 0.0D;
@@ -127,6 +136,12 @@ public class EffArc extends Effect {
          offsetZ = (float)((Number)this.offZ.getSingle(e)).intValue();
       }
 
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = (float)((Number)this.offXT.getSingle(e)).intValue();
+         offsetYT = (float)((Number)this.offYT.getSingle(e)).intValue();
+         offsetZT = (float)((Number)this.offZT.getSingle(e)).intValue();
+      }
+
       if (this.displaceX != null && this.displaceY != null && this.displaceZ != null) {
          disX = ((Number)this.displaceX.getSingle(e)).doubleValue();
          disY = ((Number)this.displaceY.getSingle(e)).doubleValue();
@@ -158,11 +173,11 @@ public class EffArc extends Effect {
       try {
          Material dataMat = ((ItemStack)this.data.getSingle(e)).getType();
          byte dataID = ((ItemStack)this.data.getSingle(e)).getData().getData();
-         EffectsLib.drawArc(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, center, target, idName, isSinglePlayer, p, rainbowMode, finalParticleDensity, finalHeight, pitchMuliplier, visibleRange, disX, disY, disZ, disX2, disY2, disZ2, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawArc(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, center, target, idName, isSinglePlayer, p, rainbowMode, finalParticleDensity, finalHeight, pitchMuliplier, visibleRange, disX, disY, disZ, disX2, disY2, disZ2, finalDelayTicks, finalDelayBySec);
       } catch (Exception var36) {
          Material dataMatNull = Material.DIRT;
          byte dataIDNull = 0;
-         EffectsLib.drawArc(particle, dataMatNull, dataIDNull, finalSpeed, offsetX, offsetY, offsetZ, center, target, idName, isSinglePlayer, p, rainbowMode, finalParticleDensity, finalHeight, pitchMuliplier, visibleRange, disX, disY, disZ, disX2, disY2, disZ2, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawArc(particle, dataMatNull, dataIDNull, finalSpeed, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, center, target, idName, isSinglePlayer, p, rainbowMode, finalParticleDensity, finalHeight, pitchMuliplier, visibleRange, disX, disY, disZ, disX2, disY2, disZ2, finalDelayTicks, finalDelayBySec);
       }
 
    }

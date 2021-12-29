@@ -18,7 +18,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawRings ")
 @Description({"Ring effect like the circles around the drawAtom that follows the player or plays at a location. Added in 0.09.0-BETA -Warning- setting animated to true will be a bit resource heavy, but produces an interesting effect. "})
-@Syntaxes({"drawRings particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, animated %boolean%, radius %number%, ringCount %number%, ringDensity %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
+@Syntaxes({"drawRings particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, animated %boolean%, radius %number%, ringCount %number%, ringDensity %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
 @Examples({"drawRings particle \"redstone\", RGB 80, 255, 255, center player, id \"%player%\", rainbowMode true, randomRotation true, animated false, radius 1, ringCount 4, ringDensity 10, visibleRange 32, pulseDelay 2"})
 public class EffRings extends Effect {
    private Expression particleString;
@@ -27,6 +27,9 @@ public class EffRings extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression idName;
    private Expression singlePlayer;
@@ -54,6 +57,9 @@ public class EffRings extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.idName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -76,7 +82,7 @@ public class EffRings extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawRings particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, animated %boolean%, radius %number%, ringCount %number%, ringDensity %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+      return "drawRings particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, animated %boolean%, radius %number%, ringCount %number%, ringDensity %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -84,6 +90,9 @@ public class EffRings extends Effect {
       float offsetX = 0.0F;
       float offsetY = 0.0F;
       float offsetZ = 0.0F;
+      float offsetXT = 0.0F;
+      float offsetYT = 0.0F;
+      float offsetZT = 0.0F;
       double xRotation = 0.0D;
       double yRotation = 0.0D;
       double zRotation = 0.0D;
@@ -130,6 +139,12 @@ public class EffRings extends Effect {
          offsetZ = (float)((Number)this.offZ.getSingle(e)).intValue();
       }
 
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = (float)((Number)this.offXT.getSingle(e)).intValue();
+         offsetYT = (float)((Number)this.offYT.getSingle(e)).intValue();
+         offsetZT = (float)((Number)this.offZT.getSingle(e)).intValue();
+      }
+
       if (this.displaceX != null && this.displaceY != null && this.displaceZ != null) {
          disX = ((Number)this.displaceX.getSingle(e)).doubleValue();
          disY = ((Number)this.displaceY.getSingle(e)).doubleValue();
@@ -148,6 +163,6 @@ public class EffRings extends Effect {
 
       Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
-      EffectsLib.drawRings(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, animated, finalRadius, ringCount, ringDensity, 0.0F, visibleRange, xRotation, yRotation, zRotation, disX, disY, disZ, 0L, finalDelayTicks);
+      EffectsLib.drawRings(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, animated, finalRadius, ringCount, ringDensity, 0.0F, visibleRange, xRotation, yRotation, zRotation, disX, disY, disZ, 0L, finalDelayTicks);
    }
 }

@@ -24,7 +24,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("Random Lightning")
 @Description({"placeholder"})
-@Syntaxes({"start new lightning effect with id name %string% at %objects% with particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, axis %-number%, %-number%, %-number%], radius %number%, density %number%[, isClientside %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
+@Syntaxes({"start new lightning effect with id name %string% at %objects% with particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, axis %-number%, %-number%, %-number%], radius %number%, density %number%[, isClientside %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
 @Examples({"placeholder"})
 public class EffLightning extends Effect {
    private Expression inputIdName;
@@ -35,6 +35,9 @@ public class EffLightning extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression axisX;
    private Expression axisY;
    private Expression axisZ;
@@ -58,6 +61,9 @@ public class EffLightning extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.axisX = exprs[i++];
       this.axisY = exprs[i++];
       this.axisZ = exprs[i++];
@@ -86,6 +92,9 @@ public class EffLightning extends Effect {
       final float offsetX = SkriptHandler.inputParticleOffset(e, this.offX);
       final float offsetY = SkriptHandler.inputParticleOffset(e, this.offY);
       final float offsetZ = SkriptHandler.inputParticleOffset(e, this.offZ);
+      final float offsetXT = SkriptHandler.inputParticleOffset(e, this.offXT);
+      final float offsetYT = SkriptHandler.inputParticleOffset(e, this.offYT);
+      final float offsetZT = SkriptHandler.inputParticleOffset(e, this.offZT);
       final float axisX = SkriptHandler.inputFloat(0.0F, e, this.axisX);
       final float axisY = SkriptHandler.inputFloat(0.0F, e, this.axisY);
       final float axisZ = SkriptHandler.inputFloat(0.0F, e, this.axisZ);
@@ -126,7 +135,7 @@ public class EffLightning extends Effect {
                   float count = radius * 20.0F;
 
                   for(float i = 0.0F; i < count; ++i) {
-                     particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, 1);
+                     particle.display(idName, dataMat, dataID, players, loc, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, finalSpeed, 1);
                      loc.add(vector);
                      if (Math.random() < 1.5D / (double)density) {
                         Vector random = Vector.getRandom().multiply(2).subtract(new Vector(1, 1, 1)).multiply(axisAlignment).normalize().multiply(0.1D);

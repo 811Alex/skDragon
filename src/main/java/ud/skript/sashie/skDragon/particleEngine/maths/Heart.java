@@ -13,7 +13,7 @@ import ud.skript.sashie.skDragon.particleEngine.utils.VectorUtils;
 import wtfplswork.Runnable;
 
 public class Heart extends EffectsLib {
-   public static void drawEffect(final ParticleEffect particle, final float speed, final Material dataMat, final byte dataID, final String idName, final DynamicLocation center, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float spin, double height, double width, double innerSpike, double compress, final int particleDensity, final double xRotation, final double yRotation, final double zRotation, final float offsetX, final float offsetY, final float offsetZ, final double disX, final double disY, final double disZ, final double visibleRange, long delayStart, long delayPulse) {
+   public static void drawEffect(final ParticleEffect particle, final float speed, final Material dataMat, final byte dataID, final String idName, final DynamicLocation center, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float spin, double height, double width, double innerSpike, double compress, final int particleDensity, final double xRotation, final double yRotation, final double zRotation, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final double disX, final double disY, final double disZ, final double visibleRange, long delayStart, long delayPulse) {
       if (!EffectsLib.arraylist.containsKey(idName)) {
          int heart = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(width, height, innerSpike, compress) {
             boolean init = false;
@@ -58,7 +58,7 @@ public class Heart extends EffectsLib {
                      for(i = 0; i < this.vectorList.size(); ++i) {
                         this.v = (Vector)this.vectorList.get(i);
                         VectorUtils.rotateVector(this.v, 0.0D, spin, 0.0D);
-                        particle.display(idName, dataMat, dataID, player, center.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                        particle.display(idName, dataMat, dataID, player, center.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                         center.subtract(this.v);
                      }
                   }

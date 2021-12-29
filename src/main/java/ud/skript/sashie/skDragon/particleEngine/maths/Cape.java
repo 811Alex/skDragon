@@ -159,7 +159,7 @@ public class Cape extends EffectsLib {
                      int r = color.getRed();
                      int g = color.getGreen();
                      int b = color.getBlue();
-                     ParticleEffect.redstone.display(Cape.this.center.add(v).add(v2), visibleRange, isSinglePlayer, player, rainbowMode, Cape.this.hue, r, g, b);
+                     ParticleEffect.redstone.display(Cape.this.center.add(v).add(v2), visibleRange, isSinglePlayer, player, rainbowMode, Cape.this.hue, r, g, b, r, g, b);
                      Cape.this.center.subtract(v2).subtract(v);
                   }
                } catch (NullPointerException var33) {

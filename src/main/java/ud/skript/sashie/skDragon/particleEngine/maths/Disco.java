@@ -12,9 +12,9 @@ import ud.skript.sashie.skDragon.particleEngine.utils.RandomUtils;
 import wtfplswork.Runnable;
 
 public class Disco extends EffectsLib {
-   public static void drawEffect(final int style, final ParticleEffect particle, final Material dataMat, final byte dataID, final float speed, Vector offset, final ParticleEffect particle2, final Material dataMat2, final byte dataID2, final float speed2, final Vector offset2, final String idName, final DynamicLocation center, final List players, final boolean rainbowMode, final int maxLines, int lineLength, final float sphereRadius, final int sphereDensity, final int lineDensity, final double visibleRange, final Vector displacement, long delayStart, long delayPulse) {
+   public static void drawEffect(final int style, final ParticleEffect particle, final Material dataMat, final byte dataID, final float speed, Vector offset, Vector offsetTrans, final ParticleEffect particle2, final Material dataMat2, final byte dataID2, final float speed2, final Vector offset2, final Vector offset2Trans, final String idName, final DynamicLocation center, final List players, final boolean rainbowMode, final int maxLines, int lineLength, final float sphereRadius, final int sphereDensity, final int lineDensity, final double visibleRange, final Vector displacement, long delayStart, long delayPulse) {
       if (!EffectsLib.arraylist.containsKey(idName)) {
-         int disco = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(lineLength, offset) {
+         int disco = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(lineLength, offset, offsetTrans) {
             boolean init = false;
             int max;
             float finalOffsetX;
@@ -23,15 +23,27 @@ public class Disco extends EffectsLib {
             float finalOffsetX2;
             float finalOffsetY2;
             float finalOffsetZ2;
+            float finalOffsetXT;
+            float finalOffsetYT;
+            float finalOffsetZT;
+            float finalOffsetX2T;
+            float finalOffsetY2T;
+            float finalOffsetZ2T;
 
             {
                this.max = (int) vars.get(0);
                this.finalOffsetX = (float)((Vector) vars.get(1)).getX();
                this.finalOffsetY = (float)((Vector) vars.get(1)).getY();
                this.finalOffsetZ = (float)((Vector) vars.get(1)).getZ();
+               this.finalOffsetXT = (float)((Vector) vars.get(2)).getX();
+               this.finalOffsetYT = (float)((Vector) vars.get(2)).getY();
+               this.finalOffsetZT = (float)((Vector) vars.get(2)).getZ();
                this.finalOffsetX2 = (float)offset2.getX();
                this.finalOffsetY2 = (float)offset2.getY();
                this.finalOffsetZ2 = (float)offset2.getZ();
+               this.finalOffsetX2T = (float)offset2Trans.getX();
+               this.finalOffsetY2T = (float)offset2Trans.getY();
+               this.finalOffsetZ2T = (float)offset2Trans.getZ();
             }
 
             public void run() {
@@ -46,12 +58,19 @@ public class Disco extends EffectsLib {
 
                   if (rainbowMode) {
                      this.finalOffsetX2 = ParticleEffect.simpleRainbowHelper(this.finalOffsetX2, particle2);
+                     this.finalOffsetX2T = ParticleEffect.simpleRainbowHelper(this.finalOffsetX2T, particle2);
                      if (offset2.getY() == 0.0D) {
                         this.finalOffsetY2 = 1.0F;
+                     }
+                     if (offset2Trans.getY() == 0.0D) {
+                        this.finalOffsetY2T = 1.0F;
                      }
 
                      if (offset2.getZ() == 0.0D) {
                         this.finalOffsetZ2 = 1.0F;
+                     }
+                     if (offset2Trans.getZ() == 0.0D) {
+                        this.finalOffsetZ2T = 1.0F;
                      }
                   }
 
@@ -83,14 +102,14 @@ public class Disco extends EffectsLib {
 
                      for(int ix = 0; ix < lineDensity; ++ix) {
                         loc.add(v);
-                        particle2.display(idName, dataMat2, dataID2, players, loc, visibleRange, rainbowMode, this.finalOffsetX2, this.finalOffsetY2, this.finalOffsetZ2, speed2, 1);
+                        particle2.display(idName, dataMat2, dataID2, players, loc, visibleRange, rainbowMode, this.finalOffsetX2, this.finalOffsetY2, this.finalOffsetZ2, this.finalOffsetX2T, this.finalOffsetY2T, this.finalOffsetZ2T, speed2, 1);
                      }
                   }
 
                   for(i = 0; i < sphereDensity; ++i) {
                      Vector vector = RandomUtils.getRandomVector().multiply(sphereRadius);
                      center.add(vector);
-                     particle.display(idName, dataMat, dataID, players, center, visibleRange, false, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, speed, 1);
+                     particle.display(idName, dataMat, dataID, players, center, visibleRange, false, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, this.finalOffsetXT, this.finalOffsetYT, this.finalOffsetZT, speed, 1);
                      center.subtract(vector);
                   }
                } catch (NullPointerException var16) {

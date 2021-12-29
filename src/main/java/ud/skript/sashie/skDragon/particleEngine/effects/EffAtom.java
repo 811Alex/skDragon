@@ -18,7 +18,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawAtom")
 @Description({"Draws an atom effect that follows the player or plays at a location. New Syntax as of v0.06.0-BETA"})
-@Syntaxes({"drawAtom particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], innerPCount %number%, innerRadius %number%, outerPCount %number%, orbitCount %number%, start %number%, visibleRange %number%, rot[ation] %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
+@Syntaxes({"drawAtom particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], innerPCount %number%, innerRadius %number%, outerPCount %number%, orbitCount %number%, start %number%, visibleRange %number%, rot[ation] %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
 @Examples({"drawAtom particle1 \"redstone\", particle2 \"flame\", center location of player, id \"%player%\", rainbowMode true, innerPCount 10, innerRadius .5, outerPCount 2, orbitCount 5, start 0, visibleRange 30, rotation 15"})
 public class EffAtom extends Effect {
    private Expression particleString;
@@ -27,12 +27,18 @@ public class EffAtom extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression particleString2;
    private Expression data2;
    private Expression speed2;
    private Expression offX2;
    private Expression offY2;
    private Expression offZ2;
+   private Expression offX2T;
+   private Expression offY2T;
+   private Expression offZ2T;
    private Expression entLoc;
    private Expression idName;
    private Expression singlePlayer;
@@ -59,12 +65,18 @@ public class EffAtom extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.particleString2 = exprs[i++];
       this.data2 = exprs[i++];
       this.speed2 = exprs[i++];
       this.offX2 = exprs[i++];
       this.offY2 = exprs[i++];
       this.offZ2 = exprs[i++];
+      this.offX2T = exprs[i++];
+      this.offY2T = exprs[i++];
+      this.offZ2T = exprs[i++];
       this.entLoc = exprs[i++];
       this.idName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -86,7 +98,7 @@ public class EffAtom extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawAtom particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], innerPCount %number%, innerRadius %number%, outerPCount %number%, orbitCount %number%, start %number%, visibleRange %number%, rot[ation] %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
+      return "drawAtom particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], innerPCount %number%, innerRadius %number%, outerPCount %number%, orbitCount %number%, start %number%, visibleRange %number%, rot[ation] %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -94,10 +106,16 @@ public class EffAtom extends Effect {
       float offsetX = 0.0F;
       float offsetY = 0.0F;
       float offsetZ = 0.0F;
+      float offsetXT = 0.0F;
+      float offsetYT = 0.0F;
+      float offsetZT = 0.0F;
       String particle2 = "happyvillager";
       float offsetX2 = 0.0F;
       float offsetY2 = 0.0F;
       float offsetZ2 = 0.0F;
+      float offsetX2T = 0.0F;
+      float offsetY2T = 0.0F;
+      float offsetZ2T = 0.0F;
       double disX = 0.0D;
       double disY = 0.0D;
       double disZ = 0.0D;
@@ -119,6 +137,12 @@ public class EffAtom extends Effect {
          offsetZ = (float)((Number)this.offZ.getSingle(e)).intValue();
       }
 
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = (float)((Number)this.offXT.getSingle(e)).intValue();
+         offsetYT = (float)((Number)this.offYT.getSingle(e)).intValue();
+         offsetZT = (float)((Number)this.offZT.getSingle(e)).intValue();
+      }
+
       if (this.particleString2 != null && ParticleEffect.NAME_MAP.containsKey(((String)this.particleString2.getSingle(e)).toLowerCase())) {
          particle2 = ((String)this.particleString2.getSingle(e)).toLowerCase();
       }
@@ -131,6 +155,12 @@ public class EffAtom extends Effect {
          offsetX2 = (float)((Number)this.offX2.getSingle(e)).intValue();
          offsetY2 = (float)((Number)this.offY2.getSingle(e)).intValue();
          offsetZ2 = (float)((Number)this.offZ2.getSingle(e)).intValue();
+      }
+
+      if (this.offX2T != null && this.offY2T != null && this.offZ2T != null) {
+         offsetX2T = (float)((Number)this.offX2T.getSingle(e)).intValue();
+         offsetY2T = (float)((Number)this.offY2T.getSingle(e)).intValue();
+         offsetZ2T = (float)((Number)this.offZ2T.getSingle(e)).intValue();
       }
 
       Object center = this.entLoc.getSingle(e);
@@ -174,11 +204,11 @@ public class EffAtom extends Effect {
          byte dataID = ((ItemStack)this.data.getSingle(e)).getData().getData();
          Material dataMat2 = ((ItemStack)this.data2.getSingle(e)).getType();
          byte dataID2 = ((ItemStack)this.data2.getSingle(e)).getData().getData();
-         EffectsLib.drawAtom(particle, dataMat, dataID, finalSpeed, particle2, dataMat2, dataID2, finalSpeed2, center, idName, isSinglePlayer, p, rainbowMode, radius, innerParticles, orbitParticles, orbitalCount, finalStep, visibleRange, rotations, offsetX, offsetY, offsetZ, offsetX2, offsetY2, offsetZ2, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawAtom(particle, dataMat, dataID, finalSpeed, particle2, dataMat2, dataID2, finalSpeed2, center, idName, isSinglePlayer, p, rainbowMode, radius, innerParticles, orbitParticles, orbitalCount, finalStep, visibleRange, rotations, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
       } catch (Exception var39) {
          Material dataMatNull = Material.DIRT;
          byte dataIDNull = 0;
-         EffectsLib.drawAtom(particle, dataMatNull, dataIDNull, finalSpeed, particle2, dataMatNull, dataIDNull, finalSpeed2, center, idName, isSinglePlayer, p, rainbowMode, radius, innerParticles, orbitParticles, orbitalCount, finalStep, visibleRange, rotations, offsetX, offsetY, offsetZ, offsetX2, offsetY2, offsetZ2, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawAtom(particle, dataMatNull, dataIDNull, finalSpeed, particle2, dataMatNull, dataIDNull, finalSpeed2, center, idName, isSinglePlayer, p, rainbowMode, radius, innerParticles, orbitParticles, orbitalCount, finalStep, visibleRange, rotations, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
       }
 
    }

@@ -19,7 +19,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawHeart")
 @Description({"Draws a heart shape at a player or location"})
-@Syntaxes({"drawHeart particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], ySpin %number%, width %number%, height %number%, innerSpike %number%, compress %number%, density %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
+@Syntaxes({"drawHeart particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], ySpin %number%, width %number%, height %number%, innerSpike %number%, compress %number%, density %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
 @Examples({"placeholder"})
 public class EffHeart extends Effect {
    private Expression inputParticle;
@@ -28,6 +28,9 @@ public class EffHeart extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression InputIdName;
    private Expression singlePlayer;
@@ -56,6 +59,9 @@ public class EffHeart extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.InputIdName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -79,7 +85,7 @@ public class EffHeart extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawHeart particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], ySpin %number%, width %number%, height %number%, innerSpike %number%, compress %number%, density %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+      return "drawHeart particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], ySpin %number%, width %number%, height %number%, innerSpike %number%, compress %number%, density %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -90,6 +96,9 @@ public class EffHeart extends Effect {
       int offsetX = SkriptHandler.inputInt(0, e, this.offX);
       int offsetY = SkriptHandler.inputInt(0, e, this.offY);
       int offsetZ = SkriptHandler.inputInt(0, e, this.offZ);
+      int offsetXT = SkriptHandler.inputInt(0, e, this.offXT);
+      int offsetYT = SkriptHandler.inputInt(0, e, this.offYT);
+      int offsetZT = SkriptHandler.inputInt(0, e, this.offZT);
 
       DynamicLocation center;
       try {
@@ -116,6 +125,6 @@ public class EffHeart extends Effect {
       double disY = SkriptHandler.inputDouble(0.0D, e, this.displaceY);
       double disZ = SkriptHandler.inputDouble(0.0D, e, this.displaceZ);
       long finalDelayTicks = SkriptHandler.inputLong(0, e, this.ticks);
-      Heart.drawEffect(particle, finalSpeed, dataMat, dataID, idName, center, isSinglePlayer, p, rainbowMode, finalSpin, finalWidth, finalHeight, finalInnerSpike, finalCompress, pDensity, xRotation, yRotation, zRotation, (float)offsetX, (float)offsetY, (float)offsetZ, disX, disY, disZ, visibleRange, 0L, finalDelayTicks);
+      Heart.drawEffect(particle, finalSpeed, dataMat, dataID, idName, center, isSinglePlayer, p, rainbowMode, finalSpin, finalWidth, finalHeight, finalInnerSpike, finalCompress, pDensity, xRotation, yRotation, zRotation, (float)offsetX, (float)offsetY, (float)offsetZ, (float)offsetXT, (float)offsetYT, (float)offsetZT, disX, disY, disZ, visibleRange, 0L, finalDelayTicks);
    }
 }

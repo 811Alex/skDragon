@@ -18,7 +18,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawBand ")
 @Description({"Draws a band effect that follows the player or plays at a location. New Syntax as of v0.06.0-BETA "})
-@Syntaxes({"drawBand particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
+@Syntaxes({"drawBand particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
 @Examples({"drawBand particle \"redstone\", RGB 0, 0, 0, center player, id \"%player%\", rainbowMode true, visibleRange 30"})
 public class EffBand extends Effect {
    private Expression particleString;
@@ -27,6 +27,9 @@ public class EffBand extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression idName;
    private Expression singlePlayer;
@@ -47,6 +50,9 @@ public class EffBand extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.idName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -62,7 +68,7 @@ public class EffBand extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawBand particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
+      return "drawBand particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -70,6 +76,9 @@ public class EffBand extends Effect {
       float offsetX = 0.0F;
       float offsetY = 0.0F;
       float offsetZ = 0.0F;
+      float offsetXT = 0.0F;
+      float offsetYT = 0.0F;
+      float offsetZT = 0.0F;
       double disX = 0.0D;
       double disY = 0.0D;
       double disZ = 0.0D;
@@ -88,6 +97,12 @@ public class EffBand extends Effect {
          offsetX = (float)((Number)this.offX.getSingle(e)).intValue();
          offsetY = (float)((Number)this.offY.getSingle(e)).intValue();
          offsetZ = (float)((Number)this.offZ.getSingle(e)).intValue();
+      }
+
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = (float)((Number)this.offXT.getSingle(e)).intValue();
+         offsetYT = (float)((Number)this.offYT.getSingle(e)).intValue();
+         offsetZT = (float)((Number)this.offZT.getSingle(e)).intValue();
       }
 
       Object center = this.entLoc.getSingle(e);
@@ -122,11 +137,11 @@ public class EffBand extends Effect {
       try {
          Material dataMat = ((ItemStack)this.data.getSingle(e)).getType();
          byte dataID = ((ItemStack)this.data.getSingle(e)).getData().getData();
-         EffectsLib.drawBand(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, center, idName, isSinglePlayer, rainbowMode, visibleRange, disX, disY, disZ, finalDelayTicks, finalDelayBySec, p);
+         EffectsLib.drawBand(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, center, idName, isSinglePlayer, rainbowMode, visibleRange, disX, disY, disZ, finalDelayTicks, finalDelayBySec, p);
       } catch (Exception var25) {
          Material dataMatNull = Material.DIRT;
          byte dataIDNull = 0;
-         EffectsLib.drawBand(particle, dataMatNull, dataIDNull, finalSpeed, offsetX, offsetY, offsetZ, center, idName, isSinglePlayer, rainbowMode, visibleRange, disX, disY, disZ, finalDelayTicks, finalDelayBySec, p);
+         EffectsLib.drawBand(particle, dataMatNull, dataIDNull, finalSpeed, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, center, idName, isSinglePlayer, rainbowMode, visibleRange, disX, disY, disZ, finalDelayTicks, finalDelayBySec, p);
       }
 
    }

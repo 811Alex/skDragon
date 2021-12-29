@@ -307,19 +307,19 @@ public class DragonParticle implements Serializable {
       if (!this.particle.isSupported()) {
          EffectsLib.stopEffect(idName);
       } else {
-         if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
+         if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.dustcolortransition && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
             if (this.particle == ParticleEffect.note) {
                if (rainbowMode) {
                   ParticleEffect.NoteColor color = new ParticleEffect.NoteColor((int)this.r);
                   if (players != null) {
-                     this.particle.display(color, center, players);
+                     this.particle.display(color, null, center, players);
                   } else {
-                     this.particle.display(color, center, this.range);
+                     this.particle.display(color, null, center, this.range);
                   }
                } else if (players != null) {
-                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, players);
+                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), null, center, players);
                } else {
-                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, this.range);
+                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), null, center, this.range);
                }
             } else if (this.particle.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
                if ((this.particle == ParticleEffect.fallingdust || this.particle == ParticleEffect.blockcrack || this.particle == ParticleEffect.blockdust) && this.material != null) {
@@ -350,9 +350,9 @@ public class DragonParticle implements Serializable {
                color = new ParticleEffect.OrdinaryColor((int)this.r, (int)this.g, (int)this.b);
             }
             if (players != null) {
-               this.particle.display(color, center, (List)players);
+               this.particle.display(color, null, center, (List)players);  // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
             } else {
-               this.particle.display(color, center, this.range);
+               this.particle.display(color, null, center, this.range);     // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
             }
          }
 
@@ -360,19 +360,19 @@ public class DragonParticle implements Serializable {
    }
 
    public void display(List players, Location center, boolean rainbowMode) {
-      if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
+      if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.dustcolortransition && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
          if (this.particle == ParticleEffect.note) {
             if (rainbowMode) {
                ParticleEffect.NoteColor color = new ParticleEffect.NoteColor((int)this.r);
                if (players != null) {
-                  this.particle.display(color, center, players);
+                  this.particle.display(color, null, center, players);
                } else {
-                  this.particle.display(color, center, this.range);
+                  this.particle.display(color, null, center, this.range);
                }
             } else if (players != null) {
-               this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, players);
+               this.particle.display(new ParticleEffect.NoteColor((int)this.r), null, center, players);
             } else {
-               this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, this.range);
+               this.particle.display(new ParticleEffect.NoteColor((int)this.r), null, center, this.range);
             }
          } else if (this.particle.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
             if ((this.particle == ParticleEffect.fallingdust || this.particle == ParticleEffect.blockcrack || this.particle == ParticleEffect.blockdust) && this.material != null) {
@@ -403,9 +403,9 @@ public class DragonParticle implements Serializable {
             color = new ParticleEffect.OrdinaryColor((int)this.r, (int)this.g, (int)this.b);
          }
          if (players != null) {
-            this.particle.display(color, center, (List)players);
+            this.particle.display(color, null, center, (List)players);  // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
          } else {
-            this.particle.display(color, center, this.range);
+            this.particle.display(color, null, center, this.range);     // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
          }
       }
 
@@ -440,19 +440,19 @@ public class DragonParticle implements Serializable {
       if (!this.particle.isSupported()) {
          EffectsLib.stopEffect(idName);
       } else {
-         if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
+         if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.dustcolortransition && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
             if (this.particle == ParticleEffect.note) {
                if (rainbowMode) {
                   ParticleEffect.NoteColor color = new ParticleEffect.NoteColor((int)this.r);
                   if (players != null) {
-                     this.particle.display(color, center, players);
+                     this.particle.display(color, null, center, players);
                   } else {
-                     this.particle.display(color, center, this.range);
+                     this.particle.display(color, null, center, this.range);
                   }
                } else if (players != null) {
-                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, players);
+                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), null, center, players);
                } else {
-                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, this.range);
+                  this.particle.display(new ParticleEffect.NoteColor((int)this.r), null, center, this.range);
                }
             }
          } else {
@@ -463,9 +463,9 @@ public class DragonParticle implements Serializable {
                color = new ParticleEffect.OrdinaryColor((int)this.r, (int)this.g, (int)this.b);
             }
             if (players != null) {
-               this.particle.display(color, center, (List)players);
+               this.particle.display(color, null, center, (List)players);  // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
             } else {
-               this.particle.display(color, center, this.range);
+               this.particle.display(color, null, center, this.range);     // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
             }
          }
 
@@ -473,19 +473,19 @@ public class DragonParticle implements Serializable {
    }
 
    public void displayColor(List players, Location center, boolean rainbowMode) {
-      if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
+      if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.dustcolortransition && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
          if (this.particle == ParticleEffect.note) {
             if (rainbowMode) {
                ParticleEffect.NoteColor color = new ParticleEffect.NoteColor((int)this.r);
                if (players != null) {
-                  this.particle.display(color, center, players);
+                  this.particle.display(color, null, center, players);
                } else {
-                  this.particle.display(color, center, this.range);
+                  this.particle.display(color, null, center, this.range);
                }
             } else if (players != null) {
-               this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, players);
+               this.particle.display(new ParticleEffect.NoteColor((int)this.r), null, center, players);
             } else {
-               this.particle.display(new ParticleEffect.NoteColor((int)this.r), center, this.range);
+               this.particle.display(new ParticleEffect.NoteColor((int)this.r), null, center, this.range);
             }
          }
       } else {
@@ -496,9 +496,9 @@ public class DragonParticle implements Serializable {
             color = new ParticleEffect.OrdinaryColor((int)this.r, (int)this.g, (int)this.b);
          }
          if (players != null) {
-            this.particle.display(color, center, (List)players);
+            this.particle.display(color, null, center, (List)players);  // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
          } else {
-            this.particle.display(color, center, this.range);
+            this.particle.display(color, null, center, this.range);     // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
          }
       }
 
@@ -513,19 +513,19 @@ public class DragonParticle implements Serializable {
    }
 
    public void displayColor(int r, int g, int b, List players, Location center, boolean rainbowMode, double range) {
-      if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
+      if (this.particle != ParticleEffect.redstone && this.particle != ParticleEffect.dustcolortransition && this.particle != ParticleEffect.mobspell && this.particle != ParticleEffect.mobspellambient) {
          if (this.particle == ParticleEffect.note) {
             if (rainbowMode) {
                ParticleEffect.NoteColor color = new ParticleEffect.NoteColor(r);
                if (players != null) {
-                  this.particle.display(color, center, players);
+                  this.particle.display(color, null, center, players);
                } else {
-                  this.particle.display(color, center, range);
+                  this.particle.display(color, null, center, range);
                }
             } else if (players != null) {
-               this.particle.display(new ParticleEffect.NoteColor(r), center, players);
+               this.particle.display(new ParticleEffect.NoteColor(r), null, center, players);
             } else {
-               this.particle.display(new ParticleEffect.NoteColor(r), center, range);
+               this.particle.display(new ParticleEffect.NoteColor(r), null, center, range);
             }
          }
       } else {
@@ -536,9 +536,9 @@ public class DragonParticle implements Serializable {
             color = new ParticleEffect.OrdinaryColor(r, g, b);
          }
          if (players != null) {
-            this.particle.display(color, center, (List)players);
+            this.particle.display(color, null, center, (List)players);  // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
          } else {
-            this.particle.display(color, center, range);
+            this.particle.display(color, null, center, range);          // NOTE: color transition not implemented for this class, if this null somehow produces a crash, it means it's time to implement it
          }
       }
 

@@ -18,7 +18,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawWings")
 @Description({"4 colored version", "Draws a wing trail that follows the player or plays them at a location. New Syntax as of v0.06.0-BETA", "Added flapping animation in v0.10.0-BETA"})
-@Syntaxes({"drawWings69 particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], particle3 %string%[[, material] %-itemstack%][, speed3 %-number%][, ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%], particle4 %string%[[, material] %-itemstack%][, speed4 %-number%][, ([offset]XYZ4|RGB4) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%][, flapSpeed %-number%, flapRange %-number%], angle %number%, height %number%, space %number%, visibleRange %number%[, tps %-number%, second %-number%]"})
+@Syntaxes({"drawWings69 particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], particle3 %string%[[, material] %-itemstack%][, speed3 %-number%][, ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%], particle4 %string%[[, material] %-itemstack%][, speed4 %-number%][, ([offset]XYZ4|RGB4) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ4|RGB4) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%][, flapSpeed %-number%, flapRange %-number%], angle %number%, height %number%, space %number%, visibleRange %number%[, tps %-number%, second %-number%]"})
 @Examples({"drawWings style 12, particle1 \"flame\", speed 0, RGB 0, 0, 0, particle2 \"redstone\", speed2 0, RGB2 0, 0, 0, particle3 \"redstone\", speed3 0, RGB3 245, 122, 0, center player, id \"%player%\", isSingle false, player, rainbowMode false, angle 110, height 0, space 0.2, visibleRange 30, tps 1, second 2", "drawWings style 17, particle1 \"flame\", speed 0, XYZ 0, 0, 0, particle2 \"redstone\", particle3 \"redstone\", center player, id \"%player%\", rainbowMode true, flapSpeed 2, flapRange 30, angle 120, height 0, space 0.2, visibleRange 30, tps 0, second 3"})
 public class EffWings69 extends Effect {
    private Expression particleString;
@@ -27,24 +27,36 @@ public class EffWings69 extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression particleString2;
    private Expression data2;
    private Expression speed2;
    private Expression offX2;
    private Expression offY2;
    private Expression offZ2;
+   private Expression offX2T;
+   private Expression offY2T;
+   private Expression offZ2T;
    private Expression particleString3;
    private Expression data3;
    private Expression speed3;
    private Expression offX3;
    private Expression offY3;
    private Expression offZ3;
+   private Expression offX3T;
+   private Expression offY3T;
+   private Expression offZ3T;
    private Expression particleString4;
    private Expression data4;
    private Expression speed4;
    private Expression offX4;
    private Expression offY4;
    private Expression offZ4;
+   private Expression offX4T;
+   private Expression offY4T;
+   private Expression offZ4T;
    private Expression entLoc;
    private Expression idName;
    private Expression singlePlayer;
@@ -67,24 +79,36 @@ public class EffWings69 extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.particleString2 = exprs[i++];
       this.data2 = exprs[i++];
       this.speed2 = exprs[i++];
       this.offX2 = exprs[i++];
       this.offY2 = exprs[i++];
       this.offZ2 = exprs[i++];
+      this.offX2T = exprs[i++];
+      this.offY2T = exprs[i++];
+      this.offZ2T = exprs[i++];
       this.particleString3 = exprs[i++];
       this.data3 = exprs[i++];
       this.speed3 = exprs[i++];
       this.offX3 = exprs[i++];
       this.offY3 = exprs[i++];
       this.offZ3 = exprs[i++];
+      this.offX3T = exprs[i++];
+      this.offY3T = exprs[i++];
+      this.offZ3T = exprs[i++];
       this.particleString4 = exprs[i++];
       this.data4 = exprs[i++];
       this.speed4 = exprs[i++];
       this.offX4 = exprs[i++];
       this.offY4 = exprs[i++];
       this.offZ4 = exprs[i++];
+      this.offX4T = exprs[i++];
+      this.offY4T = exprs[i++];
+      this.offZ4T = exprs[i++];
       this.entLoc = exprs[i++];
       this.idName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -102,7 +126,7 @@ public class EffWings69 extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawWings69 particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], particle3 %string%[[, material] %-itemstack%][, speed3 %-number%][, ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%], particle4 %string%[[, material] %-itemstack%][, speed4 %-number%][, ([offset]XYZ4|RGB4) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%][, flapSpeed %-number%, flapRange %-number%], angle %number%, height %number%, space %number%, visibleRange %number%[, tps %-number%, second %-number%]";
+      return "drawWings69 particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], particle3 %string%[[, material] %-itemstack%][, speed3 %-number%][, ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%], particle4 %string%[[, material] %-itemstack%][, speed4 %-number%][, ([offset]XYZ4|RGB4) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ4|RGB4) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%][, flapSpeed %-number%, flapRange %-number%], angle %number%, height %number%, space %number%, visibleRange %number%[, tps %-number%, second %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -110,14 +134,23 @@ public class EffWings69 extends Effect {
       int offsetX = 0;
       int offsetY = 0;
       int offsetZ = 0;
+      int offsetXT = 0;
+      int offsetYT = 0;
+      int offsetZT = 0;
       String particle2 = "limeglassparticle";
       int offsetX2 = 0;
       int offsetY2 = 0;
       int offsetZ2 = 0;
+      int offsetX2T = 0;
+      int offsetY2T = 0;
+      int offsetZ2T = 0;
       String particle3 = "limeglassparticle";
       int offsetX3 = 0;
       int offsetY3 = 0;
       int offsetZ3 = 0;
+      int offsetX3T = 0;
+      int offsetY3T = 0;
+      int offsetZ3T = 0;
       float finalSpeed = 0.0F;
       float finalSpeed2 = 0.0F;
       float finalSpeed3 = 0.0F;
@@ -125,6 +158,9 @@ public class EffWings69 extends Effect {
       int offsetX4 = 0;
       int offsetY4 = 0;
       int offsetZ4 = 0;
+      int offsetX4T = 0;
+      int offsetY4T = 0;
+      int offsetZ4T = 0;
       float finalSpeed4 = 0.0F;
       Long finalDelayTicks = 0L;
       Long finalDelayBySec = 0L;
@@ -144,6 +180,12 @@ public class EffWings69 extends Effect {
          offsetZ = ((Number)this.offZ.getSingle(e)).intValue();
       }
 
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = ((Number)this.offXT.getSingle(e)).intValue();
+         offsetYT = ((Number)this.offYT.getSingle(e)).intValue();
+         offsetZT = ((Number)this.offZT.getSingle(e)).intValue();
+      }
+
       if (this.particleString2 != null && ParticleEffect.NAME_MAP.containsKey(((String)this.particleString2.getSingle(e)).toLowerCase())) {
          particle2 = ((String)this.particleString2.getSingle(e)).toLowerCase();
       }
@@ -156,6 +198,12 @@ public class EffWings69 extends Effect {
          offsetX2 = ((Number)this.offX2.getSingle(e)).intValue();
          offsetY2 = ((Number)this.offY2.getSingle(e)).intValue();
          offsetZ2 = ((Number)this.offZ2.getSingle(e)).intValue();
+      }
+
+      if (this.offX2T != null && this.offY2T != null && this.offZ2T != null) {
+         offsetX2T = ((Number)this.offX2T.getSingle(e)).intValue();
+         offsetY2T = ((Number)this.offY2T.getSingle(e)).intValue();
+         offsetZ2T = ((Number)this.offZ2T.getSingle(e)).intValue();
       }
 
       if (this.particleString3 != null && ParticleEffect.NAME_MAP.containsKey(((String)this.particleString3.getSingle(e)).toLowerCase())) {
@@ -172,6 +220,12 @@ public class EffWings69 extends Effect {
          offsetZ3 = ((Number)this.offZ3.getSingle(e)).intValue();
       }
 
+      if (this.offX3T != null && this.offY3T != null && this.offZ3T != null) {
+         offsetX3T = ((Number)this.offX3T.getSingle(e)).intValue();
+         offsetY3T = ((Number)this.offY3T.getSingle(e)).intValue();
+         offsetZ3T = ((Number)this.offZ3T.getSingle(e)).intValue();
+      }
+
       if (this.particleString4 != null && ParticleEffect.NAME_MAP.containsKey(((String)this.particleString4.getSingle(e)).toLowerCase())) {
          particle4 = ((String)this.particleString4.getSingle(e)).toLowerCase();
       }
@@ -184,6 +238,12 @@ public class EffWings69 extends Effect {
          offsetX4 = ((Number)this.offX4.getSingle(e)).intValue();
          offsetY4 = ((Number)this.offY4.getSingle(e)).intValue();
          offsetZ4 = ((Number)this.offZ4.getSingle(e)).intValue();
+      }
+
+      if (this.offX4T != null && this.offY4T != null && this.offZ4T != null) {
+         offsetX4T = ((Number)this.offX4T.getSingle(e)).intValue();
+         offsetY4T = ((Number)this.offY4T.getSingle(e)).intValue();
+         offsetZ4T = ((Number)this.offZ4T.getSingle(e)).intValue();
       }
 
       Object center = this.entLoc.getSingle(e);
@@ -243,6 +303,6 @@ public class EffWings69 extends Effect {
       byte dataID3 = SkriptHandler.inputParticleDataID(e, this.data3);
       Material dataMat4 = SkriptHandler.inputParticleDataMat(e, this.data4);
       byte dataID4 = SkriptHandler.inputParticleDataID(e, this.data4);
-      EffectsLib.drawWings4Color(particle, dataMat, dataID, finalSpeed, (float)offsetX, (float)offsetY, (float)offsetZ, particle2, dataMat2, dataID2, finalSpeed2, (float)offsetX2, (float)offsetY2, (float)offsetZ2, particle3, dataMat3, dataID3, finalSpeed3, (float)offsetX3, (float)offsetY3, (float)offsetZ3, particle4, dataMat4, dataID4, finalSpeed4, (float)offsetX4, (float)offsetY4, (float)offsetZ4, center, idName, isSinglePlayer, rainbowMode, flapMode, flapStep, flapRange, finalAngle, visibleRange, shape1, shape2, shape3, shape4, (float)((double)finalHeight - 0.3D), finalSpace, finalDelayTicks, finalDelayBySec, p);
+      EffectsLib.drawWings4Color(particle, dataMat, dataID, finalSpeed, (float)offsetX, (float)offsetY, (float)offsetZ, (float)offsetXT, (float)offsetYT, (float)offsetZT, particle2, dataMat2, dataID2, finalSpeed2, (float)offsetX2, (float)offsetY2, (float)offsetZ2, (float)offsetX2T, (float)offsetY2T, (float)offsetZ2T, particle3, dataMat3, dataID3, finalSpeed3, (float)offsetX3, (float)offsetY3, (float)offsetZ3, (float)offsetX3T, (float)offsetY3T, (float)offsetZ3T, particle4, dataMat4, dataID4, finalSpeed4, (float)offsetX4, (float)offsetY4, (float)offsetZ4, (float)offsetX4T, (float)offsetY4T, (float)offsetZ4T, center, idName, isSinglePlayer, rainbowMode, flapMode, flapStep, flapRange, finalAngle, visibleRange, shape1, shape2, shape3, shape4, (float)((double)finalHeight - 0.3D), finalSpace, finalDelayTicks, finalDelayBySec, p);
    }
 }

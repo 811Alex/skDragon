@@ -18,7 +18,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawSphere")
 @Description({"Draws a sphere that follows the player or plays at a location. New as of v0.10.0-Beta"})
-@Syntaxes({"drawSphere[ style] %number%, particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], radius %number%, density %number%, visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
+@Syntaxes({"drawSphere[ style] %number%, particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], radius %number%, density %number%, visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
 @Examples({"drawSphere style 1, particle \"redstone\", center {_loc}, id \"%player%\", rainbowMode true, radius 1, density 100, visibleRange 32, pulseDelay 1"})
 public class EffSphere extends Effect {
    private Expression style;
@@ -28,6 +28,9 @@ public class EffSphere extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression InputIdName;
    private Expression singlePlayer;
@@ -50,6 +53,9 @@ public class EffSphere extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.InputIdName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -66,7 +72,7 @@ public class EffSphere extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawSphere style %number%, particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], radius %number%, density %number%, visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+      return "drawSphere style %number%, particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], radius %number%, density %number%, visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -74,6 +80,9 @@ public class EffSphere extends Effect {
       float offsetX = 0.0F;
       float offsetY = 0.0F;
       float offsetZ = 0.0F;
+      float offsetXT = 0.0F;
+      float offsetYT = 0.0F;
+      float offsetZT = 0.0F;
       double xRotation = 0.0D;
       double yRotation = 0.0D;
       double zRotation = 0.0D;
@@ -113,6 +122,12 @@ public class EffSphere extends Effect {
          offsetZ = (float)((Number)this.offZ.getSingle(e)).intValue();
       }
 
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = (float)((Number)this.offXT.getSingle(e)).intValue();
+         offsetYT = (float)((Number)this.offYT.getSingle(e)).intValue();
+         offsetZT = (float)((Number)this.offZT.getSingle(e)).intValue();
+      }
+
       if (this.displaceX != null && this.displaceY != null && this.displaceZ != null) {
          disX = ((Number)this.displaceX.getSingle(e)).doubleValue();
          disY = ((Number)this.displaceY.getSingle(e)).doubleValue();
@@ -130,6 +145,6 @@ public class EffSphere extends Effect {
 
       Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
-      EffectsLib.drawSphere(finalStyle, particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, center, idName, isSinglePlayer, p, rainbowMode, finalRadius, ringDensity, visibleRange, xRotation, yRotation, zRotation, disX, disY, disZ, 0L, finalDelayTicks);
+      EffectsLib.drawSphere(finalStyle, particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, center, idName, isSinglePlayer, p, rainbowMode, finalRadius, ringDensity, visibleRange, xRotation, yRotation, zRotation, disX, disY, disZ, 0L, finalDelayTicks);
    }
 }

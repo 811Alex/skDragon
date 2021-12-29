@@ -3,49 +3,6 @@ options:
 	draw-test-duration: 10 ticks
 
 variables:
-	{test.particle::0} = "explosion"
-	{test.particle::1} = "explosionlarge"
-	{test.particle::2} = "explosionhuge"
-	{test.particle::3} = "fireworkspark"
-	{test.particle::4} = "waterbubble"
-	{test.particle::5} = "watersplash"
-	{test.particle::6} = "waterwake"
-	{test.particle::7} = "suspended"
-	{test.particle::8} = "suspenddepth"
-	{test.particle::9} = "crit"
-	{test.particle::10} = "critmagic"
-	{test.particle::11} = "smoke"
-	{test.particle::12} = "smokelarge"
-	{test.particle::13} = "spell"
-	{test.particle::14} = "spellinstant"
-	{test.particle::15} = "mobspell"
-	{test.particle::16} = "mobspellambient"
-	{test.particle::17} = "witchspell"
-	{test.particle::18} = "waterdrip"
-	{test.particle::19} = "lavadrip"
-	{test.particle::20} = "angryvillager"
-	{test.particle::21} = "happyvillager"
-	{test.particle::22} = "townaura"
-	{test.particle::23} = "note"
-	{test.particle::24} = "portal"
-	{test.particle::25} = "enchantmenttable"
-	{test.particle::26} = "flame"
-	{test.particle::27} = "lava"
-	{test.particle::28} = "footstep"
-	{test.particle::29} = "cloud"
-	{test.particle::30} = "redstone"
-	{test.particle::31} = "snowball"
-	{test.particle::32} = "snowshovel"
-	{test.particle::33} = "slime"
-	{test.particle::34} = "heart"
-	{test.particle::35} = "barrier"
-	{test.particle::36} = "itemcrack"
-	{test.particle::37} = "blockcrack"
-	{test.particle::38} = "blockdust"
-	{test.particle::39} = "waterdrop"
-	{test.particle::40} = "itemtake"
-	{test.particle::41} = "mobappearance"
-
 	{test.draw::0} = "draw"
 	{test.draw::1} = "drawArc"
 	{test.draw::2} = "drawAtom"
@@ -73,11 +30,17 @@ variables:
 	{test.draw::24} = "drawWings"
 	#{test.draw::25} = "drawWings69"
 
+command /crashtesttransitionables:
+	trigger:
+		drawDot count 8, particle dustcolortransition, RGB 0, 255, 255, trans RGB 255, 0, 255, center location 2 above 3 east of player, id drawCommon("dustcolortransition"), rainbowMode false, visibleRange 32, pulseDelay 1
+		wait {@draw-test-duration}
+		broadcast "Done!"
+
 command /crashtest:
 	trigger:
 		set {_loc} to location 2 above 3 east of player
 		testParticles({_loc})
-		loop {test.particle::*}:	# block thread
+		loop all supported particles:	# block thread
 			wait {@particle-test-duration}
 		broadcast "Cooldown..."
 		wait 2 seconds
@@ -94,7 +57,7 @@ command /crashtestparticles [<text>]:
 			wait {@particle-test-duration}
 		else:
 			testParticles({_loc})
-			loop {test.particle::*}:	# block thread
+			loop all supported particles:	# block thread
 				wait {@particle-test-duration}
 		broadcast "Done!"
 
@@ -132,7 +95,7 @@ command /crashtestfake:
 
 function testParticles(loc: location):
 	broadcast "Testing all particles..."
-	loop {test.particle::*}:
+	loop all supported particles:
 		emitParticle(loop-value, {_loc})
 		wait {@particle-test-duration}
 

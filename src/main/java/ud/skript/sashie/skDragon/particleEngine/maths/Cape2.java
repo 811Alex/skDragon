@@ -161,7 +161,7 @@ public class Cape2 extends EffectsLib {
                      double r = color.getX();
                      double g = color.getY();
                      double b = color.getZ();
-                     ParticleEffect.redstone.display(Cape2.this.center.add(v).add(v2), visibleRange, isSinglePlayer, player, rainbowMode, Cape2.this.hue, (int)r, (int)g, (int)b);
+                     ParticleEffect.redstone.display(Cape2.this.center.add(v).add(v2), visibleRange, isSinglePlayer, player, rainbowMode, Cape2.this.hue, (int)r, (int)g, (int)b, (int)r, (int)g, (int)b);
                      Cape2.this.center.subtract(v2).subtract(v);
                   }
                } catch (NullPointerException var36) {

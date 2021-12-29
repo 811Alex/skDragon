@@ -237,8 +237,12 @@ public enum ParticleEffect {
       if (ParticleEffect.ParticlePacket.getVersion() < 13) {
          return (effect == mobspell || effect == mobspellambient || effect == redstone) && color instanceof ParticleEffect.OrdinaryColor || effect == note && color instanceof ParticleEffect.NoteColor;
       } else {
-         return (effect == mobspell || effect == mobspellambient) && color instanceof ParticleEffect.OrdinaryColor || effect == redstone && color instanceof ParticleEffect.RedstoneColor || effect == note && color instanceof ParticleEffect.NoteColor;
+         return (effect == mobspell || effect == mobspellambient) && color instanceof ParticleEffect.OrdinaryColor || (effect == redstone || effect == dustcolortransition) && color instanceof ParticleEffect.RedstoneColor || effect == note && color instanceof ParticleEffect.NoteColor;
       }
+   }
+
+   private static boolean isTransColorCorrect(ParticleEffect effect, ParticleEffect.ParticleColor transColor) {
+      return effect != dustcolortransition || transColor instanceof ParticleEffect.OrdinaryColor;
    }
 
    public void display(float offsetX, float offsetY, float offsetZ, float speed, int amount, Location center, double range) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleDataException, IllegalArgumentException {
@@ -303,7 +307,7 @@ public enum ParticleEffect {
       this.display(direction, speed, center, Arrays.asList(players));
    }
 
-   public void display(ParticleEffect.ParticleColor color, Location center, double range) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleColorException {
+   public void display(ParticleEffect.ParticleColor color, ParticleEffect.ParticleColor colorTrans, Location center, double range) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleColorException {
       if (!this.isSupported()) {
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else if (!this.hasProperty(ParticleEffect.ParticleProperty.COLORABLE)) {
@@ -311,24 +315,26 @@ public enum ParticleEffect {
       } else if (!isColorCorrect(this, color)) {
          throw new ParticleEffect.ParticleColorException("The particle color type is incorrect");
       } else {
-         (new ParticleEffect.ParticlePacket(this, color, true)).sendTo(center, range);
+         (new ParticleEffect.ParticlePacket(this, color, colorTrans, true)).sendTo(center, range);
       }
    }
 
-   public void display(ParticleEffect.ParticleColor color, Location center, List players) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleColorException {
+   public void display(ParticleEffect.ParticleColor color, ParticleEffect.ParticleColor colorTrans, Location center, List players) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleColorException {
       if (!this.isSupported()) {
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else if (!this.hasProperty(ParticleEffect.ParticleProperty.COLORABLE)) {
          throw new ParticleEffect.ParticleColorException("This particle effect is not colorable");
       } else if (!isColorCorrect(this, color)) {
          throw new ParticleEffect.ParticleColorException("The particle color type is incorrect");
+      } else if (!isTransColorCorrect(this, colorTrans)) {
+         throw new ParticleEffect.ParticleColorException("The particle transition color type is incorrect");
       } else {
-         (new ParticleEffect.ParticlePacket(this, color, isLongDistance(center, players))).sendTo(center, players);
+         (new ParticleEffect.ParticlePacket(this, color, colorTrans, isLongDistance(center, players))).sendTo(center, players);
       }
    }
 
-   public void display(ParticleEffect.ParticleColor color, Location center, Player... players) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleColorException {
-      this.display(color, center, Arrays.asList(players));
+   public void display(ParticleEffect.ParticleColor color, ParticleEffect.ParticleColor colorTrans, Location center, Player... players) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleColorException {
+      this.display(color, colorTrans, center, Arrays.asList(players));
    }
 
    public void display(ParticleEffect.ParticleData data, float offsetX, float offsetY, float offsetZ, float speed, int amount, Location center, double range) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleDataException {
@@ -387,25 +393,25 @@ public enum ParticleEffect {
       this.display(data, direction, speed, center, Arrays.asList(players));
    }
 
-   public void display(String idName, Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float hue, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
+   public void display(String idName, Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float hue, float offsetX, float offsetY, float offsetZ, float offsetXTrans, float offsetYTrans, float offsetZTrans, float speed, int particleCount) {
       if (!this.isSupported()) {
          EffectsLib.stopEffect(idName);
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else {
-         if (this != redstone && this != mobspell && this != mobspellambient) {
+         if (this != redstone && this != dustcolortransition && this != mobspell && this != mobspellambient) {
             ParticleEffect.NoteColor finalData;
             if (this == note) {
                if (rainbowMode) {
                   finalData = new ParticleEffect.NoteColor((int)hue);
                   if (isSinglePlayer) {
-                     this.display(finalData, center, player);
+                     this.display(finalData, null, center, player);
                   } else {
-                     this.display(finalData, center, visibleRange);
+                     this.display(finalData, null, center, visibleRange);
                   }
                } else if (isSinglePlayer) {
-                  this.display(new ParticleEffect.NoteColor((int)offsetX), center, player);
+                  this.display(new ParticleEffect.NoteColor((int)offsetX), null, center, player);
                } else {
-                  this.display(new ParticleEffect.NoteColor((int)offsetX), center, visibleRange);
+                  this.display(new ParticleEffect.NoteColor((int)offsetX), null, center, visibleRange);
                }
             } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
                if ((this == fallingdust || this == blockcrack || this == blockdust) && dataMat != null) {
@@ -450,12 +456,16 @@ public enum ParticleEffect {
                float g = (float)(ir >> 8 & 255) / 255.0F;
                float b = (float)(ir & 255) / 255.0F;
                r = r == 0.0F ? 0.001F : r;
-               if (this == redstone) {
+               if (this == redstone || this == dustcolortransition) {
                   ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
+                  ParticleEffect.OrdinaryColor colorTrans = null;
+                  if (this == dustcolortransition) {
+                     colorTrans = new ParticleEffect.OrdinaryColor(new Color(1 - r, 1 - g, 1 - b));
+                  }
                   if (isSinglePlayer) {
-                     this.display(color, center, player);
+                     this.display(color, colorTrans, center, player);
                   } else {
-                     this.display(color, center, visibleRange);
+                     this.display(color, colorTrans, center, visibleRange);
                   }
                } else if (isSinglePlayer) {
                   this.display(r, g, b, 1.0F, 0, center, player);
@@ -466,26 +476,32 @@ public enum ParticleEffect {
                ir = Math.round(offsetX);
                int g = Math.round(offsetY);
                int b = Math.round(offsetZ);
-               if (this == redstone) {
+               if (this == redstone || this == dustcolortransition) {
                   ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(ir, g, b), 1.0F);
+                  ParticleEffect.OrdinaryColor colorTrans = null;
+                  if (this == dustcolortransition) {
+                     int irt = Math.round(offsetXTrans);
+                     int gt = Math.round(offsetYTrans);
+                     int bt = Math.round(offsetZTrans);
+                     colorTrans = new ParticleEffect.OrdinaryColor(new Color(irt, gt, bt));
+                  }
                   if (isSinglePlayer) {
-                     this.display(color, center, (player));
+                     this.display(color, colorTrans, center, (player));
                   } else {
-                     this.display(color, center, visibleRange);
+                     this.display(color, colorTrans, center, visibleRange);
                   }
                } else if (isSinglePlayer) {
-                  this.display(new ParticleEffect.OrdinaryColor(ir, g, b), center, (player));
+                  this.display(new ParticleEffect.OrdinaryColor(ir, g, b), null, center, (player));
                } else {
-                  this.display(new ParticleEffect.OrdinaryColor(ir, g, b), center, visibleRange);
+                  this.display(new ParticleEffect.OrdinaryColor(ir, g, b), null, center, visibleRange);
                }
             }
          }
-
       }
    }
 
-   public void display(String idName, Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float hue, double offsetX, double offsetY, double offsetZ, float speed, int particleCount) {
-      this.display(idName, dataMat, dataID, player, center, visibleRange, isSinglePlayer, rainbowMode, hue, (float)offsetX, (float)offsetY, (float)offsetZ, speed, particleCount);
+   public void display(String idName, Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float hue, double offsetX, double offsetY, double offsetZ, double offsetXTrans, double offsetYTrans, double offsetZTrans, float speed, int particleCount) {
+      this.display(idName, dataMat, dataID, player, center, visibleRange, isSinglePlayer, rainbowMode, hue, (float)offsetX, (float)offsetY, (float)offsetZ, (float)offsetXTrans, (float)offsetYTrans, (float)offsetZTrans, speed, particleCount);
    }
 
    public static float simpleRainbowHelper(float hue, String particle) {
@@ -524,19 +540,28 @@ public enum ParticleEffect {
       return hue;
    }
 
-   public void display(Player player, Location center, double visibleRange, boolean isSinglePlayer, float hue) {
-      if (this == redstone || this == mobspell || this == mobspellambient) {
+   public void display(Player player, Location center, double visibleRange, boolean isSinglePlayer, float hue, float hueTrans) {
+      if (this == redstone || this == dustcolortransition || this == mobspell || this == mobspellambient) {
          int argb = Color.HSBtoRGB(hue / 20.0F, 1.0F, 1.0F);
          float r = (float)(argb >> 16 & 255) / 255.0F;
          float g = (float)(argb >> 8 & 255) / 255.0F;
          float b = (float)(argb & 255) / 255.0F;
          r = r == 0.0F ? 0.001F : r;
-         if (this == redstone) {
+         if (this == redstone || this == dustcolortransition) {
             ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
+            ParticleEffect.OrdinaryColor colorTrans = null;
+            if (this == dustcolortransition) {
+               int argbTrans = Color.HSBtoRGB(hueTrans / 20.0F, 1.0F, 1.0F);
+               float rt = (float)(argbTrans >> 16 & 255) / 255.0F;
+               float gt = (float)(argbTrans >> 8 & 255) / 255.0F;
+               float bt = (float)(argbTrans & 255) / 255.0F;
+               rt = rt == 0.0F ? 0.001F : rt;
+               colorTrans = new ParticleEffect.OrdinaryColor(new Color(rt, gt, bt));
+            }
             if (isSinglePlayer) {
-               this.display(color, center, (player));
+               this.display(color, colorTrans, center, (player));
             } else {
-               this.display(color, center, visibleRange);
+               this.display(color, colorTrans, center, visibleRange);
             }
          } else if (isSinglePlayer) {
             this.display(r, g, b, 1.0F, 0, center, player);
@@ -547,7 +572,7 @@ public enum ParticleEffect {
 
    }
 
-   public void display(Location center, double visibleRange, boolean isSinglePlayer, Player player, boolean rainbowMode, float hue, int r, int g, int b) {
+   public void display(Location center, double visibleRange, boolean isSinglePlayer, Player player, boolean rainbowMode, float hue, int r, int g, int b, int rt, int gt, int bt) {
       if (rainbowMode) {
          int argb = Color.HSBtoRGB(hue, 1.0F, 1.0F);
          float r2 = (float)(argb >> 16 & 255) / 255.0F;
@@ -555,30 +580,36 @@ public enum ParticleEffect {
          float b2 = (float)(argb & 255) / 255.0F;
          r2 = r2 == 0.0F ? 0.001F : r2;
          ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r2, g2, b2), 1.0F);
+         ParticleEffect.OrdinaryColor colorTrans = new ParticleEffect.OrdinaryColor(new Color(1 - r2, 1 - g2, 1 - b2));
          if (isSinglePlayer) {
-            this.display(color, center, (player));
+            this.display(color, colorTrans, center, (player));
          } else {
-            this.display(color, center, visibleRange);
+            this.display(color, colorTrans, center, visibleRange);
          }
       } else {
          ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
+         ParticleEffect.OrdinaryColor colorTrans = new ParticleEffect.OrdinaryColor(new Color(rt, gt, bt));
          if (isSinglePlayer) {
-            this.display(color, center, (player));
+            this.display(color, colorTrans, center, (player));
          } else {
-            this.display(color, center, visibleRange);
+            this.display(color, colorTrans, center, visibleRange);
          }
       }
 
    }
 
-   public void display(Location center, double visibleRange, boolean isSinglePlayer, Player player, int r, int g, int b) {
-      if (this == redstone || this == mobspell || this == mobspellambient) {
-         if (this == redstone) {
+   public void display(Location center, double visibleRange, boolean isSinglePlayer, Player player, int r, int g, int b, int rt, int gt, int bt) {
+      if (this == redstone || this == dustcolortransition || this == mobspell || this == mobspellambient) {
+         if (this == redstone || this == dustcolortransition) {
             ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
+            ParticleEffect.OrdinaryColor colorTrans = null;
+            if(this == dustcolortransition) {
+               colorTrans = new ParticleEffect.OrdinaryColor(new Color(rt, gt, bt));
+            }
             if (isSinglePlayer) {
-               this.display(color, center, (player));
+               this.display(color, colorTrans, center, (player));
             } else {
-               this.display(color, center, visibleRange);
+               this.display(color, colorTrans, center, visibleRange);
             }
          } else if (isSinglePlayer) {
             this.display((float)r, (float)g, (float)b, 1.0F, 0, center, player);
@@ -589,14 +620,18 @@ public enum ParticleEffect {
 
    }
 
-   public void display(Location center, double visibleRange, List players, int r, int g, int b) {
-      if (this == redstone || this == mobspell || this == mobspellambient) {
-         if (this == redstone) {
+   public void display(Location center, double visibleRange, List players, int r, int g, int b, int rt, int gt, int bt) {
+      if (this == redstone || this == dustcolortransition || this == mobspell || this == mobspellambient) {
+         if (this == redstone || this == dustcolortransition) {
             ParticleEffect.RedstoneColor color = new ParticleEffect.RedstoneColor(new Color(r, g, b), 1.0F);
+            ParticleEffect.OrdinaryColor colorTrans = null;
+            if (this == dustcolortransition) {
+               colorTrans = new ParticleEffect.OrdinaryColor(new Color(rt, gt, bt));
+            }
             if (players != null) {
-               this.display(color, center, players);
+               this.display(color, colorTrans, center, players);
             } else {
-               this.display(color, center, visibleRange);
+               this.display(color, colorTrans, center, visibleRange);
             }
          } else if (players != null) {
             this.display((float)r, (float)g, (float)b, 1.0F, 0, center, players);
@@ -607,19 +642,19 @@ public enum ParticleEffect {
 
    }
 
-   public void display(String idName, Material dataMat, byte dataID, List players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
+   public void display(String idName, Material dataMat, byte dataID, List players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float offsetXTrans, float offsetYTrans, float offsetZTrans, float speed, int particleCount) {
       if (!this.isSupported()) {
          EffectsLib.stopEffect(idName);
       } else {
          ParticleEffect.RedstoneColor finalData;
-         if (this != redstone && this != mobspell && this != mobspellambient) {
+         if (this != redstone && this != dustcolortransition && this != mobspell && this != mobspellambient) {
             if (this == note) {
                ParticleEffect.NoteColor color;
                color = new NoteColor((int)offsetX);
                if (players != null) {
-                  this.display(color, center, (List)players);
+                  this.display(color, null, center, (List)players);
                } else {
-                  this.display(color, center, visibleRange);
+                  this.display(color, null, center, visibleRange);
                }
             } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
                if ((this == fallingdust || this == blockcrack || this == blockdust) && dataMat != null) {
@@ -659,34 +694,42 @@ public enum ParticleEffect {
          } else {
             ParticleEffect.OrdinaryColor color;
             if (rainbowMode) {
-               if (this == redstone) {
+               if (this == redstone || this == dustcolortransition) {
                   finalData = new ParticleEffect.RedstoneColor(new Color((int)offsetX, (int)offsetY, (int)offsetZ), 1.0F);
+                  ParticleEffect.OrdinaryColor finalDataTrans = null;
+                  if (this == dustcolortransition) {
+                     finalDataTrans = new ParticleEffect.OrdinaryColor(new Color(255 - (int)offsetX, 255 - (int)offsetY, 255 - (int)offsetZ));
+                  }
                   if (players != null) {
-                     this.display(finalData, center, players);
+                     this.display(finalData, finalDataTrans, center, players);
                   } else {
-                     this.display(finalData, center, visibleRange);
+                     this.display(finalData, finalDataTrans, center, visibleRange);
                   }
                } else {
                   color = new ParticleEffect.OrdinaryColor(Color.getHSBColor(offsetX, offsetY, offsetZ));
                   if (players != null) {
-                     this.display(color, center, players);
+                     this.display(color, null, center, players);
                   } else {
-                     this.display(color, center, visibleRange);
+                     this.display(color, null, center, visibleRange);
                   }
                }
-            } else if (this == redstone) {
+            } else if (this == redstone || this == dustcolortransition) {
                finalData = new ParticleEffect.RedstoneColor(new Color((int)offsetX, (int)offsetY, (int)offsetZ), 1.0F);
+               ParticleEffect.OrdinaryColor finalDataTrans = null;
+               if (this == dustcolortransition) {
+                  finalDataTrans = new ParticleEffect.OrdinaryColor(new Color((int)offsetXTrans, (int)offsetYTrans, (int)offsetZTrans));
+               }
                if (players != null) {
-                  this.display(finalData, center, players);
+                  this.display(finalData, finalDataTrans, center, players);
                } else {
-                  this.display(finalData, center, visibleRange);
+                  this.display(finalData, finalDataTrans, center, visibleRange);
                }
             } else {
                color = new ParticleEffect.OrdinaryColor((int)offsetX, (int)offsetY, (int)offsetZ);
                if (players != null) {
-                  this.display(color, center, players);
+                  this.display(color, null, center, players);
                } else {
-                  this.display(color, center, visibleRange);
+                  this.display(color, null, center, visibleRange);
                }
             }
          }
@@ -694,16 +737,16 @@ public enum ParticleEffect {
       }
    }
 
-   public void display(Material dataMat, byte dataID, List players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
+   public void display(Material dataMat, byte dataID, List players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float offsetXTrans, float offsetYTrans, float offsetZTrans, float speed, int particleCount) {
       ParticleEffect.RedstoneColor finalData;
-      if (this != redstone && this != mobspell && this != mobspellambient) {
+      if (this != redstone && this != dustcolortransition && this != mobspell && this != mobspellambient) {
          if (this == note) {
             ParticleEffect.NoteColor color;
             color = new NoteColor((int)offsetX);
             if (players != null) {
-               this.display(color, center, (List)players);
+               this.display(color, null, center, (List)players);
             } else {
-               this.display(color, center, visibleRange);
+               this.display(color, null, center, visibleRange);
             }
          } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
             if ((this == fallingdust || this == blockcrack || this == blockdust) && dataMat != null) {
@@ -743,34 +786,42 @@ public enum ParticleEffect {
       } else {
          ParticleEffect.OrdinaryColor color;
          if (rainbowMode) {
-            if (this == redstone) {
+            if (this == redstone || this == dustcolortransition) {
                finalData = new ParticleEffect.RedstoneColor(new Color((int)offsetX, (int)offsetY, (int)offsetZ), 1.0F);
+               ParticleEffect.OrdinaryColor finalDataTrans = null;
+               if (this == dustcolortransition){
+                  finalDataTrans = new ParticleEffect.OrdinaryColor(new Color(255 - (int)offsetX, 255 - (int)offsetX, 255 - (int)offsetX));
+               }
                if (players != null) {
-                  this.display(finalData, center, players);
+                  this.display(finalData, finalDataTrans, center, players);
                } else {
-                  this.display(finalData, center, visibleRange);
+                  this.display(finalData, finalDataTrans, center, visibleRange);
                }
             } else {
                color = new ParticleEffect.OrdinaryColor(Color.getHSBColor(offsetX, offsetY, offsetZ));
                if (players != null) {
-                  this.display(color, center, players);
+                  this.display(color, null, center, players);
                } else {
-                  this.display(color, center, visibleRange);
+                  this.display(color, null, center, visibleRange);
                }
             }
-         } else if (this == redstone) {
+         } else if (this == redstone || this == dustcolortransition) {
             finalData = new ParticleEffect.RedstoneColor(new Color((int)offsetX, (int)offsetY, (int)offsetZ), 1.0F);
+            ParticleEffect.OrdinaryColor finalDataTrans = null;
+            if (this == dustcolortransition){
+               finalDataTrans = new ParticleEffect.OrdinaryColor(new Color((int)offsetXTrans, (int)offsetYTrans, (int)offsetZTrans));
+            }
             if (players != null) {
-               this.display(finalData, center, players);
+               this.display(finalData, finalDataTrans, center, players);
             } else {
-               this.display(finalData, center, visibleRange);
+               this.display(finalData, finalDataTrans, center, visibleRange);
             }
          } else {
             color = new ParticleEffect.OrdinaryColor((int)offsetX, (int)offsetY, (int)offsetZ);
             if (players != null) {
-               this.display(color, center, players);
+               this.display(color, null, center, players);
             } else {
-               this.display(color, center, visibleRange);
+               this.display(color, null, center, visibleRange);
             }
          }
       }
@@ -980,6 +1031,7 @@ public enum ParticleEffect {
       private final boolean longDistance;
       private final ParticleEffect.ParticleData data;
       private ParticleEffect.RedstoneColor colorData;
+      private ParticleEffect.OrdinaryColor colorTransData;
       private Object packet;
 
       public ParticlePacket(ParticleEffect effect, float offsetX, float offsetY, float offsetZ, float speed, int amount, boolean longDistance, ParticleEffect.ParticleData data) throws IllegalArgumentException {
@@ -1004,16 +1056,17 @@ public enum ParticleEffect {
          this(effect, (float)direction.getX(), (float)direction.getY(), (float)direction.getZ(), speed, 0, longDistance, data);
       }
 
-      public ParticlePacket(ParticleEffect effect, ParticleEffect.ParticleColor color, boolean longDistance) {
+      public ParticlePacket(ParticleEffect effect, ParticleEffect.ParticleColor color, ParticleEffect.ParticleColor colorTrans, boolean longDistance) {
          this(effect, color.getR(), color.getG(), color.getB(), 1.0F, 0, longDistance, null);
          if (effect == ParticleEffect.redstone && color instanceof ParticleEffect.OrdinaryColor && ((ParticleEffect.OrdinaryColor)color).getRed() == 0) {
             this.offsetX = 1.17549435E-38F;
          }
 
-         if (effect == ParticleEffect.redstone) {
+         if (effect == ParticleEffect.redstone || effect == ParticleEffect.dustcolortransition) {
             this.colorData = (ParticleEffect.RedstoneColor)color;
+            if(effect == ParticleEffect.dustcolortransition)
+               this.colorTransData = (ParticleEffect.OrdinaryColor)colorTrans;
          }
-
       }
 
       public static void initialize() throws ParticleEffect.ParticlePacket.VersionIncompatibleException {
@@ -1105,6 +1158,14 @@ public enum ParticleEffect {
                         Object vector3fa = vector3faConstructor.newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
                         param = materialDataConstructor.newInstance(vector3fa, this.colorData.getSize());
                      }
+                  } else if (this.effect == ParticleEffect.dustcolortransition) {
+                     Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3fa");
+                     materialDataClass = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("DustColorTransitionOptions");
+                     materialDataConstructor = ReflectionUtils.getConstructor(materialDataClass, vector3faClass, vector3faClass, Float.class);
+                     Constructor vector3faConstructor = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class);
+                     Object vector3fa = vector3faConstructor.newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
+                     Object vector3fa2 = vector3faConstructor.newInstance(this.colorTransData.getR(), this.colorTransData.getG(), this.colorTransData.getB());
+                     param = materialDataConstructor.newInstance(vector3fa, vector3fa2, this.colorData.getSize());
                   } else {
                      Object materialData;
                      if (this.effect != ParticleEffect.fallingdust && this.effect != ParticleEffect.blockcrack && this.effect != ParticleEffect.blockdust) {

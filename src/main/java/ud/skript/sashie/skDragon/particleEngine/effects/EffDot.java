@@ -25,7 +25,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawDot")
 @Description({"placeholder"})
-@Syntaxes({"drawDot [count %-number%,] particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %objects%[, id %-string%][, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%][, keepFor %-timespan%]"})
+@Syntaxes({"drawDot [count %-number%,] particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %objects%[, id %-string%][, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%][, keepFor %-timespan%]"})
 @Examples({"placeholder"})
 public class EffDot extends Effect {
    private Expression partCount;
@@ -35,6 +35,9 @@ public class EffDot extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression inputIdName;
    private Expression inputPlayers;
@@ -56,6 +59,9 @@ public class EffDot extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.inputIdName = exprs[i++];
       this.isSingle = exprs[i++];
@@ -71,7 +77,7 @@ public class EffDot extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawDot[ count %-number%,] particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entites/locations%[, id %string%][, isSingle %-boolean%, %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%][, keepFor %-timespan%]";
+      return "drawDot[ count %-number%,] particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entites/locations%[, id %string%][, isSingle %-boolean%, %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%][, keepFor %-timespan%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -84,6 +90,9 @@ public class EffDot extends Effect {
       final float offsetX = SkriptHandler.inputParticleOffset(e, this.offX);
       final float offsetY = SkriptHandler.inputParticleOffset(e, this.offY);
       final float offsetZ = SkriptHandler.inputParticleOffset(e, this.offZ);
+      final float offsetXT = SkriptHandler.inputParticleOffset(e, this.offXT);
+      final float offsetYT = SkriptHandler.inputParticleOffset(e, this.offYT);
+      final float offsetZT = SkriptHandler.inputParticleOffset(e, this.offZT);
       final Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       final byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
       final boolean isSinglePlayer = SkriptHandler.inputRainbowMode(e, this.isSingle);
@@ -120,7 +129,7 @@ public class EffDot extends Effect {
 
             public void run() {
                DynamicLocation loc;
-               for(Iterator var2 = locations.iterator(); var2.hasNext(); ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, players, loc, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, finalSpeed, count)) {
+               for(Iterator var2 = locations.iterator(); var2.hasNext(); ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, players, loc, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, finalSpeed, count)) {
                   loc = (DynamicLocation)var2.next();
                   loc.update();
                   if (loc.isDynamic()) {

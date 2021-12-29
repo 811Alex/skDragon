@@ -247,7 +247,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawSimpleHalo(final String particle, final Object center, final Material dataMat, final byte dataID, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float speed, final int particleDensity, final double visibleRange, final float offsetX, final float offsetY, final float offsetZ, long delayTicks, long delayBySecond, final boolean solid) {
+   public static void drawSimpleHalo(final String particle, final Object center, final Material dataMat, final byte dataID, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float speed, final int particleDensity, final double visibleRange, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, long delayTicks, long delayBySecond, final boolean solid) {
       if (!arraylist.containsKey(idName)) {
          int normalHalo = Bukkit.getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             float step = 0.0F;
@@ -268,11 +268,11 @@ public class EffectsLib {
 
                      while(var2.hasNext()) {
                         Location loc = (Location)var2.next();
-                        ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, loc, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                        ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, loc, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      }
                   } else {
                      Vector v = new Vector(Math.cos(this.angle * (double)this.step) * 0.30000001192092896D, 0.0D, Math.sin(this.angle * (double)this.step) * 0.30000001192092896D);
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      ++this.step;
                   }
                } catch (NullPointerException var3) {
@@ -286,7 +286,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawComplexCircle(final String particle, final Material dataMat, final byte dataID, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean enableRotation, final float radius, final float speed, final int particleDensity, float steps, final double visibleRange, final double xRotation, final double yRotation, final double zRotation, final float offsetX, final float offsetY, final float offsetZ, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
+   public static void drawComplexCircle(final String particle, final Material dataMat, final byte dataID, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean enableRotation, final float radius, final float speed, final int particleDensity, float steps, final double visibleRange, final double xRotation, final double yRotation, final double zRotation, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
          int circle = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(steps) {
             public double angularVelocityX = 0.015707964077591896D;
@@ -318,7 +318,7 @@ public class EffectsLib {
                      this.hue = ParticleEffect.simpleRainbowHelper(this.hue, particle);
                   }
 
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   ++this.step;
                } catch (NullPointerException var3) {
                   EffectsLib.foundNull(this.location, idName, var3);
@@ -331,7 +331,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawAtom(final String particle, final Material dataMat, final byte dataID, final float speed, final String particle2, final Material dataMat2, final byte dataID2, final float speed2, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float innerRadius, final int innerParticles, final int orbitParticles, final int orbitalCount, float steps, final double visibleRange, final double rotations, final float offsetX, final float offsetY, final float offsetZ, final float offsetX2, final float offsetY2, final float offsetZ2, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
+   public static void drawAtom(final String particle, final Material dataMat, final byte dataID, final float speed, final String particle2, final Material dataMat2, final byte dataID2, final float speed2, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float innerRadius, final int innerParticles, final int orbitParticles, final int orbitalCount, float steps, final double visibleRange, final double rotations, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final float offsetX2, final float offsetY2, final float offsetZ2, final float offsetX2T, final float offsetY2T, final float offsetZ2T, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
          int atom = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(steps) {
             public double angularVelocity = 0.07853981852531433D;
@@ -354,7 +354,7 @@ public class EffectsLib {
                   int i;
                   for(i = 0; i < innerParticles; ++i) {
                      Vector vx = RandomUtils.getRandomVector().multiply(0.5D * (double)innerRadius);
-                     ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.add(vx), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, speed2, 1);
+                     ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.add(vx), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, speed2, 1);
                      this.location.subtract(vx);
                   }
 
@@ -368,7 +368,7 @@ public class EffectsLib {
                         v.setY(Math.cos(angle) * (0.6D + (double)innerRadius));
                         VectorUtils.rotateAroundAxisX(v, xRotation);
                         VectorUtils.rotateAroundAxisY(v, rotations);
-                        ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                        ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                         this.location.subtract(v);
                      }
 
@@ -385,7 +385,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawArc(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final Object getTarget, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final int particleDensity, final float height, final float pitchMuliplier, final double visibleRange, final double disX, final double disY, final double disZ, final double disX2, final double disY2, final double disZ2, long delayTicks, long delayBySecond) {
+   public static void drawArc(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final Object getTarget, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final int particleDensity, final float height, final float pitchMuliplier, final double visibleRange, final double disX, final double disY, final double disZ, final double disX2, final double disY2, final double disZ2, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
          int arc = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             int step = 0;
@@ -416,7 +416,7 @@ public class EffectsLib {
                      float x = (float)i / (float)particleDensity * length - length / 2.0F;
                      float y = (float)((double)(-pitch) * Math.pow(x, 2.0D) + (double)height);
                      this.location.add(v).add(0.0D, y, 0.0D);
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      this.location.subtract(0.0D, y, 0.0D).subtract(v);
                      ++this.step;
                   }
@@ -431,7 +431,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawDot(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean isFacing, final float faceAngle, final float radius, final double xRotation, final double yRotation, final double zRotation, final double disX, final double disY, final double disZ, final double visibleRange, long delayTicks, long delayBySecond) {
+   public static void drawDot(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean isFacing, final float faceAngle, final float radius, final double xRotation, final double yRotation, final double zRotation, final double disX, final double disY, final double disZ, final double visibleRange, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
          int simpleDot = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             public float hue;
@@ -455,9 +455,9 @@ public class EffectsLib {
                      Location loc1R = this.location.clone();
                      loc1R.setYaw(loc1R.getYaw() + faceAngle);
                      Location loc2R = loc1R.clone().add(loc1R.getDirection().multiply(1));
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, loc2R.add(0.0D, 0.0D, 0.0D), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, loc2R.add(0.0D, 0.0D, 0.0D), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   } else {
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   }
                } catch (NullPointerException var8) {
                   EffectsLib.foundNull(this.location, idName, var8);
@@ -470,7 +470,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawComplexSpiral(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean clockwise, final boolean scan, final double visibleRange, final double xRotation, final double yRotation, final double zRotation, final float radius, final float height, final float effectMod, final int circleDensity, final double disX, final double disY, final double disZ, float steps, long delayTicks, long delayBySecond) {
+   public static void drawComplexSpiral(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean clockwise, final boolean scan, final double visibleRange, final double xRotation, final double yRotation, final double zRotation, final float radius, final float height, final float effectMod, final int circleDensity, final double disX, final double disY, final double disZ, float steps, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
          int complexSpiral = Bukkit.getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(steps) {
             float step;
@@ -504,7 +504,7 @@ public class EffectsLib {
                   }
 
                   VectorUtils.rotateVector(this.v, xRotation, yRotation, zRotation);
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   ++this.step;
                   if (scan) {
                      if (this.i > height) {
@@ -540,7 +540,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawBand(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final boolean rainbowMode, final double visibleRange, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond, final Player player) {
+   public static void drawBand(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final boolean rainbowMode, final double visibleRange, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond, final Player player) {
       if (!arraylist.containsKey(idName)) {
          int band = Bukkit.getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             private float hue;
@@ -557,7 +557,7 @@ public class EffectsLib {
                         this.hue = ParticleEffect.simpleRainbowHelper(this.hue, particle);
                      }
 
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   }
                } catch (NullPointerException var2) {
                   EffectsLib.foundNull(this.location, idName, var2);
@@ -580,7 +580,7 @@ public class EffectsLib {
                   this.location = EffectsLib.getLocation(center, idName);
 
                   for(int i = 0; i < 15; ++i) {
-                     ParticleEffect.valueOf("redstone").display(player, this.location, visibleRange, isSinglePlayer, (float)i);
+                     ParticleEffect.valueOf("redstone").display(player, this.location, visibleRange, isSinglePlayer, (float)i, (float)i);
                      this.location.setY(this.location.getY() + 0.1D);
                   }
                } catch (NullPointerException var2) {
@@ -714,7 +714,7 @@ public class EffectsLib {
                            int r = (new Color(this.image.getRGB(x, y))).getRed();
                            int g = (new Color(this.image.getRGB(x, y))).getGreen();
                            int b = (new Color(this.image.getRGB(x, y))).getBlue();
-                           ParticleEffect.valueOf("redstone").display(this.location.add(v), visibleRange, isSinglePlayer, player, r, g, b);
+                           ParticleEffect.valueOf("redstone").display(this.location.add(v), visibleRange, isSinglePlayer, player, r, g, b, r, g, b);
                            this.location.subtract(v);
                         }
                      }
@@ -802,7 +802,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawBreath(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float finalArcPitch, final int finalArcs, final int finalParticleCount, final int finalStepPerIteration, final float finalLength, final double visibleRange, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
+   public static void drawBreath(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float finalArcPitch, final int finalArcs, final int finalParticleCount, final int finalStepPerIteration, final float finalLength, final double visibleRange, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
          int breath = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             protected int step = 0;
@@ -841,7 +841,7 @@ public class EffectsLib {
                         VectorUtils.rotateAroundAxisX(v, (Double)this.rndAngle.get(i));
                         VectorUtils.rotateAroundAxisZ(v, -this.location.getPitch() * 0.017453292F);
                         VectorUtils.rotateAroundAxisY(v, -(this.location.getYaw() + 90.0F) * 0.017453292F);
-                        ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                        ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                         this.location.subtract(v);
                      }
 
@@ -858,7 +858,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawCylinder(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean enableRotation, final boolean solid, final float radius, final int finalParticleCount, final float height, float ratio, final double visibleRange, double xRotation, double yRotation, double zRotation, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
+   public static void drawCylinder(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean enableRotation, final boolean solid, final float radius, final int finalParticleCount, final float height, float ratio, final double visibleRange, double xRotation, double yRotation, double zRotation, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
          int cylinder = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(ratio) {
             public double angularVelocityX = 0.015707964077591896D;
@@ -919,11 +919,11 @@ public class EffectsLib {
                         VectorUtils.rotateVector(v, xRotation, yRotation, zRotation);
                      }
 
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      this.location.subtract(v);
                   }
 
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   ++this.step;
                } catch (NullPointerException var11) {
                   EffectsLib.foundNull(this.location, idName, var11);
@@ -936,7 +936,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawRings(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean enableRotation, final boolean animated, final float radius, final int ringCount, final int ringDensity, float height, final double visibleRange, final double xRotation, final double yRotation, final double zRotation, final double disX, final double disY, final double disZ, long delayTicks, final long periodTicks) {
+   public static void drawRings(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean enableRotation, final boolean animated, final float radius, final int ringCount, final int ringDensity, float height, final double visibleRange, final double xRotation, final double yRotation, final double zRotation, final double disX, final double disY, final double disZ, long delayTicks, final long periodTicks) {
       if (!arraylist.containsKey(idName)) {
          int rings = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             double rotation = 90.0D;
@@ -975,7 +975,7 @@ public class EffectsLib {
                               this.hue = ParticleEffect.simpleRainbowHelper(this.hue, particle);
                            }
 
-                           ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                           ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                         } else {
                            this.n = (int)((long)this.n + periodTicks);
                            int test = SchedulingManager.runAsyncRepeating(new Runnable() {
@@ -986,7 +986,7 @@ public class EffectsLib {
                                     this.finalHue = ParticleEffect.simpleRainbowHelper(this.finalHue, particle);
                                  }
 
-                                 ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, add, visibleRange, isSinglePlayer, rainbowMode, this.finalHue, offsetX, offsetY, offsetZ, speed, 1);
+                                 ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, add, visibleRange, isSinglePlayer, rainbowMode, this.finalHue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                               }
                            }, this.n, 0).getTaskId();
                            EffectsLib.arraylist2.put(idName, test);
@@ -1009,7 +1009,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawSphere(final int style, final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float radius, final int density, final double visibleRange, double xRotation, double yRotation, double zRotation, final double disX, final double disY, final double disZ, long delayTicks, long periodTicks) {
+   public static void drawSphere(final int style, final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float radius, final int density, final double visibleRange, double xRotation, double yRotation, double zRotation, final double disX, final double disY, final double disZ, long delayTicks, long periodTicks) {
       if (!arraylist.containsKey(idName)) {
          int rings = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             float hue = 0.0F;
@@ -1065,7 +1065,7 @@ public class EffectsLib {
             public void quickSphere(float radiusx) {
                for(int i = 0; i < density; ++i) {
                   this.v = RandomUtils.getRandomVector().multiply(radiusx);
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   this.location.subtract(this.v);
                }
 
@@ -1079,7 +1079,7 @@ public class EffectsLib {
                      this.radiusScanRev();
                   }
 
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   this.location.subtract(this.v);
                }
 
@@ -1093,7 +1093,7 @@ public class EffectsLib {
                   double y = radiusx * Math.cos(this.t);
                   double z = radiusx * Math.sin(theta) * Math.sin(this.t);
                   this.location.add(x, y, z);
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   this.location.subtract(x, y, z);
                }
 
@@ -1103,7 +1103,7 @@ public class EffectsLib {
                for(int i = 0; i < density; ++i) {
                   this.v = RandomUtils.getRandomVector().multiply(radiusx);
                   this.v.setY(Math.abs(this.v.getY()));
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   this.location.subtract(this.v);
                }
 
@@ -1147,7 +1147,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawWarpRings(final int style, final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean scan, final float radius, int ringCount, final int ringDensity, final float height, final double visibleRange, final double xRotation, final double yRotation, final double zRotation, final double disX, final double disY, final double disZ, long delayTicks) {
+   public static void drawWarpRings(final int style, final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean scan, final float radius, int ringCount, final int ringDensity, final float height, final double visibleRange, final double xRotation, final double yRotation, final double zRotation, final double disX, final double disY, final double disZ, long delayTicks) {
       if (!arraylist.containsKey(idName)) {
          int rings = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(ringCount) {
             double x;
@@ -1315,7 +1315,7 @@ public class EffectsLib {
                   this.z = Math.sin(angle) * (double)radiusx;
                   this.v = new Vector(this.x, 0.0D, this.z);
                   VectorUtils.rotateVector(this.v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   this.location.subtract(this.x, 0.0D, this.z);
                }
 
@@ -1331,7 +1331,7 @@ public class EffectsLib {
                   this.z = this.t * Math.sin(angle);
                   this.v = new Vector(this.x, y, this.z);
                   VectorUtils.rotateVector(this.v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   this.location.subtract(this.x, y, this.z);
                }
 
@@ -1350,7 +1350,7 @@ public class EffectsLib {
                   this.z = this.t * Math.sin(angle);
                   this.v = new Vector(this.x, y, this.z);
                   VectorUtils.rotateVector(this.v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
-                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                  ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   this.location.subtract(this.x, y, this.z);
                }
 
@@ -1370,7 +1370,7 @@ public class EffectsLib {
                      this.v = new Vector(a, yStep, radiusx * (float)p / (float)ringDensity - a);
                      VectorUtils.rotateAroundAxisY(this.v, angleY);
                      VectorUtils.rotateVector(this.v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      this.location.subtract(this.v);
                   }
                }
@@ -1395,7 +1395,7 @@ public class EffectsLib {
                         VectorUtils.rotateAroundAxisX(v, angleX);
                         VectorUtils.rotateAroundAxisY(v, angleY);
                         VectorUtils.rotateVector(v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
-                        ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                        ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                         this.location.subtract(v);
                      }
                   }
@@ -1405,7 +1405,7 @@ public class EffectsLib {
                      v.setY(yStep * (double)p / (double)ringDensity - b);
                      VectorUtils.rotateAroundAxisY(v, angleY);
                      VectorUtils.rotateVector(v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      this.location.subtract(v);
                   }
                }
@@ -1422,7 +1422,7 @@ public class EffectsLib {
                      this.v = new Vector(a, yStep, radiusx * (float)p / (float)ringDensity - a);
                      VectorUtils.rotateAroundAxisY(this.v, angleY);
                      VectorUtils.rotateVector(this.v, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      this.location.subtract(this.v);
                   }
                }
@@ -1449,7 +1449,7 @@ public class EffectsLib {
 
                   for(int i2 = 0; i2 < ringDensity; ++i2) {
                      VectorUtils.rotateVector(v3, xRotation * 0.01745329238474369D, yRotation * 0.01745329238474369D, zRotation * 0.01745329238474369D);
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, loc.add(v3), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, loc.add(v3), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                   }
 
                   this.location.subtract(this.v);
@@ -1770,7 +1770,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawWings(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final String particle2, final Material dataMat2, final byte dataID2, final float speed2, final float offsetX2, final float offsetY2, final float offsetZ2, final String particle3, final Material dataMat3, final byte dataID3, final float speed3, final float offsetX3, final float offsetY3, final float offsetZ3, final Object center, final String idName, final boolean isSinglePlayer, final boolean rainbowMode, final boolean flapMode, float flapStep, final float flapRange, final float wingAngle, final double visibleRange, final boolean[][] shape, final boolean[][] shape2, final boolean[][] shape3, final float height, final double space, long delayTicks, long delayBySecond, final Player player) {
+   public static void drawWings(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final String particle2, final Material dataMat2, final byte dataID2, final float speed2, final float offsetX2, final float offsetY2, final float offsetZ2, final float offsetX2T, final float offsetY2T, final float offsetZ2T, final String particle3, final Material dataMat3, final byte dataID3, final float speed3, final float offsetX3, final float offsetY3, final float offsetZ3, final float offsetX3T, final float offsetY3T, final float offsetZ3T, final Object center, final String idName, final boolean isSinglePlayer, final boolean rainbowMode, final boolean flapMode, float flapStep, final float flapRange, final float wingAngle, final double visibleRange, final boolean[][] shape, final boolean[][] shape2, final boolean[][] shape3, final float height, final double space, long delayTicks, long delayBySecond, final Player player) {
       if (!arraylist.containsKey(idName)) {
          int wings = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(flapStep) {
             private float hue;
@@ -1819,8 +1819,8 @@ public class EffectsLib {
                               vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                               vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                               v2.setY(0).multiply(-0.2D);
-                              ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
-                              ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                              ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
+                              ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                            }
 
                            x += space;
@@ -1846,8 +1846,8 @@ public class EffectsLib {
                               vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                               vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                               v2.setY(0).multiply(-0.2D);
-                              ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, speed2, 1);
-                              ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, speed2, 1);
+                              ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, speed2, 1);
+                              ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, speed2, 1);
                            }
 
                            x += space;
@@ -1873,8 +1873,8 @@ public class EffectsLib {
                               vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                               vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                               v2.setY(0).multiply(-0.2D);
-                              ParticleEffect.valueOf(particle3).display(idName, dataMat3, dataID3, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX3, offsetY3, offsetZ3, speed3, 1);
-                              ParticleEffect.valueOf(particle3).display(idName, dataMat3, dataID3, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX3, offsetY3, offsetZ3, speed3, 1);
+                              ParticleEffect.valueOf(particle3).display(idName, dataMat3, dataID3, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX3, offsetY3, offsetZ3, offsetX3T, offsetY3T, offsetZ3T, speed3, 1);
+                              ParticleEffect.valueOf(particle3).display(idName, dataMat3, dataID3, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX3, offsetY3, offsetZ3, offsetX3T, offsetY3T, offsetZ3T, speed3, 1);
                            }
 
                            x += space;
@@ -1905,7 +1905,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawWings4Color(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final String particle2, final Material dataMat2, final byte dataID2, final float speed2, final float offsetX2, final float offsetY2, final float offsetZ2, final String particle3, final Material dataMat3, final byte dataID3, final float speed3, final float offsetX3, final float offsetY3, final float offsetZ3, final String particle4, final Material dataMat4, final byte dataID4, final float speed4, final float offsetX4, final float offsetY4, final float offsetZ4, final Object center, final String idName, final boolean isSinglePlayer, final boolean rainbowMode, final boolean flapMode, float flapStep, final float flapRange, final float wingAngle, final double visibleRange, final boolean[][] shape, final boolean[][] shape2, final boolean[][] shape3, final boolean[][] shape4, final float height, final double space, long delayTicks, long delayBySecond, final Player player) {
+   public static void drawWings4Color(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final String particle2, final Material dataMat2, final byte dataID2, final float speed2, final float offsetX2, final float offsetY2, final float offsetZ2, final float offsetX2T, final float offsetY2T, final float offsetZ2T, final String particle3, final Material dataMat3, final byte dataID3, final float speed3, final float offsetX3, final float offsetY3, final float offsetZ3, final float offsetX3T, final float offsetY3T, final float offsetZ3T, final String particle4, final Material dataMat4, final byte dataID4, final float speed4, final float offsetX4, final float offsetY4, final float offsetZ4, final float offsetX4T, final float offsetY4T, final float offsetZ4T, final Object center, final String idName, final boolean isSinglePlayer, final boolean rainbowMode, final boolean flapMode, float flapStep, final float flapRange, final float wingAngle, final double visibleRange, final boolean[][] shape, final boolean[][] shape2, final boolean[][] shape3, final boolean[][] shape4, final float height, final double space, long delayTicks, long delayBySecond, final Player player) {
       if (!arraylist.containsKey(idName)) {
          int wings = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(flapStep) {
             private float hue;
@@ -1956,8 +1956,8 @@ public class EffectsLib {
                            vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                            vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                            v2.setY(0).multiply(-0.2D);
-                           ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
-                           ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                           ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
+                           ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                         }
 
                         x += space;
@@ -1981,8 +1981,8 @@ public class EffectsLib {
                            vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                            vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                            v2.setY(0).multiply(-0.2D);
-                           ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, speed2, 1);
-                           ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, speed2, 1);
+                           ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, speed2, 1);
+                           ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, speed2, 1);
                         }
 
                         x += space;
@@ -2006,8 +2006,8 @@ public class EffectsLib {
                            vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                            vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                            v2.setY(0).multiply(-0.2D);
-                           ParticleEffect.valueOf(particle3).display(idName, dataMat3, dataID3, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX3, offsetY3, offsetZ3, speed3, 1);
-                           ParticleEffect.valueOf(particle3).display(idName, dataMat3, dataID3, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX3, offsetY3, offsetZ3, speed3, 1);
+                           ParticleEffect.valueOf(particle3).display(idName, dataMat3, dataID3, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX3, offsetY3, offsetZ3, offsetX3T, offsetY3T, offsetZ3T, speed3, 1);
+                           ParticleEffect.valueOf(particle3).display(idName, dataMat3, dataID3, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX3, offsetY3, offsetZ3, offsetX3T, offsetY3T, offsetZ3T, speed3, 1);
                         }
 
                         x += space;
@@ -2031,8 +2031,8 @@ public class EffectsLib {
                            vR = VectorUtils.rotateAroundAxisY(vR, -rightWing);
                            vL = VectorUtils.rotateAroundAxisY(vL, -leftWing);
                            v2.setY(0).multiply(-0.2D);
-                           ParticleEffect.valueOf(particle4).display(idName, dataMat4, dataID4, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX4, offsetY4, offsetZ4, speed4, 1);
-                           ParticleEffect.valueOf(particle4).display(idName, dataMat4, dataID4, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX4, offsetY4, offsetZ4, speed4, 1);
+                           ParticleEffect.valueOf(particle4).display(idName, dataMat4, dataID4, player, this.location.clone().add(vL).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX4, offsetY4, offsetZ4, offsetX4T, offsetY4T, offsetZ4T, speed4, 1);
+                           ParticleEffect.valueOf(particle4).display(idName, dataMat4, dataID4, player, this.location.clone().add(vR).add(v2), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX4, offsetY4, offsetZ4, offsetX4T, offsetY4T, offsetZ4T, speed4, 1);
                         }
 
                         x += space;
@@ -2062,7 +2062,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawPlanet(final String particle, final Material dataMat, final byte dataID, final float speed, final String particle2, final Material dataMat2, final byte dataID2, final float speed2, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean enableRotation, final EffectsLib.Plane plane, final float rotationStep, final boolean enableOrbit, final float orbitalRadius, final float orbitalStepDensity, final double xRotation, final double yRotation, final double zRotation, final float radius, final int density, final int precision, final float mountainHeight, final double visibleRange, final float offsetX, final float offsetY, final float offsetZ, final float offsetX2, final float offsetY2, final float offsetZ2, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
+   public static void drawPlanet(final String particle, final Material dataMat, final byte dataID, final float speed, final String particle2, final Material dataMat2, final byte dataID2, final float speed2, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean enableRotation, final EffectsLib.Plane plane, final float rotationStep, final boolean enableOrbit, final float orbitalRadius, final float orbitalStepDensity, final double xRotation, final double yRotation, final double zRotation, final float radius, final int density, final int precision, final float mountainHeight, final double visibleRange, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final float offsetX2, final float offsetY2, final float offsetZ2, final float offsetX2T, final float offsetY2T, final float offsetZ2T, final double disX, final double disY, final double disZ, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
          int planet = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             public float hue;
@@ -2226,7 +2226,7 @@ public class EffectsLib {
                   Vector vx;
                   while(var2.hasNext()) {
                      vx = (Vector)var2.next();
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(vx), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(vx), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      this.location.subtract(vx);
                   }
 
@@ -2234,7 +2234,7 @@ public class EffectsLib {
 
                   while(var2.hasNext()) {
                      vx = (Vector)var2.next();
-                     ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.add(vx), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, speed2, 1);
+                     ParticleEffect.valueOf(particle2).display(idName, dataMat2, dataID2, player, this.location.add(vx), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, speed2, 1);
                      this.location.subtract(vx);
                   }
                } catch (NullPointerException var9) {
@@ -2318,7 +2318,7 @@ public class EffectsLib {
                double x = Math.cos(angle) * (double)this.radius;
                double z = Math.sin(angle) * (double)this.radius;
                location.add(x, this.height, z);
-               ParticleEffect.redstone.display(color, location, 30.0D);
+               ParticleEffect.redstone.display(color, color, location, 30.0D);
                location.subtract(x, 0.0D, z);
                this.i += this.speed;
                if ((double)this.radius > 0.02D) {
@@ -2334,7 +2334,7 @@ public class EffectsLib {
                double z2 = Math.sin(angle2) * (double)(-this.radius2);
                Vector v = new Vector(x2, this.height2, z2);
                location2.add(v);
-               ParticleEffect.redstone.display(color, location, 30.0D);
+               ParticleEffect.redstone.display(color, color, location, 30.0D);
                location2.subtract(x, 0.0D, z);
                this.i2 += this.speed2;
                if ((double)this.radius2 > 0.02D) {
@@ -2528,7 +2528,7 @@ public class EffectsLib {
 
    }
 
-   public static void drawWarpBubble(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean scan, final float radius, int ringCount, final int ringDensity, final float height, final double visibleRange, double xRotation, double yRotation, double zRotation, final double disX, final double disY, final double disZ, long delayTicks, long periodTicks) {
+   public static void drawWarpBubble(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean scan, final float radius, int ringCount, final int ringDensity, final float height, final double visibleRange, double xRotation, double yRotation, double zRotation, final double disX, final double disY, final double disZ, long delayTicks, long periodTicks) {
       if (!arraylist.containsKey(idName)) {
          int rings = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(ringCount) {
             double x;
@@ -2568,7 +2568,7 @@ public class EffectsLib {
                      this.x = Math.cos(angle) * this.radiusCounter;
                      this.z = Math.sin(angle) * this.radiusCounter;
                      this.v = new Vector(this.x, 0.0D, this.z);
-                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location.add(this.v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      this.location.subtract(this.x, 0.0D, this.z);
                   }
 

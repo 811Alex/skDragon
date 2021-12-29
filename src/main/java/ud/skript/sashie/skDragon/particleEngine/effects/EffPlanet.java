@@ -18,7 +18,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawPlanet ")
 @Description({"Draws a randomized two colored planet that follows the player or plays at a location. New as of v0.07.0-Beta"})
-@Syntaxes({"drawPlanet particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%][, rotation %-boolean%,[ plane] %-string%, rot[ation]Speed %-number%][, orbit %-boolean%, orbit[al]Radius %-number%, orbit[al]Step %-number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%]], radius %number%, density %number%, precision %number%, bumpHeight %number%, visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
+@Syntaxes({"drawPlanet particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%][, rotation %-boolean%,[ plane] %-string%, rot[ation]Speed %-number%][, orbit %-boolean%, orbit[al]Radius %-number%, orbit[al]Step %-number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%]], radius %number%, density %number%, precision %number%, bumpHeight %number%, visibleRange %number%[, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
 @Examples({"drawPlanet particle1 \"redstone\", RGB 0, 255, 10, particle2 \"redstone\", RGB2 0, 10, 255, center location of player, id \"%player%\", rotation true, plane \"x\", rotationSpeed 1, orbit true, orbitalRadius 2, orbitalStep 360, xRotation 45, yRotation 0, zRotation 0, radius .25, density 150, precision 100, bumpHeight .25, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 0, 255, 10, particle2 \"redstone\", RGB2 0, 10, 255, center location of player, id \"%player%\", rotation true, plane \"xz\", rotationSpeed 5, radius .25, density 100, precision 100, bumpHeight .25, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 230, 204, 255, particle2 \"redstone\", RGB2 46, 138, 92, center location of player, id \"%player%\", rotation true, plane \"xz\", rotationSpeed 5, radius .25, density 100, precision 100, bumpHeight .25, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 224, 224, 224, particle2 \"redstone\", RGB2 133, 133, 133, center location of player, id \"%player%-1\", rotation true, plane \"xz\", rotationSpeed 1, orbit true, orbitalRadius 1.1, orbitalStep 180, xRotation 45, yRotation 0, zRotation 0, radius .05, density 15, precision 100, bumpHeight .05, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 153, 153, 255, particle2 \"redstone\", RGB2 153, 204, 255, center location of player, id \"%player%-2\", rotation true, plane \"xz\", rotationSpeed 1, orbit true, orbitalRadius 1.4, orbitalStep 180, xRotation 20, yRotation 45, zRotation 0, radius .06, density 15, precision 50, bumpHeight .05, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 204, 230, 255, particle2 \"redstone\", RGB2 204, 255, 255, center location of player, id \"%player%-3\", rotation true, plane \"xz\", rotationSpeed 1, orbit true, orbitalRadius 1.4, orbitalStep 180, xRotation 20, yRotation 180, zRotation 0, radius .06, density 15, precision 50, bumpHeight .05, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 0, 255, 10, particle2 \"redstone\", RGB2 0, 10, 255, center location of player, id \"%player%\", rotation true, plane \"x\", rotationSpeed 1, orbit true, orbitalRadius 2, orbitalStep 360, xRotation 45, yRotation 0, zRotation 0, radius .25, density 150, precision 100, bumpHeight .25, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 255, 204, 51, particle2 \"redstone\", RGB2 255, 255, 0, center location of player, id \"%player%\", rotation true, plane \"xz\", rotationSpeed 5, radius .50, density 200, precision 50, bumpHeight .25, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 224, 224, 224, particle2 \"redstone\", RGB2 133, 133, 133, center location of player, id \"%player%-1\", rotation true, plane \"xz\", rotationSpeed 1, orbit true, orbitalRadius 1.5, orbitalStep 350, xRotation 45, yRotation 0, zRotation 0, radius .05, density 15, precision 100, bumpHeight .05, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 0, 255, 10, particle2 \"redstone\", RGB2 0, 10, 255, center location of player, id \"%player%-2\", rotation true, plane \"xz\", rotationSpeed 5, orbit true, orbitalRadius 3.1, orbitalStep 290, xRotation 45, yRotation 180, zRotation 0, radius .10, density 50, precision 50, bumpHeight .25, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 230, 204, 255, particle2 \"redstone\", RGB2 46, 138, 92, center location of player, id \"%player%-3\", rotation true, plane \"xz\", rotationSpeed 5, orbit true, orbitalRadius 4.5, orbitalStep 300, xRotation 45, yRotation 0, zRotation 0, radius .10, density 50, precision 50, bumpHeight .25, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 153, 153, 255, particle2 \"redstone\", RGB2 153, 204, 255, center location of player, id \"%player%-4\", rotation true, plane \"xz\", rotationSpeed 1, orbit true, orbitalRadius 5.4, orbitalStep 280, xRotation 20, yRotation 45, zRotation 0, radius .06, density 15, precision 50, bumpHeight .05, visibleRange 30, tps 1, second 2", "drawPlanet particle1 \"redstone\", RGB 204, 230, 255, particle2 \"redstone\", RGB2 204, 255, 255, center location of player, id \"%player%-5\", rotation true, plane \"xz\", rotationSpeed 1, orbit true, orbitalRadius 6.4, orbitalStep 280, xRotation 20, yRotation 180, zRotation 0, radius .06, density 15, precision 50, bumpHeight .05, visibleRange 30, tps 1, second 2"})
 public class EffPlanet extends Effect {
    private Expression particleString;
@@ -27,12 +27,18 @@ public class EffPlanet extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression particleString2;
    private Expression data2;
    private Expression speed2;
    private Expression offX2;
    private Expression offY2;
    private Expression offZ2;
+   private Expression offX2T;
+   private Expression offY2T;
+   private Expression offZ2T;
    private Expression entLoc;
    private Expression idName;
    private Expression singlePlayer;
@@ -66,12 +72,18 @@ public class EffPlanet extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.particleString2 = exprs[i++];
       this.data2 = exprs[i++];
       this.speed2 = exprs[i++];
       this.offX2 = exprs[i++];
       this.offY2 = exprs[i++];
       this.offZ2 = exprs[i++];
+      this.offX2T = exprs[i++];
+      this.offY2T = exprs[i++];
+      this.offZ2T = exprs[i++];
       this.entLoc = exprs[i++];
       this.idName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -108,10 +120,16 @@ public class EffPlanet extends Effect {
       float offsetX = 0.0F;
       float offsetY = 0.0F;
       float offsetZ = 0.0F;
+      float offsetXT = 0.0F;
+      float offsetYT = 0.0F;
+      float offsetZT = 0.0F;
       String particle2 = "waterdrip";
       float offsetX2 = 0.0F;
       float offsetY2 = 0.0F;
       float offsetZ2 = 0.0F;
+      float offsetX2T = 0.0F;
+      float offsetY2T = 0.0F;
+      float offsetZ2T = 0.0F;
       boolean enableRotation = false;
       EffectsLib.Plane plane = EffectsLib.Plane.XYZ;
       float finalRotationStep = 1.0F;
@@ -142,6 +160,12 @@ public class EffPlanet extends Effect {
          offsetZ = (float)((Number)this.offZ.getSingle(e)).intValue();
       }
 
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = (float)((Number)this.offXT.getSingle(e)).intValue();
+         offsetYT = (float)((Number)this.offYT.getSingle(e)).intValue();
+         offsetZT = (float)((Number)this.offZT.getSingle(e)).intValue();
+      }
+
       if (this.particleString2 != null && ParticleEffect.NAME_MAP.containsKey(((String)this.particleString2.getSingle(e)).toLowerCase())) {
          particle2 = ((String)this.particleString2.getSingle(e)).toLowerCase();
       }
@@ -154,6 +178,12 @@ public class EffPlanet extends Effect {
          offsetX2 = (float)((Number)this.offX2.getSingle(e)).intValue();
          offsetY2 = (float)((Number)this.offY2.getSingle(e)).intValue();
          offsetZ2 = (float)((Number)this.offZ2.getSingle(e)).intValue();
+      }
+
+      if (this.offX2T != null && this.offY2T != null && this.offZ2T != null) {
+         offsetX2T = (float)((Number)this.offX2T.getSingle(e)).intValue();
+         offsetY2T = (float)((Number)this.offY2T.getSingle(e)).intValue();
+         offsetZ2T = (float)((Number)this.offZ2T.getSingle(e)).intValue();
       }
 
       Object center = this.entLoc.getSingle(e);
@@ -227,11 +257,11 @@ public class EffPlanet extends Effect {
          byte dataID = ((ItemStack)this.data.getSingle(e)).getData().getData();
          Material dataMat2 = ((ItemStack)this.data2.getSingle(e)).getType();
          byte dataID2 = ((ItemStack)this.data2.getSingle(e)).getData().getData();
-         EffectsLib.drawPlanet(particle, dataMat, dataID, finalSpeed, particle2, dataMat2, dataID2, finalSpeed2, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, plane, finalRotationStep, enableOrbit, finalOrbitalRadius, finalOrbitalStep, xRotation, yRotation, zRotation, finalRadius, finalDensity, finalPrecision, finalMountainHeight, visibleRange, offsetX, offsetY, offsetZ, offsetX2, offsetY2, offsetZ2, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawPlanet(particle, dataMat, dataID, finalSpeed, particle2, dataMat2, dataID2, finalSpeed2, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, plane, finalRotationStep, enableOrbit, finalOrbitalRadius, finalOrbitalStep, xRotation, yRotation, zRotation, finalRadius, finalDensity, finalPrecision, finalMountainHeight, visibleRange, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
       } catch (Exception var47) {
          Material dataMatNull = Material.DIRT;
          byte dataIDNull = 0;
-         EffectsLib.drawPlanet(particle, dataMatNull, dataIDNull, finalSpeed, particle2, dataMatNull, dataIDNull, finalSpeed2, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, plane, finalRotationStep, enableOrbit, finalOrbitalRadius, finalOrbitalStep, xRotation, yRotation, zRotation, finalRadius, finalDensity, finalPrecision, finalMountainHeight, visibleRange, offsetX, offsetY, offsetZ, offsetX2, offsetY2, offsetZ2, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawPlanet(particle, dataMatNull, dataIDNull, finalSpeed, particle2, dataMatNull, dataIDNull, finalSpeed2, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, plane, finalRotationStep, enableOrbit, finalOrbitalRadius, finalOrbitalStep, xRotation, yRotation, zRotation, finalRadius, finalDensity, finalPrecision, finalMountainHeight, visibleRange, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, offsetX2, offsetY2, offsetZ2, offsetX2T, offsetY2T, offsetZ2T, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
       }
 
    }

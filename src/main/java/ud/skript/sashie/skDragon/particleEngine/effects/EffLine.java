@@ -20,7 +20,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawLine")
 @Description({"Draws a line from entity/location to entity/location options exist to set the length of the line as well as point with the player(it doesnt appear to follow the pitch/yaw of mobs, might require a movement update perhaps)"})
-@Syntaxes({"drawLine particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%[, target %-object%], id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%][, solid %-boolean%][, density %-number%][, length %-number%][, zigZag count %-number%, height %-number%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
+@Syntaxes({"drawLine particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%[, target %-object%], id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%][, solid %-boolean%][, density %-number%][, length %-number%][, zigZag count %-number%, height %-number%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]"})
 @Examples({"drawLine particle redstone, RGB 0, 1, 1, center player, target location of target block, id \"%player%\", rainbowMode true, solid true, density 5, length 0, zigZag count 0, height 0, visibleRange 32, displacementXYZ 0, 1.2, 0, pulseDelay 1"})
 public class EffLine extends Effect {
    private Expression particleName;
@@ -29,6 +29,9 @@ public class EffLine extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression tarLoc;
    private Expression inputIdName;
@@ -53,6 +56,9 @@ public class EffLine extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.tarLoc = exprs[i++];
       this.inputIdName = exprs[i++];
@@ -72,7 +78,7 @@ public class EffLine extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawLine particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%[, target %entity/location%], id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%][, solid %-boolean%][, density %-number%][, length %-number%][, zigZag count %-number%, height %-number%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+      return "drawLine particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%[, target %entity/location%], id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%][, solid %-boolean%][, density %-number%][, length %-number%][, zigZag count %-number%, height %-number%], visibleRange %number%[, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -86,6 +92,7 @@ public class EffLine extends Effect {
       ParticleEffect particle = (ParticleEffect)this.particleName.getSingle(e);
       float speed = SkriptHandler.inputParticleSpeed(e, this.inputParticleSpeed);
       Vector offset = SkriptHandler.inputParticleOffset(e, this.offX, this.offY, this.offZ);
+      Vector offsetTrans = SkriptHandler.inputParticleOffset(e, this.offXT, this.offYT, this.offZT);
       Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
       String idName = (String)this.inputIdName.getSingle(e);
@@ -104,6 +111,6 @@ public class EffLine extends Effect {
       float length = SkriptHandler.inputFloat(0.0F, e, this.inputLength);
       int zigZagCount = SkriptHandler.inputInt(0, e, this.inputZigZagCount);
       float zigZagHeight = SkriptHandler.inputFloat(0.0F, e, this.inputZigZagHeight);
-      Line.drawEffect(particle, dataMat, dataID, speed, offset, idName, center, target, players, rainbowMode, solid, density, length, zigZagCount, zigZagHeight, visibleRange, displacement, 0L, finalPulseTick);
+      Line.drawEffect(particle, dataMat, dataID, speed, offset, offsetTrans, idName, center, target, players, rainbowMode, solid, density, length, zigZagCount, zigZagHeight, visibleRange, displacement, 0L, finalPulseTick);
    }
 }

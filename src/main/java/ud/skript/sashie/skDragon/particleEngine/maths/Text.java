@@ -25,6 +25,7 @@ public class Text extends EffectsLib {
    final byte dataID;
    final float speed;
    final Vector offset;
+   final Vector offsetTrans;
    final String idName;
    final DynamicLocation center;
    final List players;
@@ -49,11 +50,14 @@ public class Text extends EffectsLib {
    float finalOffsetX;
    float finalOffsetY;
    float finalOffsetZ;
+   float finalOffsetXT;
+   float finalOffsetYT;
+   float finalOffsetZT;
    float yaw;
    float pitchX;
    float pitchZ;
 
-   public Text(String text, Font font, ParticleEffect particle, Material dataMat, byte dataID, float speed, Vector offset, String idName, DynamicLocation center, List players, boolean rainbowMode, boolean invert, boolean autoFace, float pixelStepX, float pixelStepY, float scaleSize, double visibleRange, Vector axis, Vector displacement, long delayStart, long delayPulse) {
+   public Text(String text, Font font, ParticleEffect particle, Material dataMat, byte dataID, float speed, Vector offset, Vector offsetTrans, String idName, DynamicLocation center, List players, boolean rainbowMode, boolean invert, boolean autoFace, float pixelStepX, float pixelStepY, float scaleSize, double visibleRange, Vector axis, Vector displacement, long delayStart, long delayPulse) {
       this.text = text;
       this.font = font;
       this.particle = particle;
@@ -61,6 +65,7 @@ public class Text extends EffectsLib {
       this.dataID = dataID;
       this.speed = speed;
       this.offset = offset;
+      this.offsetTrans = offsetTrans;
       this.idName = idName;
       this.center = center;
       this.players = players;
@@ -82,6 +87,9 @@ public class Text extends EffectsLib {
       this.finalOffsetX = (float)offset.getX();
       this.finalOffsetY = (float)offset.getY();
       this.finalOffsetZ = (float)offset.getZ();
+      this.finalOffsetXT = (float)offsetTrans.getX();
+      this.finalOffsetYT = (float)offsetTrans.getY();
+      this.finalOffsetZT = (float)offsetTrans.getZ();
       this.yaw = (float)axis.getY();
       this.pitchX = (float)axis.getX();
       this.pitchZ = (float)axis.getZ();
@@ -112,12 +120,19 @@ public class Text extends EffectsLib {
 
          if (this.rainbowMode) {
             this.finalOffsetX = ParticleEffect.simpleRainbowHelper(this.finalOffsetX, this.particle);
+            this.finalOffsetXT = ParticleEffect.simpleRainbowHelper(this.finalOffsetXT, this.particle);
             if (this.offset.getY() == 0.0D) {
                this.finalOffsetY = 1.0F;
+            }
+            if (this.offsetTrans.getY() == 0.0D) {
+               this.finalOffsetYT = 1.0F;
             }
 
             if (this.offset.getZ() == 0.0D) {
                this.finalOffsetZ = 1.0F;
+            }
+            if (this.offsetTrans.getZ() == 0.0D) {
+               this.finalOffsetZT = 1.0F;
             }
          }
 
@@ -159,7 +174,7 @@ public class Text extends EffectsLib {
    }
 
    private void display(Vector v) {
-      this.particle.display(this.idName, this.dataMat, this.dataID, this.players, this.center.add(v), this.visibleRange, this.rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, this.speed, 1);
+      this.particle.display(this.idName, this.dataMat, this.dataID, this.players, this.center.add(v), this.visibleRange, this.rainbowMode, this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ, this.finalOffsetXT, this.finalOffsetYT, this.finalOffsetZT, this.speed, 1);
       this.center.subtract(v);
    }
 

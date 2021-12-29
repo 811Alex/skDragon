@@ -191,10 +191,10 @@ public class ColorImage2 extends EffectsLib {
                            this.b = this.color.getZ();
                            if (center.isDynamic() && autoFace) {
                               v2xx = VectorUtils.rotateVectorYX(this.v, this.angle, 0.0F);
-                              ParticleEffect.redstone.display(center.add(v2xx), visibleRange, players, (int)this.r, (int)this.g, (int)this.b);
+                              ParticleEffect.redstone.display(center.add(v2xx), visibleRange, players, (int)this.r, (int)this.g, (int)this.b, (int)this.r, (int)this.g, (int)this.b);
                               center.subtract(v2xx);
                            } else {
-                              ParticleEffect.redstone.display(center.add(this.v), visibleRange, players, (int)this.r, (int)this.g, (int)this.b);
+                              ParticleEffect.redstone.display(center.add(this.v), visibleRange, players, (int)this.r, (int)this.g, (int)this.b, (int)this.r, (int)this.g, (int)this.b);
                               center.subtract(this.v);
                            }
                         }
@@ -242,10 +242,10 @@ public class ColorImage2 extends EffectsLib {
                            this.b = this.color.getZ();
                            if (center.isDynamic() && autoFace) {
                               v2xx = VectorUtils.rotateVectorYX(this.v, this.angle, 0.0F);
-                              ParticleEffect.redstone.display(center.add(v2xx), visibleRange, players, (int)this.r, (int)this.g, (int)this.b);
+                              ParticleEffect.redstone.display(center.add(v2xx), visibleRange, players, (int)this.r, (int)this.g, (int)this.b, (int)this.r, (int)this.g, (int)this.b);
                               center.subtract(v2xx);
                            } else {
-                              ParticleEffect.redstone.display(center.add(this.v), visibleRange, players, (int)this.r, (int)this.g, (int)this.b);
+                              ParticleEffect.redstone.display(center.add(this.v), visibleRange, players, (int)this.r, (int)this.g, (int)this.b, (int)this.r, (int)this.g, (int)this.b);
                               center.subtract(this.v);
                            }
                         }

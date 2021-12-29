@@ -13,7 +13,7 @@ import ud.skript.sashie.skDragon.particleEngine.utils.VectorUtils;
 import wtfplswork.Runnable;
 
 public class Cone extends EffectsLib {
-   public static void drawEffect(final int style, final ParticleEffect particle, final float speed, final Material dataMat, final byte dataID, final String idName, final DynamicLocation center, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, float radius, float grow, int circles, int helixes, int particleDensity, double xRotation, double yRotation, double zRotation, final float offsetX, final float offsetY, final float offsetZ, final double disX, final double disY, final double disZ, final double visibleRange, long delayStart, long delayPulse) {
+   public static void drawEffect(final int style, final ParticleEffect particle, final float speed, final Material dataMat, final byte dataID, final String idName, final DynamicLocation center, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, float radius, float grow, int circles, int helixes, int particleDensity, double xRotation, double yRotation, double zRotation, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final double disX, final double disY, final double disZ, final double visibleRange, long delayStart, long delayPulse) {
       if (!EffectsLib.arraylist.containsKey(idName)) {
          int cone = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable(radius, particleDensity, grow, helixes, circles) {
             boolean init = false;
@@ -85,14 +85,14 @@ public class Cone extends EffectsLib {
                         Vector v = new Vector(Math.cos(angle) * (double)radius, length, Math.sin(angle) * (double)radius);
                         VectorUtils.rotateAroundAxisX(v, (center.getPitch() + 90.0F) * 0.017453292F);
                         VectorUtils.rotateAroundAxisY(v, -center.getYaw() * 0.017453292F);
-                        particle.display(idName, dataMat, dataID, player, center.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                        particle.display(idName, dataMat, dataID, player, center.add(v), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                         center.subtract(v);
                         ++this.step;
                      }
                   } else if (style == 2) {
                      for(float k = 3.5F; k > 0.0F; k -= 0.1F) {
                         Vector vx = new Vector((double)k * Math.sin(k * this.step) / 3.0D, (double)(-k) + 3.8D, (double)k * Math.cos(k * this.step) / 3.0D);
-                        particle.display(idName, dataMat, dataID, player, center.add(vx), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                        particle.display(idName, dataMat, dataID, player, center.add(vx), visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      }
 
                      this.step -= 0.1F;
@@ -104,7 +104,7 @@ public class Cone extends EffectsLib {
                      double xx = Math.cos(angle) * (double)this.radius1;
                      double z = Math.sin(angle) * (double)this.radius1;
                      center.add(xx, this.height, z);
-                     particle.display(idName, dataMat, dataID, player, center, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     particle.display(idName, dataMat, dataID, player, center, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      center.subtract(xx, 0.0D, z);
                      this.i += this.speed1;
                      if ((double)this.radius1 > 0.02D) {
@@ -119,7 +119,7 @@ public class Cone extends EffectsLib {
                      double x2 = Math.cos(angle2) * (double)(-this.radius2);
                      double z2 = Math.sin(angle2) * (double)(-this.radius2);
                      ((Location) center).add(x2, this.height2, z2);
-                     particle.display(idName, dataMat, dataID, player, center, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, speed, 1);
+                     particle.display(idName, dataMat, dataID, player, center, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      ((Location) center).subtract(xx, 0.0D, z);
                      this.i2 += this.speed2;
                      if ((double)this.radius2 > 0.02D) {

@@ -22,7 +22,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawComplexSpiral ")
 @Description({"Draws a spiral that follows the player or plays at a location. New Syntax as of v0.06.0-BETA "})
-@Syntaxes({"draw[Complex]Spiral particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], clockwise %boolean%, scan %boolean%, radius %number%, density %number%, height %number%, effectMod %number%, start %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
+@Syntaxes({"draw[Complex]Spiral particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], clockwise %boolean%, scan %boolean%, radius %number%, density %number%, height %number%, effectMod %number%, start %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
 @Examples({"drawComplexSpiral particle \"redstone\", center player, id \"%player%\", rainbowMode true, clockwise true, scan true, radius 1.5, density 50, height 6, effectMod .05, start 0, visibleRange 30"})
 public class EffComplexSpiral extends Effect {
    private Expression particleString;
@@ -31,6 +31,9 @@ public class EffComplexSpiral extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression idName;
    private Expression singlePlayer;
@@ -61,6 +64,9 @@ public class EffComplexSpiral extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.idName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -96,7 +102,7 @@ public class EffComplexSpiral extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawComplexSpiral particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], clockwise %boolean%, scan %boolean%, radius %number%, density %number%, height %number%, effectMod %number%, start %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
+      return "drawComplexSpiral particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], clockwise %boolean%, scan %boolean%, radius %number%, density %number%, height %number%, effectMod %number%, start %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -104,6 +110,9 @@ public class EffComplexSpiral extends Effect {
       float offsetX = 0.0F;
       float offsetY = 0.0F;
       float offsetZ = 0.0F;
+      float offsetXT = 0.0F;
+      float offsetYT = 0.0F;
+      float offsetZT = 0.0F;
       double xRotation = 0.0D;
       double yRotation = 0.0D;
       double zRotation = 0.0D;
@@ -159,6 +168,12 @@ public class EffComplexSpiral extends Effect {
          offsetZ = (float)((Number)this.offZ.getSingle(e)).intValue();
       }
 
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = (float)((Number)this.offXT.getSingle(e)).intValue();
+         offsetYT = (float)((Number)this.offYT.getSingle(e)).intValue();
+         offsetZT = (float)((Number)this.offZT.getSingle(e)).intValue();
+      }
+
       if (this.displaceX != null && this.displaceY != null && this.displaceZ != null) {
          disX = ((Number)this.displaceX.getSingle(e)).doubleValue();
          disY = ((Number)this.displaceY.getSingle(e)).doubleValue();
@@ -181,6 +196,6 @@ public class EffComplexSpiral extends Effect {
 
       Material dataMat = SkriptHandler.inputParticleDataMat(e, this.inputParticleData);
       byte dataID = SkriptHandler.inputParticleDataID(e, this.inputParticleData);
-      EffectsLib.drawComplexSpiral(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, center, idName, isSinglePlayer, p, rainbowMode, finalClockwise, finalScan, visibleRange, xRotation, yRotation, zRotation, radius, finalHeight, finalEffectMod, finalCircleDensity, disX, disY, disZ, finalStep, finalDelayTicks, finalDelayBySec);
+      EffectsLib.drawComplexSpiral(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, center, idName, isSinglePlayer, p, rainbowMode, finalClockwise, finalScan, visibleRange, xRotation, yRotation, zRotation, radius, finalHeight, finalEffectMod, finalCircleDensity, disX, disY, disZ, finalStep, finalDelayTicks, finalDelayBySec);
    }
 }

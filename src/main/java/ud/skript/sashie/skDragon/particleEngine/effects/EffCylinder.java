@@ -18,7 +18,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawCylinder ")
 @Description({"Draws a cylinder that follows the player or plays at a location. New as of v0.07.0-Beta"})
-@Syntaxes({"drawCylinder particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, isSolid %boolean%, radius %number%, density %number%, height %number%, sideRatio %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
+@Syntaxes({"drawCylinder particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, isSolid %boolean%, radius %number%, density %number%, height %number%, sideRatio %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
 @Examples({"drawCylinder particle \"redstone\", RGB 102, 204, 255, center location of player, id \"%player%\", randomRotation false, isSolid false, radius 3, density 200, height 6, sideRatio 0, visibleRange 30", "drawCylinder particle \"flame\", center location of player, id \"%player%\", randomRotation false, isSolid true, radius 1, density 100, height 3, sideRatio 0, visibleRange 30"})
 public class EffCylinder extends Effect {
    private Expression particleString;
@@ -27,6 +27,9 @@ public class EffCylinder extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression idName;
    private Expression singlePlayer;
@@ -56,6 +59,9 @@ public class EffCylinder extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.idName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -80,7 +86,7 @@ public class EffCylinder extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawCylinder particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, isSolid %boolean%, radius %number%, density %number%, height %number%, sideRatio %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
+      return "drawCylinder particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, isSolid %boolean%, radius %number%, density %number%, height %number%, sideRatio %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -89,6 +95,9 @@ public class EffCylinder extends Effect {
       float offsetX = 0.0F;
       float offsetY = 0.0F;
       float offsetZ = 0.0F;
+      float offsetXT = 0.0F;
+      float offsetYT = 0.0F;
+      float offsetZT = 0.0F;
       double xRotation = 0.0D;
       double yRotation = 0.0D;
       double zRotation = 0.0D;
@@ -132,6 +141,12 @@ public class EffCylinder extends Effect {
          offsetZ = (float)((Number)this.offZ.getSingle(e)).intValue();
       }
 
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = (float)((Number)this.offXT.getSingle(e)).intValue();
+         offsetYT = (float)((Number)this.offYT.getSingle(e)).intValue();
+         offsetZT = (float)((Number)this.offZT.getSingle(e)).intValue();
+      }
+
       if (this.displaceX != null && this.displaceY != null && this.displaceZ != null) {
          disX = ((Number)this.displaceX.getSingle(e)).doubleValue();
          disY = ((Number)this.displaceY.getSingle(e)).doubleValue();
@@ -155,11 +170,11 @@ public class EffCylinder extends Effect {
       try {
          Material dataMat = ((ItemStack)this.data.getSingle(e)).getType();
          byte dataID = ((ItemStack)this.data.getSingle(e)).getData().getData();
-         EffectsLib.drawCylinder(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, isSolid, finalRadius, finalParticleCount, finalHeight, finalSideRatio, visibleRange, xRotation, yRotation, zRotation, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawCylinder(particle, dataMat, dataID, finalSpeed, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, isSolid, finalRadius, finalParticleCount, finalHeight, finalSideRatio, visibleRange, xRotation, yRotation, zRotation, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
       } catch (Exception var37) {
          Material dataMatNull = Material.DIRT;
          byte dataIDNull = 0;
-         EffectsLib.drawCylinder(particle, dataMatNull, dataIDNull, finalSpeed, offsetX, offsetY, offsetZ, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, isSolid, finalRadius, finalParticleCount, finalHeight, finalSideRatio, visibleRange, xRotation, yRotation, zRotation, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawCylinder(particle, dataMatNull, dataIDNull, finalSpeed, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, isSolid, finalRadius, finalParticleCount, finalHeight, finalSideRatio, visibleRange, xRotation, yRotation, zRotation, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
       }
 
    }

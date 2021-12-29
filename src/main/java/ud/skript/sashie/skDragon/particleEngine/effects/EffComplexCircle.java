@@ -18,7 +18,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("drawCircle ")
 @Description({"Draws a circle effect that follows the player or plays at a location. The only thing complex about this circle is its syntax. New Syntax as of v0.06.0-BETA "})
-@Syntaxes({"draw[Complex]Circle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, start %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
+@Syntaxes({"draw[Complex]Circle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, start %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]"})
 @Examples({"drawComplexCircle particle \"redstone\", center player, id \"%player%\", rainbowMode true, randomRotation true, radius 1.5, density 20, start 0, visibleRange 30"})
 public class EffComplexCircle extends Effect {
    private Expression data;
@@ -33,6 +33,9 @@ public class EffComplexCircle extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression displaceX;
    private Expression displaceY;
    private Expression displaceZ;
@@ -54,6 +57,9 @@ public class EffComplexCircle extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.idName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -76,7 +82,7 @@ public class EffComplexCircle extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawComplexCircle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, start %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
+      return "drawComplexCircle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, start %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
    }
 
    protected void execute(@Nullable Event e) {
@@ -85,6 +91,9 @@ public class EffComplexCircle extends Effect {
       float offsetX = 0.0F;
       float offsetY = 0.0F;
       float offsetZ = 0.0F;
+      float offsetXT = 0.0F;
+      float offsetYT = 0.0F;
+      float offsetZT = 0.0F;
       double xRotation = 0.0D;
       double yRotation = 0.0D;
       double zRotation = 0.0D;
@@ -127,6 +136,12 @@ public class EffComplexCircle extends Effect {
          offsetZ = ((Number)this.offZ.getSingle(e)).floatValue();
       }
 
+      if (this.offXT != null && this.offYT != null && this.offZT != null) {
+         offsetXT = ((Number)this.offXT.getSingle(e)).floatValue();
+         offsetYT = ((Number)this.offYT.getSingle(e)).floatValue();
+         offsetZT = ((Number)this.offZT.getSingle(e)).floatValue();
+      }
+
       if (this.displaceX != null && this.displaceY != null && this.displaceZ != null) {
          disX = ((Number)this.displaceX.getSingle(e)).doubleValue();
          disY = ((Number)this.displaceY.getSingle(e)).doubleValue();
@@ -150,11 +165,11 @@ public class EffComplexCircle extends Effect {
       try {
          Material dataMat = ((ItemStack)this.data.getSingle(e)).getType();
          byte dataID = ((ItemStack)this.data.getSingle(e)).getData().getData();
-         EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
       } catch (Exception var36) {
          Material dataMatNull = Material.DIRT;
          byte dataIDNull = 0;
-         EffectsLib.drawComplexCircle(particle, dataMatNull, dataIDNull, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+         EffectsLib.drawComplexCircle(particle, dataMatNull, dataIDNull, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
       }
 
    }

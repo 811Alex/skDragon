@@ -21,7 +21,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 @DontRegister
 @Name("drawCone")
 @Description({""})
-@Syntaxes({"drawCone particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], radius %number%, growth %number%, circles %number%, helixes %number%, density %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%] style %number%"})
+@Syntaxes({"drawCone particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], radius %number%, growth %number%, circles %number%, helixes %number%, density %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%] style %number%"})
 @Examples({""})
 public class EffCone extends Effect {
    private Expression inputParticle;
@@ -30,6 +30,9 @@ public class EffCone extends Effect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression offXT;
+   private Expression offYT;
+   private Expression offZT;
    private Expression entLoc;
    private Expression InputIdName;
    private Expression singlePlayer;
@@ -58,6 +61,9 @@ public class EffCone extends Effect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.offXT = exprs[i++];
+      this.offYT = exprs[i++];
+      this.offZT = exprs[i++];
       this.entLoc = exprs[i++];
       this.InputIdName = exprs[i++];
       this.singlePlayer = exprs[i++];
@@ -81,7 +87,7 @@ public class EffCone extends Effect {
    }
 
    public String toString(@Nullable Event e, boolean debug) {
-      return "drawCone particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], radius %number%, growth %number%, circles %number%, helixes %number%, density %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%] style %number%";
+      return "drawCone particle %particlename%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], radius %number%, growth %number%, circles %number%, helixes %number%, density %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%] style %number%";
    }
 
    protected void execute(@Nullable Event e) {
@@ -92,6 +98,9 @@ public class EffCone extends Effect {
       int offsetX = SkriptHandler.inputInt(0, e, this.offX);
       int offsetY = SkriptHandler.inputInt(0, e, this.offY);
       int offsetZ = SkriptHandler.inputInt(0, e, this.offZ);
+      int offsetXT = SkriptHandler.inputInt(0, e, this.offXT);
+      int offsetYT = SkriptHandler.inputInt(0, e, this.offYT);
+      int offsetZT = SkriptHandler.inputInt(0, e, this.offZT);
 
       DynamicLocation center;
       try {
@@ -118,6 +127,6 @@ public class EffCone extends Effect {
       double disZ = SkriptHandler.inputDouble(0.0D, e, this.displaceZ);
       long finalDelayTicks = SkriptHandler.inputLong(0, e, this.ticks);
       int style = ((Number)this.inputStyle.getSingle(e)).intValue();
-      Cone.drawEffect(style, particle, finalSpeed, dataMat, dataID, idName, center, isSinglePlayer, p, rainbowMode, radius, grow, circles, helixes, pDensity, xRotation, yRotation, zRotation, (float)offsetX, (float)offsetY, (float)offsetZ, disX, disY, disZ, visibleRange, 0L, finalDelayTicks);
+      Cone.drawEffect(style, particle, finalSpeed, dataMat, dataID, idName, center, isSinglePlayer, p, rainbowMode, radius, grow, circles, helixes, pDensity, xRotation, yRotation, zRotation, (float)offsetX, (float)offsetY, (float)offsetZ, (float)offsetXT, (float)offsetYT, (float)offsetZT, disX, disY, disZ, visibleRange, 0L, finalDelayTicks);
    }
 }
