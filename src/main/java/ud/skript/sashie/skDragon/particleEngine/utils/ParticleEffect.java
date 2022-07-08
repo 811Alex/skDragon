@@ -314,6 +314,8 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleColorException("This particle effect is not colorable");
       } else if (!isColorCorrect(this, color)) {
          throw new ParticleEffect.ParticleColorException("The particle color type is incorrect");
+      } else if (!isTransColorCorrect(this, colorTrans)) {
+         throw new ParticleEffect.ParticleColorException("The particle transition color type is incorrect");
       } else {
          (new ParticleEffect.ParticlePacket(this, color, colorTrans, true)).sendTo(center, range);
       }
