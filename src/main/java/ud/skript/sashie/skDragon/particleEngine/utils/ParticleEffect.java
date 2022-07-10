@@ -18,6 +18,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -230,7 +232,7 @@ public enum ParticleEffect {
    }
 
    private static boolean isDataCorrect(ParticleEffect effect, ParticleEffect.ParticleData data) {
-      return (effect == blockcrack || effect == blockdust || effect == fallingdust) && data instanceof ParticleEffect.BlockData || effect == itemcrack && data instanceof ParticleEffect.ItemData;
+      return ((effect == blockcrack || effect == blockdust || effect == fallingdust) && data instanceof ParticleEffect.BlockData) || (effect == itemcrack && data instanceof ParticleEffect.ItemData) || effect.hasProperty(ParticleEffect.ParticleProperty.VIBRATION);
    }
 
    private static boolean isColorCorrect(ParticleEffect effect, ParticleEffect.ParticleColor color) {
@@ -250,6 +252,8 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
          throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
+      } else if (this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time (not supported by this drawing method)");
       } else {
          (new ParticleEffect.ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, true, null)).sendTo(center, range);
       }
@@ -260,6 +264,8 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
          throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
+      } else if (this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time (not supported by this drawing method)");
       } else {
          (new ParticleEffect.ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, isLongDistance(center, players), null)).sendTo(center, players);
       }
@@ -270,6 +276,8 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else if (this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
          throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
+      } else if (this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time (not supported by this drawing method)");
       } else {
          (new ParticleEffect.ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, isLongDistance(center, player), null)).sendTo(center, player);
       }
@@ -286,8 +294,10 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
       } else if (!this.hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
          throw new IllegalArgumentException("This particle effect is not directional");
+      } else if (this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time (not supported by this drawing method)");
       } else {
-         (new ParticleEffect.ParticlePacket(this, direction, speed, true, null)).sendTo(center, range);
+         (new ParticleEffect.ParticlePacket(this, direction, speed, true, null, null)).sendTo(center, range);
       }
    }
 
@@ -298,8 +308,10 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
       } else if (!this.hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
          throw new IllegalArgumentException("This particle effect is not directional");
+      } else if (this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time (not supported by this drawing method)");
       } else {
-         (new ParticleEffect.ParticlePacket(this, direction, speed, isLongDistance(center, players), null)).sendTo(center, players);
+         (new ParticleEffect.ParticlePacket(this, direction, speed, isLongDistance(center, players), null, null)).sendTo(center, players);
       }
    }
 
@@ -316,6 +328,8 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleColorException("The particle color type is incorrect");
       } else if (!isTransColorCorrect(this, colorTrans)) {
          throw new ParticleEffect.ParticleColorException("The particle transition color type is incorrect");
+      } else if (this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time (not supported by this drawing method)");
       } else {
          (new ParticleEffect.ParticlePacket(this, color, colorTrans, true)).sendTo(center, range);
       }
@@ -330,6 +344,8 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleColorException("The particle color type is incorrect");
       } else if (!isTransColorCorrect(this, colorTrans)) {
          throw new ParticleEffect.ParticleColorException("The particle transition color type is incorrect");
+      } else if (this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time (not supported by this drawing method)");
       } else {
          (new ParticleEffect.ParticlePacket(this, color, colorTrans, isLongDistance(center, players))).sendTo(center, players);
       }
@@ -344,6 +360,8 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else if (!this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
          throw new ParticleEffect.ParticleDataException("This particle effect does not require additional data");
+      } else if (this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time (not supported by this drawing method)");
       } else if (!isDataCorrect(this, data)) {
          throw new ParticleEffect.ParticleDataException("The particle data type is incorrect");
       } else {
@@ -356,6 +374,8 @@ public enum ParticleEffect {
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else if (!this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
          throw new ParticleEffect.ParticleDataException("This particle effect does not require additional data");
+      } else if (this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time (not supported by this drawing method)");
       } else if (!isDataCorrect(this, data)) {
          throw new ParticleEffect.ParticleDataException("The particle data type is incorrect");
       } else {
@@ -367,32 +387,36 @@ public enum ParticleEffect {
       this.display(data, offsetX, offsetY, offsetZ, speed, amount, center, Arrays.asList(players));
    }
 
-   public void display(ParticleEffect.ParticleData data, Vector direction, float speed, Location center, double range) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleDataException {
+   public void display(ParticleEffect.ParticleData data, ParticleEffect.ParticleDestination destination, Vector direction, float speed, Location center, double range) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleDataException {
       if (!this.isSupported()) {
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
-      } else if (!this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
+      } else if (!this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA) && !this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
          throw new ParticleEffect.ParticleDataException("This particle effect does not require additional data");
+      } else if (destination == null && this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time");
       } else if (!isDataCorrect(this, data)) {
          throw new ParticleEffect.ParticleDataException("The particle data type is incorrect");
       } else {
-         (new ParticleEffect.ParticlePacket(this, direction, speed, true, data)).sendTo(center, range);
+         (new ParticleEffect.ParticlePacket(this, direction, speed, true, data, destination)).sendTo(center, range);
       }
    }
 
-   public void display(ParticleEffect.ParticleData data, Vector direction, float speed, Location center, List players) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleDataException {
+   public void display(ParticleEffect.ParticleData data, ParticleEffect.ParticleDestination destination, Vector direction, float speed, Location center, List players) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleDataException {
       if (!this.isSupported()) {
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
-      } else if (!this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
+      } else if (!this.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA) && !this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
          throw new ParticleEffect.ParticleDataException("This particle effect does not require additional data");
+      } else if (destination == null && this.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
+         throw new ParticleEffect.ParticleVibrationException("This particle effect is a vibration, so it requires a destination & arrival time");
       } else if (!isDataCorrect(this, data)) {
          throw new ParticleEffect.ParticleDataException("The particle data type is incorrect");
       } else {
-         (new ParticleEffect.ParticlePacket(this, direction, speed, isLongDistance(center, players), data)).sendTo(center, players);
+         (new ParticleEffect.ParticlePacket(this, direction, speed, isLongDistance(center, players), data, destination)).sendTo(center, players);
       }
    }
 
-   public void display(ParticleEffect.ParticleData data, Vector direction, float speed, Location center, Player... players) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleDataException {
-      this.display(data, direction, speed, center, Arrays.asList(players));
+   public void display(ParticleEffect.ParticleData data, ParticleEffect.ParticleDestination destination, Vector direction, float speed, Location center, Player... players) throws ParticleEffect.ParticleVersionException, ParticleEffect.ParticleDataException {
+      this.display(data, destination, direction, speed, center, Arrays.asList(players));
    }
 
    public void display(String idName, Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float hue, float offsetX, float offsetY, float offsetZ, float offsetXTrans, float offsetYTrans, float offsetZTrans, float speed, int particleCount) {
@@ -974,6 +998,55 @@ public enum ParticleEffect {
       }
    }
 
+   public static class ParticleDestination {
+      private final Location location;
+      private final Entity entity;
+      private final int arrivalTicks;
+
+      public static ParticleDestination from(Object obj, int arrivalTicks){
+         if (obj instanceof Location location) {
+            return new ParticleDestination(location, arrivalTicks);
+         } else if (obj instanceof Block block) {
+            return new ParticleDestination(block, arrivalTicks);
+         } else if (obj instanceof Entity entity) {
+            return new ParticleDestination(entity, arrivalTicks);
+         }
+         throw new UnsupportedOperationException("The destination object is not a Location/Block/Entity.");
+      }
+
+      public ParticleDestination(Block block, int arrivalTicks){
+         this(block.getLocation(), arrivalTicks);
+      }
+
+      public ParticleDestination(Location location, int arrivalTicks) {
+         this.location = location;
+         this.entity = null;
+         this.arrivalTicks = arrivalTicks;
+      }
+
+      public ParticleDestination(Entity entity, int arrivalTicks) {
+         this.location = null;
+         this.entity = entity;
+         this.arrivalTicks = arrivalTicks;
+      }
+
+      public boolean isEntity() {
+         return entity != null;
+      }
+
+      public Location getLocation() {
+         return location;
+      }
+
+      public Entity getEntity() {
+         return entity;
+      }
+
+      public int getArrivalTicks() {
+         return arrivalTicks;
+      }
+   }
+
    public abstract static class ParticleData {
       private final Material material;
       private byte data;
@@ -1034,6 +1107,7 @@ public enum ParticleEffect {
       private final ParticleEffect.ParticleData data;
       private ParticleEffect.RedstoneColor colorData;
       private ParticleEffect.OrdinaryColor colorTransData;
+      private ParticleEffect.ParticleDestination destination;
       private Object packet;
 
       public ParticlePacket(ParticleEffect effect, float offsetX, float offsetY, float offsetZ, float speed, int amount, boolean longDistance, ParticleEffect.ParticleData data) throws IllegalArgumentException {
@@ -1054,8 +1128,11 @@ public enum ParticleEffect {
          }
       }
 
-      public ParticlePacket(ParticleEffect effect, Vector direction, float speed, boolean longDistance, ParticleEffect.ParticleData data) throws IllegalArgumentException {
-         this(effect, (float)direction.getX(), (float)direction.getY(), (float)direction.getZ(), speed, 0, longDistance, data);
+      public ParticlePacket(ParticleEffect effect, Vector direction, float speed, boolean longDistance, ParticleEffect.ParticleData data, ParticleEffect.ParticleDestination destination) throws IllegalArgumentException {
+         this(effect, (float)direction.getX(), (float)direction.getY(), (float)direction.getZ(), speed, 0, longDistance, effect == ParticleEffect.vibration ? null : data);
+         if(effect == ParticleEffect.vibration){
+            this.destination = destination;
+         }
       }
 
       public ParticlePacket(ParticleEffect effect, ParticleEffect.ParticleColor color, ParticleEffect.ParticleColor colorTrans, boolean longDistance) {
@@ -1149,25 +1226,39 @@ public enum ParticleEffect {
                   Constructor materialDataConstructor;
                   if (this.effect == ParticleEffect.redstone) {
                      if(version < 17){
-                        materialDataClass = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParamRedstone");
-                        materialDataConstructor = ReflectionUtils.getConstructor(materialDataClass, Float.class, Float.class, Float.class, Float.class);
-                        param = materialDataConstructor.newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB(), this.colorData.getSize());
+                        param = ReflectionUtils.getConstructor("ParticleParamRedstone", ReflectionUtils.PackageType.MINECRAFT_SERVER, Float.class, Float.class, Float.class, Float.class)
+                                .newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB(), this.colorData.getSize());
                      }else{
                         Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3fa");
-                        materialDataClass = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("ParticleParamRedstone");
-                        materialDataConstructor = ReflectionUtils.getConstructor(materialDataClass, vector3faClass, Float.class);
-                        Constructor vector3faConstructor = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class);
-                        Object vector3fa = vector3faConstructor.newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
-                        param = materialDataConstructor.newInstance(vector3fa, this.colorData.getSize());
+                        Object vector3fa = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class)
+                                .newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
+                        param = ReflectionUtils.getConstructor("ParticleParamRedstone", ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES, vector3faClass, Float.class)
+                                .newInstance(vector3fa, this.colorData.getSize());
                      }
                   } else if (this.effect == ParticleEffect.dustcolortransition) {
                      Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3fa");
-                     materialDataClass = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("DustColorTransitionOptions");
-                     materialDataConstructor = ReflectionUtils.getConstructor(materialDataClass, vector3faClass, vector3faClass, Float.class);
                      Constructor vector3faConstructor = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class);
                      Object vector3fa = vector3faConstructor.newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
                      Object vector3fa2 = vector3faConstructor.newInstance(this.colorTransData.getR(), this.colorTransData.getG(), this.colorTransData.getB());
-                     param = materialDataConstructor.newInstance(vector3fa, vector3fa2, this.colorData.getSize());
+                     param = ReflectionUtils.getConstructor("DustColorTransitionOptions", ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES, vector3faClass, vector3faClass, Float.class)
+                             .newInstance(vector3fa, vector3fa2, this.colorData.getSize());
+                  } else if (this.effect == ParticleEffect.vibration) {
+                     Class blockPosClass = ReflectionUtils.PackageType.MINECRAFT_CORE.getClass("BlockPosition");
+                     Constructor blockPosConstructor = ReflectionUtils.getConstructor(blockPosClass, Double.class, Double.class, Double.class);
+                     Object origin = blockPosConstructor.newInstance(center.getX(), center.getY(), center.getZ());
+                     Object dest;
+                     if (this.destination.isEntity()) {
+                        dest = ReflectionUtils.getConstructor("EntityPositionSource", ReflectionUtils.PackageType.MINECRAFT_WORLD_LEVEL_GAMEEVENT, Integer.class)
+                                .newInstance(this.destination.getEntity().getEntityId());
+                     } else {
+                        Location destLoc = this.destination.getLocation();
+                        dest = ReflectionUtils.getConstructor("BlockPositionSource", ReflectionUtils.PackageType.MINECRAFT_WORLD_LEVEL_GAMEEVENT, blockPosClass)
+                                .newInstance(blockPosConstructor.newInstance(destLoc.getX(), destLoc.getY(), destLoc.getZ()));
+                     }
+                     Class vibrationPathClass = ReflectionUtils.PackageType.MINECRAFT_WORLD_LEVEL_GAMEEVENT_VIBRATIONS.getClass("VibrationPath");
+                     param = ReflectionUtils.getConstructor("VibrationParticleOption", ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES, vibrationPathClass)
+                             .newInstance(ReflectionUtils.getConstructor(vibrationPathClass, blockPosClass, ReflectionUtils.PackageType.MINECRAFT_WORLD_LEVEL_GAMEEVENT.getClass("PositionSource"), Integer.class)
+                                             .newInstance(origin, dest, this.destination.getArrivalTicks()));
                   } else {
                      Object materialData;
                      if (this.effect != ParticleEffect.fallingdust && this.effect != ParticleEffect.blockcrack && this.effect != ParticleEffect.blockdust) {
@@ -1183,8 +1274,8 @@ public enum ParticleEffect {
                            }
                         } else {
                            materialDataClass = ReflectionUtils.PackageType.BUKKIT_MATERIAL.getClass("MaterialData");
-                           materialDataConstructor = ReflectionUtils.getConstructor(materialDataClass, Material.class);
-                           materialData = materialDataConstructor.newInstance(this.data.getMaterial());
+                           materialData = ReflectionUtils.getConstructor(materialDataClass, Material.class)
+                                   .newInstance(this.data.getMaterial());
                            toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, materialDataClass);
                            param = toNMS.invoke(particleParam, particle, materialData);
                         }
@@ -1303,6 +1394,14 @@ public enum ParticleEffect {
       private static final long serialVersionUID = 3203085387160737484L;
 
       public ParticleDirectionalException(String message) {
+         super(message);
+      }
+   }
+
+   public static final class ParticleVibrationException extends RuntimeException {
+      private static final long serialVersionUID = 3203085387160737484L;
+
+      public ParticleVibrationException(String message) {
          super(message);
       }
    }

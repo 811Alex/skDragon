@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 import ud.skript.sashie.skDragonCore;
@@ -77,14 +76,6 @@ public class EffSpawnParticleDirectionMadness extends DragonEffect {
       return "Direction Particle Madness";
    }
 
-   public static Location getLocation(Object location) {
-      if (location instanceof Entity) {
-         return ((Entity)location).getLocation();
-      } else {
-         return location instanceof Location ? (Location)location : null;
-      }
-   }
-
    protected void exec(@Nullable Event e) {
       final int count = SkriptHandler.inputParticleCount(e, this.partCount);
       final int style = SkriptHandler.inputInt(1, e, this.inputStyle);
@@ -149,7 +140,7 @@ public class EffSpawnParticleDirectionMadness extends DragonEffect {
 
                for(int var2 = 0; var2 < var3; ++var2) {
                   Object loc = var4[var2];
-                  Location location = EffSpawnParticleDirectionMadness.getLocation(loc);
+                  Location location = SkriptHandler.getLocation(loc);
                   if (randomColor) {
                      if (!rainbowMode) {
                         this.finalColorOffsetX = RandomUtils.randomRangeFloat(0.0F, 255.0F);

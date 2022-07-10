@@ -567,34 +567,40 @@ public class DragonParticle implements Serializable {
       }
    }
 
-   public void displayDirectional(String idName, List players, Location center) {
-      this.displayDirectional(idName, players, center, this.getDirection());
+   public void displayDirectional(String idName, List players, Location center, ParticleEffect.ParticleDestination destination) {
+      this.displayDirectional(idName, players, center, this.getDirection(), destination);
    }
 
-   public void displayDirectional(String idName, List players, Location center, Vector direction) {
+   public void displayDirectional(String idName, List players, Location center, Vector direction, ParticleEffect.ParticleDestination destination) {
       if (!this.particle.isSupported()) {
          EffectsLib.stopEffect(idName);
          throw new ParticleEffect.ParticleVersionException("This particle effect is not supported by your server version");
       } else if (this.particle.hasProperty(ParticleEffect.ParticleProperty.REQUIRES_DATA)) {
          EffectsLib.stopEffect(idName);
          throw new ParticleEffect.ParticleDataException("This particle effect requires additional data");
-      } else if (!this.particle.hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
+      } else if (!this.particle.hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL) && !this.particle.hasProperty(ParticleEffect.ParticleProperty.VIBRATION)) {
          EffectsLib.stopEffect(idName);
          throw new ParticleEffect.ParticleDirectionalException("This particle effect is not directional");
       } else {
          if (this.particle == ParticleEffect.blockdust && this.material != null) {
             ParticleEffect.BlockData finalData = new ParticleEffect.BlockData(this.getMaterial(), this.getMaterialId());
             if (players != null) {
-               this.particle.display(finalData, direction, this.speed, center, players);
+               this.particle.display(finalData, null, direction, this.speed, center, players);
             } else {
-               this.particle.display(finalData, direction, this.speed, center, this.range);
+               this.particle.display(finalData, null, direction, this.speed, center, this.range);
             }
          } else if (this.particle == ParticleEffect.itemcrack && this.material != null) {
             ParticleEffect.ItemData finalData = new ParticleEffect.ItemData(this.getMaterial(), this.getMaterialId());
             if (players != null) {
-               this.particle.display(finalData, direction, this.speed, center, players);
+               this.particle.display(finalData, null, direction, this.speed, center, players);
             } else {
-               this.particle.display(finalData, direction, this.speed, center, this.range);
+               this.particle.display(finalData, null, direction, this.speed, center, this.range);
+            }
+         } else if (this.particle == ParticleEffect.vibration) {
+            if (players != null) {
+               this.particle.display(null, destination, direction, this.speed, center, players);
+            } else {
+               this.particle.display(null, destination, direction, this.speed, center, this.range);
             }
          } else if (players != null) {
             this.particle.display(direction, this.speed, center, players);

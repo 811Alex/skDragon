@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.particleEngine.maths.EffectsLib;
@@ -106,7 +105,7 @@ public class EffSpawnParticleMaterial extends Effect {
 
                for(int var2 = 0; var2 < var3; ++var2) {
                   Object loc = var4[var2];
-                  Location location = EffSpawnParticleMaterial.getLocation(loc);
+                  Location location = SkriptHandler.getLocation(loc);
                   particle.displayMaterials(idName, players, location);
                }
 
@@ -118,13 +117,5 @@ public class EffSpawnParticleMaterial extends Effect {
          }
       }
 
-   }
-
-   public static Location getLocation(Object location) {
-      if (location instanceof Entity) {
-         return ((Entity)location).getLocation();
-      } else {
-         return location instanceof Location ? (Location)location : null;
-      }
    }
 }

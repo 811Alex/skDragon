@@ -3,6 +3,7 @@ package ud.skript.sashie.skDragon.particleEngine.effects.spawns;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,7 +12,6 @@ import java.util.Random;
 import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 import ud.skript.sashie.skDragonCore;
@@ -32,7 +32,7 @@ import wtfplswork.Runnable;
 @DontRegister
 @Name("Spawn more complex directional particle patterns")
 @Description({"Most particles react differently to this effect using their individual built in mojang nature", "Uses any bukkit vector type as input for the direction"})
-@Syntaxes({"draw %number% style %number% %particlename% particle[s] at %objects% with direction %vector% and speed %number%[, offset %-number%, %-number%, %-number%][, id %-string%][, visibleTo %-players%][, visibleRange %-number%][, pulseDelay %-number%][, keepFor %-timespan%]"})
+@Syntaxes({"draw %number% style %number% %particlename% particle[s] at %objects% with direction %vector% and speed %number%[, offset %-number%, %-number%, %-number%][, dest[ination] %-object%[ with] arrival[ after] %-number%[ ticks]][, id %-string%][, visibleTo %-players%][, visibleRange %-number%][, pulseDelay %-number%][, keepFor %-timespan%]"})
 @Examples({"draw 2 style 1 flame particles at {_loc} with direction {_v2} and speed .2"})
 public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
    private Expression partCount;
@@ -44,6 +44,8 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression destLoc;
+   private Expression destArrival;
    private Expression inputIdName;
    private Expression inputPlayers;
    private Expression inputRange;
@@ -61,6 +63,8 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.destLoc = exprs[i++];
+      this.destArrival = exprs[i++];
       this.inputIdName = exprs[i++];
       this.inputPlayers = exprs[i++];
       this.inputRange = exprs[i++];
@@ -73,14 +77,6 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
       return "";
    }
 
-   public static Location getLocation(Object location) {
-      if (location instanceof Entity) {
-         return ((Entity)location).getLocation();
-      } else {
-         return location instanceof Location ? (Location)location : null;
-      }
-   }
-
    protected void exec(@Nullable Event e) {
       final int count = SkriptHandler.inputParticleCount(e, this.partCount);
       final int style = SkriptHandler.inputInt(1, e, this.inputStyle);
@@ -90,6 +86,7 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
       final float offsetX = SkriptHandler.inputParticleOffset(e, this.offX);
       final float offsetY = SkriptHandler.inputParticleOffset(e, this.offY);
       final float offsetZ = SkriptHandler.inputParticleOffset(e, this.offZ);
+      final ParticleEffect.ParticleDestination dest = SkriptHandler.inputDestLoc(e, this.destLoc, this.destArrival);
       Vector direction = SkriptHandler.inputVector(e, this.inputDirection);
       float speed = SkriptHandler.inputFloat(0.0F, e, this.inputSpeed);
       long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
@@ -334,7 +331,7 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
 
                for(int var2 = 0; var2 < var3; ++var2) {
                   Object loc = var4[var2];
-                  Location location = EffSpawnParticleDirectionMadness2.getLocation(loc);
+                  Location location = SkriptHandler.getLocation(loc);
                   Vector target = particle.getDirection().normalize();
 
                   for(int i = 0; i < count; ++i) {
@@ -355,20 +352,20 @@ public class EffSpawnParticleDirectionMadness2 extends DragonEffect {
                         if (!particle.getParticle().hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
                            this.startPortal(location);
                         } else {
-                           particle.displayDirectional(idName, players, location);
+                           particle.displayDirectional(idName, players, location, dest);
                         }
                      } else if (style == 2) {
-                        particle.displayDirectional(idName, players, EffSpawnParticleDirectionMadness2.drop(location));
+                        particle.displayDirectional(idName, players, EffSpawnParticleDirectionMadness2.drop(location), dest);
                      } else if (style == 3) {
                         particle.setDirection(new Vector(EffSpawnParticleDirectionMadness2.Vec(), 0.1D, EffSpawnParticleDirectionMadness2.Vec()));
-                        particle.displayDirectional(idName, players, location);
+                        particle.displayDirectional(idName, players, location, dest);
                      } else if (style == 4) {
                         this.startBigSoulWell(location);
                      } else if (style == 5) {
                         if (!particle.getParticle().hasProperty(ParticleEffect.ParticleProperty.DIRECTIONAL)) {
                            this.startEnchant(location);
                         } else {
-                           particle.displayDirectional(idName, players, location);
+                           particle.displayDirectional(idName, players, location, dest);
                         }
                      } else if (style >= 6) {
                         Iterator var9 = SimpleShapes.getStar4(location, 3.0D, 8.0F, 10).iterator();

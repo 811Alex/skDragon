@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 import ud.skript.sashie.skDragonCore;
@@ -26,7 +25,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("Spawn colored directional particles")
 @Description({"Like material based directional particles but with a color spectrum based on different block types", "This color spectrum is spurcial... ", "shade(1-17) - from white most to black most shaded blocks", "red(1-13) - ends with orange", "green(1-15) - starts with yellow", "blue(1-24) - ends with violets", "rainbow - simulates what is done with normal redstone particle rainbow mode", "full(1-69) - lets you cycle between the full enum"})
-@Syntaxes({"draw %number% (shade|red|green|blue|rainbow|full)[ scale %-number%] colo[u]red directional (blockdust|itemcrack) particle[s] at %objects% with direction %vector% and speed %number%[, offset %-number%, %-number%, %-number%][, id %-string%][, visibleTo %-players%][, visibleRange %-number%][, pulseDelay %-number%][, keepFor %-timespan%]"})
+@Syntaxes({"draw %number% (shade|red|green|blue|rainbow|full)[ scale %-number%] colo[u]red directional (blockdust|itemcrack) particle[s] at %objects% with direction %vector% and speed %number%[, offset %-number%, %-number%, %-number%][, dest[ination] %-object%[ with] arrival[ after] %-number%[ ticks]][, id %-string%][, visibleTo %-players%][, visibleRange %-number%][, pulseDelay %-number%][, keepFor %-timespan%]"})
 @Examples({"draw 2 shade scale 9 colored directional itemcrack particles at location of player with direction {_vector} and speed .6", "draw 2 red scale 3 colored directional itemcrack particles at location of player with direction {_vector} and speed .6", "draw 2 green scale 6 colored directional itemcrack particles at location of player with direction {_vector} and speed .6", "draw 2 blue scale 7 colored directional itemcrack particles at location of player with direction {_vector} and speed .6", "draw 2 rainbow colored directional itemcrack particles at location of player with direction {_vector} and speed .6, keepfor 15 seconds"})
 public class EffSpawnParticleDirectionColor extends DragonEffect {
    private Expression partCount;
@@ -37,6 +36,8 @@ public class EffSpawnParticleDirectionColor extends DragonEffect {
    private Expression offX;
    private Expression offY;
    private Expression offZ;
+   private Expression destLoc;
+   private Expression destArrival;
    private Expression inputIdName;
    private Expression inputPlayers;
    private Expression inputRange;
@@ -55,6 +56,8 @@ public class EffSpawnParticleDirectionColor extends DragonEffect {
       this.offX = exprs[i++];
       this.offY = exprs[i++];
       this.offZ = exprs[i++];
+      this.destLoc = exprs[i++];
+      this.destArrival = exprs[i++];
       this.inputIdName = exprs[i++];
       this.inputPlayers = exprs[i++];
       this.inputRange = exprs[i++];
@@ -66,14 +69,6 @@ public class EffSpawnParticleDirectionColor extends DragonEffect {
 
    public String toString(@Nullable Event e, boolean debug) {
       return "Colored Directional Particles";
-   }
-
-   public static Location getLocation(Object location) {
-      if (location instanceof Entity) {
-         return ((Entity)location).getLocation();
-      } else {
-         return location instanceof Location ? (Location)location : null;
-      }
    }
 
    protected void exec(@Nullable Event e) {
@@ -117,6 +112,7 @@ public class EffSpawnParticleDirectionColor extends DragonEffect {
       final float offsetX = SkriptHandler.inputParticleOffset(e, this.offX);
       final float offsetY = SkriptHandler.inputParticleOffset(e, this.offY);
       final float offsetZ = SkriptHandler.inputParticleOffset(e, this.offZ);
+      final ParticleEffect.ParticleDestination dest = SkriptHandler.inputDestLoc(e, this.destLoc, this.destArrival);
       Vector direction = SkriptHandler.inputVector(e, this.inputDirection);
       float speed = SkriptHandler.inputFloat(0.0F, e, this.inputSpeed);
       long finalPulseTick = SkriptHandler.inputPulseTick(e, this.inputPulseDelay);
@@ -153,7 +149,7 @@ public class EffSpawnParticleDirectionColor extends DragonEffect {
 
                for(int var2 = 0; var2 < var3; ++var2) {
                   Object loc = var4[var2];
-                  Location location = EffSpawnParticleDirectionColor.getLocation(loc);
+                  Location location = SkriptHandler.getLocation(loc);
                   if (EffSpawnParticleDirectionColor.this.rainbow) {
                      this.boop = BlockColor.simpleRainbowHelper(this.boop);
 
@@ -178,7 +174,7 @@ public class EffSpawnParticleDirectionColor extends DragonEffect {
                      }
 
                      location.add(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
-                     particle.displayDirectional(idName, players, location);
+                     particle.displayDirectional(idName, players, location, dest);
                      location.subtract(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
                   }
                }

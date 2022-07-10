@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 import ud.skript.sashie.skDragonCore;
@@ -25,7 +24,7 @@ import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 @Name("Custom spiral circle")
 @Description({""})
-@Syntaxes({"drawSpircle %number% %particlename% particle[s] [rotating] at %objects% with id %string%, %number% point[s], density %number%, radius %number% and speed %number%[, offset %-number%, %-number%, %-number%][, rotate %-number%, %-number%, %-number%][, visibleTo %-players%][, visibleRange %-number%][, loop delay %-number%]"})
+@Syntaxes({"drawSpircle %number% %particlename% particle[s] [rotating] at %objects% with id %string%, %number% point[s], density %number%, radius %number% and speed %number%[, offset %-number%, %-number%, %-number%][, rotate %-number%, %-number%, %-number%][, dest[ination] %-object%[ with] arrival[ after] %-number%[ ticks]][, visibleTo %-players%][, visibleRange %-number%][, loop delay %-number%]"})
 @Examples({""})
 public class EffSpircle extends DragonEffect {
    private Expression partCount;
@@ -42,6 +41,8 @@ public class EffSpircle extends DragonEffect {
    private Expression rotX;
    private Expression rotY;
    private Expression rotZ;
+   private Expression destLoc;
+   private Expression destArrival;
    private Expression inputPlayers;
    private Expression inputRange;
    private Expression inputPulseDelay;
@@ -63,6 +64,8 @@ public class EffSpircle extends DragonEffect {
       this.rotX = exprs[i++];
       this.rotY = exprs[i++];
       this.rotZ = exprs[i++];
+      this.destLoc = exprs[i++];
+      this.destArrival = exprs[i++];
       this.inputPlayers = exprs[i++];
       this.inputRange = exprs[i++];
       this.inputPulseDelay = exprs[i++];
@@ -72,14 +75,6 @@ public class EffSpircle extends DragonEffect {
 
    public String toString(@Nullable Event e, boolean debug) {
       return "Directional Particles";
-   }
-
-   public static Location getLocation(Object location) {
-      if (location instanceof Entity) {
-         return ((Entity)location).getLocation();
-      } else {
-         return location instanceof Location ? (Location)location : null;
-      }
    }
 
    protected void exec(@Nullable Event e) {
@@ -94,6 +89,7 @@ public class EffSpircle extends DragonEffect {
       final float xRotation = SkriptHandler.inputFloat(0.0F, e, this.rotX);
       final float yRotation = SkriptHandler.inputFloat(0.0F, e, this.rotY);
       final float zRotation = SkriptHandler.inputFloat(0.0F, e, this.rotZ);
+      final ParticleEffect.ParticleDestination dest = SkriptHandler.inputDestLoc(e, this.destLoc, this.destArrival);
       final int points = SkriptHandler.inputInt(1, e, this.inputPoints);
       final int density = SkriptHandler.inputInt(20, e, this.inputDensity);
       final float radius = SkriptHandler.inputFloat(1.0F, e, this.inputRadius);
@@ -123,7 +119,7 @@ public class EffSpircle extends DragonEffect {
 
                for(int var2 = 0; var2 < var3; ++var2) {
                   Object loc = var4[var2];
-                  Location location = EffSpircle.getLocation(loc);
+                  Location location = SkriptHandler.getLocation(loc);
 
                   for(int i2 = 1; i2 < points + 1; ++i2) {
                      for(int i = 0; i < count; ++i) {
@@ -150,7 +146,7 @@ public class EffSpircle extends DragonEffect {
                            VectorUtils.rotateVector(this.v, this.angularVelocityX * (double)this.step, this.angularVelocityY * (double)this.step, this.angularVelocityZ * (double)this.step);
                         }
 
-                        particle.displayDirectional(idName, players, location, this.v);
+                        particle.displayDirectional(idName, players, location, this.v, dest);
                         location.subtract(this.finalOffsetX, this.finalOffsetY, this.finalOffsetZ);
                      }
                   }

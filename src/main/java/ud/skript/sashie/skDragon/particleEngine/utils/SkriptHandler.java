@@ -58,6 +58,19 @@ public class SkriptHandler {
       return false;
    }
 
+   public static Location getLocation(Object location) {
+      if (location instanceof Entity) return ((Entity)location).getLocation();
+      return location instanceof Location ? (Location)location : null;
+   }
+
+   public static ParticleEffect.ParticleDestination inputDestLoc(@Nullable Event e, Expression loc, Expression arrivalTicks){
+      return (loc == null || arrivalTicks == null) ? null : ParticleEffect.ParticleDestination.from(getLocation(loc.getSingle(e)), inputPulseTick(e, arrivalTicks));
+   }
+
+   public static Object[] inputAll(@Nullable Event e, @Nullable Expression input){
+      return input != null ? input.getAll(e) : new Object[0];
+   }
+
    public static int inputParticleCount(@Nullable Event e, @Nullable Expression inputParticleCount) {
       return inputParticleCount != null && inputParticleCount.getSingle(e) != null ? ((Number)inputParticleCount.getSingle(e)).intValue() : 1;
    }

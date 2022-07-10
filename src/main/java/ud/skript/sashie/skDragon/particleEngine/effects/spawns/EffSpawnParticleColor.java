@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.particleEngine.effects.DragonEffect;
@@ -119,7 +118,7 @@ public class EffSpawnParticleColor extends DragonEffect {
 
                for(int var2 = 0; var2 < var3; ++var2) {
                   Object loc = var4[var2];
-                  Location location = EffSpawnParticleColor.getLocation(loc);
+                  Location location = SkriptHandler.getLocation(loc);
                   if (randomColor) {
                       if (!rainbowMode) {
                           this.finalOffsetX = RandomUtils.randomRangeFloat(0.0F, 255.0F);
@@ -172,13 +171,5 @@ public class EffSpawnParticleColor extends DragonEffect {
          }
       }
 
-   }
-
-   public static Location getLocation(Object location) {
-      if (location instanceof Entity) {
-         return ((Entity)location).getLocation();
-      } else {
-         return location instanceof Location ? (Location)location : null;
-      }
    }
 }

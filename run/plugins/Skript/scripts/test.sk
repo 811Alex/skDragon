@@ -30,6 +30,12 @@ variables:
 	{test.draw::24} = "drawWings"
 	#{test.draw::25} = "drawWings69"
 
+command /crashtestvibration:
+	trigger:
+		draw 8 vibration particles at location 2 above 3 east of player with direction vector 0.5, 0.5, 0.5 and speed .6, dest location 3 above 2 east 6 north of player arrival 100, id drawCommon("vibration"), keepFor {@particle-test-duration}
+		wait {@draw-test-duration}
+		broadcast "Done!"
+
 command /crashtesttransitionables:
 	trigger:
 		drawDot count 8, particle dustcolortransition, RGB 0, 255, 255, trans RGB 255, 0, 255, center location 2 above 3 east of player, id drawCommon("dustcolortransition"), rainbowMode false, visibleRange 32, pulseDelay 1
