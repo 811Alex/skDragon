@@ -18,7 +18,7 @@ There are releases available here, but you can try and compile it yourself if yo
 If you have issues resolving dependencies, you can put them in a directory called "libs", at the root of the project instead. 
 
 ## Custom syntax
-There is some custom syntax, for some drawing methods, to add support for newer types of particles.
+There is some custom syntax, mainly to add support for newer types of particles (for some drawing methods).
 You can use them if you need those particles, but obviously don't expect that syntax to be the same on future official versions.
 Scripts written with the official version's syntax should work the same with this version.
 
@@ -63,4 +63,13 @@ drawText %string%, particle %particlename%[, material %-itemstack%][, speed %-nu
 drawWarpRings style %number%, particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], scan %boolean%, height %number%, radius %number%, ringCount %number%, ringDensity %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%][, keepFor %-timespan%[, repeat %number%]]
 drawWings[ style] %number%, particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], particle3 %string%[[, material] %-itemstack%][, speed3 %-number%][, ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%][, flapSpeed %-number%, flapRange %-number%], angle %number%, height %number%, space %number%, visibleRange %number%[, tps %-number%, second %-number%]
 drawWings69 particle1 %string%[[, material] %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[[, material] %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], particle3 %string%[[, material] %-itemstack%][, speed3 %-number%][, ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ3|RGB3) %-number%, %-number%, %-number%], particle4 %string%[[, material] %-itemstack%][, speed4 %-number%][, ([offset]XYZ4|RGB4) %-number%, %-number%, %-number%][, trans[ition] ([offset]XYZ4|RGB4) %-number%, %-number%, %-number%], center %object%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%][, flapSpeed %-number%, flapRange %-number%], angle %number%, height %number%, space %number%, visibleRange %number%[, tps %-number%, second %-number%]
+```
+
+### All supported particle names
+Description: Gets a list of all supported particle names on this version  
+Syntax: `[all ]supported particle(s| names)`  
+Examples:
+```
+set {_var::*} to supported particles
+set {_var::*} to all supported particle names
 ```
