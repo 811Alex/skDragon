@@ -1229,14 +1229,14 @@ public enum ParticleEffect {
                         param = ReflectionUtils.getConstructor("ParticleParamRedstone", ReflectionUtils.PackageType.MINECRAFT_SERVER, Float.class, Float.class, Float.class, Float.class)
                                 .newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB(), this.colorData.getSize());
                      }else{
-                        Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3fa");
+                        Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3f");
                         Object vector3fa = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class)
                                 .newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
                         param = ReflectionUtils.getConstructor("ParticleParamRedstone", ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES, vector3faClass, Float.class)
                                 .newInstance(vector3fa, this.colorData.getSize());
                      }
                   } else if (this.effect == ParticleEffect.dustcolortransition) {
-                     Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3fa");
+                     Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3f");
                      Constructor vector3faConstructor = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class);
                      Object vector3fa = vector3faConstructor.newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
                      Object vector3fa2 = vector3faConstructor.newInstance(this.colorTransData.getR(), this.colorTransData.getG(), this.colorTransData.getB());

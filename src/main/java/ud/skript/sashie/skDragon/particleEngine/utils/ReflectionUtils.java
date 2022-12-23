@@ -325,7 +325,7 @@ public final class ReflectionUtils {
       MINECRAFT_SERVER_NETWORK("MINECRAFT_SERVER_NETWORK", 30, "net.minecraft.server.network"),
       MINECRAFT_CORE_PARTICLES("MINECRAFT_CORE_PARTICLES", 31, "net.minecraft.core.particles"),
       MINECRAFT_NETWORK_PROTOCOL("MINECRAFT_NETWORK_PROTOCOL_GAME", 32, "net.minecraft.network.protocol"),
-      MOJANG_MATH("MOJANG_MATH", 33, "com.mojang.math"),
+      MOJANG_MATH("MOJANG_MATH", 33, "org.joml"),
       MINECRAFT_CORE("MINECRAFT_CORE", 34, "net.minecraft.core"),
       MINECRAFT_WORLD_LEVEL_GAMEEVENT("MINECRAFT_WORLD_LEVEL_GAMEEVENT", 35, "net.minecraft.world.level.gameevent"),
       MINECRAFT_WORLD_LEVEL_GAMEEVENT_VIBRATIONS("MINECRAFT_WORLD_LEVEL_GAMEEVENT_VIBRATIONS", 36, "net.minecraft.world.level.gameevent.vibrations");
