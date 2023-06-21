@@ -1164,7 +1164,7 @@ public enum ParticleEffect {
                }else{
                   packetClass = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL_GAME.getClass("PacketPlayOutWorldParticles");
                   playerConnection = FieldAccess.get(ReflectionUtils.PackageType.MINECRAFT_LEVEL.getClass("EntityPlayer"));
-                  playerConnectionIndex = playerConnection.getIndex("b");
+                  playerConnectionIndex = playerConnection.getIndex("c");
                   sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK.getClass("PlayerConnection"));
                   packet = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet");
                }
