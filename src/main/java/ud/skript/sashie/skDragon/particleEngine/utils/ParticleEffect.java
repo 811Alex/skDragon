@@ -1169,15 +1169,18 @@ public enum ParticleEffect {
                   packet = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet");
                }
 
-               sendPacketIndex = sendPacket.getIndex(version < 18 ? "sendPacket" : "a", packet);
+               if (version < 18) {
+                  sendPacketIndex = sendPacket.getIndex("sendPacket", packet);
+               } else if (version == 20) {
+                  sendPacketIndex = sendPacket.getIndex("b", packet);
+               } else {
+                  sendPacketIndex = sendPacket.getIndex(version < 18 ? "sendPacket" : "a", packet);
+               }
+
                Class particleParam;
-               if(version >= 17){
+               if(version >= 15){
                   enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
                   particleParam = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("ParticleParam");
-                  packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
-               }else if(version >= 15) {
-                  enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
-                  particleParam = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParam");
                   packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
                } else if (version >= 13) {
                   enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");

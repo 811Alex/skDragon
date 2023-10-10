@@ -8,12 +8,12 @@ plugins {
 import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
 
 def ver = 4
-def mcver = '1.18'
+def mcver = '1.20.2'
 def javaVer = JavaVersion.VERSION_17
 targetCompatibility = sourceCompatibility = javaVer
 
 group = 'ud.skript.sashie'
-version ='0.17-alex-MC' + mcver + '-hack-' + ver
+version ='0.18-alex-MC' + mcver + '-hack-' + ver
 description = name
 
 repositories {

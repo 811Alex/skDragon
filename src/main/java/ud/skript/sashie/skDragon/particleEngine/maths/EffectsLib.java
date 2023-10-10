@@ -242,9 +242,10 @@ public class EffectsLib {
    public static void foundNull(Location location, String idName, Exception ex) {
       if (location != null) {
          skDragonCore.sendExLog("Null found, effect stopped", idName, 3);
-         ex.printStackTrace();
+      } else {
+         skDragonCore.sendExLog("Null location found, effect stopped", idName, 3);
       }
-
+      ex.printStackTrace();
    }
 
    public static void drawSimpleHalo(final String particle, final Object center, final Material dataMat, final byte dataID, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final float speed, final int particleDensity, final double visibleRange, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, long delayTicks, long delayBySecond, final boolean solid) {
@@ -387,6 +388,7 @@ public class EffectsLib {
 
    public static void drawArc(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final Object getTarget, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final int particleDensity, final float height, final float pitchMuliplier, final double visibleRange, final double disX, final double disY, final double disZ, final double disX2, final double disY2, final double disZ2, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
+         System.out.println("initial drawarc for " + particle);
          int arc = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             int step = 0;
             public float hue;
@@ -408,13 +410,13 @@ public class EffectsLib {
                   }
 
                   Vector link = this.target.toVector().subtract(this.location.toVector());
-                  float length = (float)link.length();
-                  float pitch = (float)((double)(pitchMuliplier * height) / Math.pow(length, 2.0D));
+                  float length = (float) link.length();
+                  float pitch = (float) ((double) (pitchMuliplier * height) / Math.pow(length, 2.0D));
 
-                  for(int i = 0; i < particleDensity; ++i) {
-                     Vector v = link.clone().normalize().multiply(length * (float)i / (float)particleDensity);
-                     float x = (float)i / (float)particleDensity * length - length / 2.0F;
-                     float y = (float)((double)(-pitch) * Math.pow(x, 2.0D) + (double)height);
+                  for (int i = 0; i < particleDensity; ++i) {
+                     Vector v = link.clone().normalize().multiply(length * (float) i / (float) particleDensity);
+                     float x = (float) i / (float) particleDensity * length - length / 2.0F;
+                     float y = (float) ((double) (-pitch) * Math.pow(x, 2.0D) + (double) height);
                      this.location.add(v).add(0.0D, y, 0.0D);
                      ParticleEffect.valueOf(particle).display(idName, dataMat, dataID, player, this.location, visibleRange, isSinglePlayer, rainbowMode, this.hue, offsetX, offsetY, offsetZ, offsetXT, offsetYT, offsetZT, speed, 1);
                      this.location.subtract(0.0D, y, 0.0D).subtract(v);
@@ -428,7 +430,6 @@ public class EffectsLib {
          }, delayTicks, delayBySecond).getTaskId();
          arraylist.put(idName, arc);
       }
-
    }
 
    public static void drawDot(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final boolean isFacing, final float faceAngle, final float radius, final double xRotation, final double yRotation, final double zRotation, final double disX, final double disY, final double disZ, final double visibleRange, long delayTicks, long delayBySecond) {
