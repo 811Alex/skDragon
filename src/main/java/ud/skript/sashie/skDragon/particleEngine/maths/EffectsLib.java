@@ -388,7 +388,6 @@ public class EffectsLib {
 
    public static void drawArc(final String particle, final Material dataMat, final byte dataID, final float speed, final float offsetX, final float offsetY, final float offsetZ, final float offsetXT, final float offsetYT, final float offsetZT, final Object center, final Object getTarget, final String idName, final boolean isSinglePlayer, final Player player, final boolean rainbowMode, final int particleDensity, final float height, final float pitchMuliplier, final double visibleRange, final double disX, final double disY, final double disZ, final double disX2, final double disY2, final double disZ2, long delayTicks, long delayBySecond) {
       if (!arraylist.containsKey(idName)) {
-         System.out.println("initial drawarc for " + particle);
          int arc = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(skDragonCore.skdragoncore, new Runnable() {
             int step = 0;
             public float hue;
