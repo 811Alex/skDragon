@@ -1269,24 +1269,24 @@ public enum ParticleEffect {
                            if (this.effect == ParticleEffect.itemcrack) {
                               ItemStack item = new ItemStack(this.data.getMaterial());
                               item.setDurability(this.data.getData());
-                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, ItemStack.class);
+                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, ItemStack.class);
                               param = toNMS.invoke(particleParam, particle, item);
                            } else {
-                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class);
+                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class);
                               param = toNMS.invoke(particleParam, particle);
                            }
                         } else {
                            materialDataClass = ReflectionUtils.PackageType.BUKKIT_MATERIAL.getClass("MaterialData");
                            materialData = ReflectionUtils.getConstructor(materialDataClass, Material.class)
                                    .newInstance(this.data.getMaterial());
-                           toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, materialDataClass);
+                           toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, materialDataClass);
                            param = toNMS.invoke(particleParam, particle, materialData);
                         }
                      } else {
                         materialDataClass = ReflectionUtils.PackageType.BUKKIT_BLOCK_DATA.getClass("BlockData");
                         Method getBlockData = ReflectionUtils.getMethod(Bukkit.class, "createBlockData", Material.class);
                         materialData = getBlockData.invoke(materialDataClass, this.data.getMaterial());
-                        toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, materialDataClass);
+                        toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, materialDataClass);
                         param = toNMS.invoke(particleParam, particle, materialData);
                      }
                   }
