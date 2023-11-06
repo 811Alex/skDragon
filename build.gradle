@@ -7,7 +7,7 @@ plugins {
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
 
-def ver = 4
+def ver = 5
 def mcver = '1.20.2'
 def javaVer = JavaVersion.VERSION_17
 targetCompatibility = sourceCompatibility = javaVer

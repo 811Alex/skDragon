@@ -1222,8 +1222,6 @@ public enum ParticleEffect {
                   ReflectionUtils.setValue(this.packet, true, "a", name);
                } else if (version >= 13) {
                   Particle particle = Particle.values()[this.effect.getID()];
-                  Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
-                  Method toNMS = null;
                   Object param = null;
                   Class materialDataClass;
                   Constructor materialDataConstructor;
@@ -1263,30 +1261,33 @@ public enum ParticleEffect {
                              .newInstance(ReflectionUtils.getConstructor(vibrationPathClass, blockPosClass, ReflectionUtils.PackageType.MINECRAFT_WORLD_LEVEL_GAMEEVENT.getClass("PositionSource"), Integer.class)
                                              .newInstance(origin, dest, this.destination.getArrivalTicks()));
                   } else {
-                     Object materialData;
+                     Method toNMS;
                      if (this.effect != ParticleEffect.fallingdust && this.effect != ParticleEffect.blockcrack && this.effect != ParticleEffect.blockdust) {
                         if (this.effect != ParticleEffect.legacyfallingdust && this.effect != ParticleEffect.legacyblockcrack && this.effect != ParticleEffect.legacyblockdust) {
                            if (this.effect == ParticleEffect.itemcrack) {
                               ItemStack item = new ItemStack(this.data.getMaterial());
                               item.setDurability(this.data.getData());
                               toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, ItemStack.class);
+                              Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                               param = toNMS.invoke(particleParam, particle, item);
                            } else {
-                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class);
-                              param = toNMS.invoke(particleParam, particle);
+                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, Void.class);
+                              param = toNMS.invoke(null, particle, null);
                            }
                         } else {
                            materialDataClass = ReflectionUtils.PackageType.BUKKIT_MATERIAL.getClass("MaterialData");
-                           materialData = ReflectionUtils.getConstructor(materialDataClass, Material.class)
+                           Object materialData = ReflectionUtils.getConstructor(materialDataClass, Material.class)
                                    .newInstance(this.data.getMaterial());
                            toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, materialDataClass);
+                           Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                            param = toNMS.invoke(particleParam, particle, materialData);
                         }
                      } else {
                         materialDataClass = ReflectionUtils.PackageType.BUKKIT_BLOCK_DATA.getClass("BlockData");
                         Method getBlockData = ReflectionUtils.getMethod(Bukkit.class, "createBlockData", Material.class);
-                        materialData = getBlockData.invoke(materialDataClass, this.data.getMaterial());
+                        Object materialData = getBlockData.invoke(materialDataClass, this.data.getMaterial());
                         toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, materialDataClass);
+                        Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                         param = toNMS.invoke(particleParam, particle, materialData);
                      }
                   }
