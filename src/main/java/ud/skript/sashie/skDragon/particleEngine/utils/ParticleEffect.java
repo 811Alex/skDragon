@@ -1164,20 +1164,23 @@ public enum ParticleEffect {
                }else{
                   packetClass = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL_GAME.getClass("PacketPlayOutWorldParticles");
                   playerConnection = FieldAccess.get(ReflectionUtils.PackageType.MINECRAFT_LEVEL.getClass("EntityPlayer"));
-                  playerConnectionIndex = playerConnection.getIndex("b");
+                  playerConnectionIndex = playerConnection.getIndex("c");
                   sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK.getClass("PlayerConnection"));
                   packet = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet");
                }
 
-               sendPacketIndex = sendPacket.getIndex(version < 18 ? "sendPacket" : "a", packet);
+               if (version < 18) {
+                  sendPacketIndex = sendPacket.getIndex("sendPacket", packet);
+               } else if (version == 20) {
+                  sendPacketIndex = sendPacket.getIndex("b", packet);
+               } else {
+                  sendPacketIndex = sendPacket.getIndex(version < 18 ? "sendPacket" : "a", packet);
+               }
+
                Class particleParam;
-               if(version >= 17){
+               if(version >= 15){
                   enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
                   particleParam = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("ParticleParam");
-                  packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
-               }else if(version >= 15) {
-                  enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
-                  particleParam = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParam");
                   packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
                } else if (version >= 13) {
                   enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
@@ -1219,8 +1222,6 @@ public enum ParticleEffect {
                   ReflectionUtils.setValue(this.packet, true, "a", name);
                } else if (version >= 13) {
                   Particle particle = Particle.values()[this.effect.getID()];
-                  Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
-                  Method toNMS = null;
                   Object param = null;
                   Class materialDataClass;
                   Constructor materialDataConstructor;
@@ -1229,14 +1230,14 @@ public enum ParticleEffect {
                         param = ReflectionUtils.getConstructor("ParticleParamRedstone", ReflectionUtils.PackageType.MINECRAFT_SERVER, Float.class, Float.class, Float.class, Float.class)
                                 .newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB(), this.colorData.getSize());
                      }else{
-                        Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3fa");
+                        Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3f");
                         Object vector3fa = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class)
                                 .newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
                         param = ReflectionUtils.getConstructor("ParticleParamRedstone", ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES, vector3faClass, Float.class)
                                 .newInstance(vector3fa, this.colorData.getSize());
                      }
                   } else if (this.effect == ParticleEffect.dustcolortransition) {
-                     Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3fa");
+                     Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3f");
                      Constructor vector3faConstructor = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class);
                      Object vector3fa = vector3faConstructor.newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
                      Object vector3fa2 = vector3faConstructor.newInstance(this.colorTransData.getR(), this.colorTransData.getG(), this.colorTransData.getB());
@@ -1260,30 +1261,33 @@ public enum ParticleEffect {
                              .newInstance(ReflectionUtils.getConstructor(vibrationPathClass, blockPosClass, ReflectionUtils.PackageType.MINECRAFT_WORLD_LEVEL_GAMEEVENT.getClass("PositionSource"), Integer.class)
                                              .newInstance(origin, dest, this.destination.getArrivalTicks()));
                   } else {
-                     Object materialData;
+                     Method toNMS;
                      if (this.effect != ParticleEffect.fallingdust && this.effect != ParticleEffect.blockcrack && this.effect != ParticleEffect.blockdust) {
                         if (this.effect != ParticleEffect.legacyfallingdust && this.effect != ParticleEffect.legacyblockcrack && this.effect != ParticleEffect.legacyblockdust) {
                            if (this.effect == ParticleEffect.itemcrack) {
                               ItemStack item = new ItemStack(this.data.getMaterial());
                               item.setDurability(this.data.getData());
-                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, ItemStack.class);
+                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, ItemStack.class);
+                              Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                               param = toNMS.invoke(particleParam, particle, item);
                            } else {
-                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class);
-                              param = toNMS.invoke(particleParam, particle);
+                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, Void.class);
+                              param = toNMS.invoke(null, particle, null);
                            }
                         } else {
                            materialDataClass = ReflectionUtils.PackageType.BUKKIT_MATERIAL.getClass("MaterialData");
-                           materialData = ReflectionUtils.getConstructor(materialDataClass, Material.class)
+                           Object materialData = ReflectionUtils.getConstructor(materialDataClass, Material.class)
                                    .newInstance(this.data.getMaterial());
-                           toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, materialDataClass);
+                           toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, materialDataClass);
+                           Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                            param = toNMS.invoke(particleParam, particle, materialData);
                         }
                      } else {
                         materialDataClass = ReflectionUtils.PackageType.BUKKIT_BLOCK_DATA.getClass("BlockData");
                         Method getBlockData = ReflectionUtils.getMethod(Bukkit.class, "createBlockData", Material.class);
-                        materialData = getBlockData.invoke(materialDataClass, this.data.getMaterial());
-                        toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, materialDataClass);
+                        Object materialData = getBlockData.invoke(materialDataClass, this.data.getMaterial());
+                        toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, materialDataClass);
+                        Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                         param = toNMS.invoke(particleParam, particle, materialData);
                      }
                   }
