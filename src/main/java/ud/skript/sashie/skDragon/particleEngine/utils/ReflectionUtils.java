@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import me.despical.commons.reflection.XReflection;
 import org.bukkit.Bukkit;
 
 public final class ReflectionUtils {
@@ -17,7 +19,7 @@ public final class ReflectionUtils {
 
       for(int i = 0; i < length; ++i) {
          Constructor constructor = constructors[i];
-         if (ReflectionUtils.DataType.compare(ReflectionUtils.DataType.getPrimitive(constructor.getParameterTypes()), primitiveTypes)) {
+         if (DataType.compare(ReflectionUtils.DataType.getPrimitive(constructor.getParameterTypes()), primitiveTypes)) {
             return constructor;
          }
       }
@@ -49,7 +51,7 @@ public final class ReflectionUtils {
          }
       }
 
-      throw new NoSuchMethodException("There is no such method in this class with the specified name and parameter types");
+      throw new NoSuchMethodException("There is no such method in this class with the specified name and parameter types (Method: " + methodName + ")");
    }
 
    public static Method getMethod(String className, ReflectionUtils.PackageType packageType, String methodName, Class... parameterTypes) throws NoSuchMethodException, ClassNotFoundException {
@@ -292,8 +294,8 @@ public final class ReflectionUtils {
    }
 
    public enum PackageType {
-      MINECRAFT_SERVER("MINECRAFT_SERVER", 0, "net.minecraft.server." + getServerVersion()),
-      CRAFTBUKKIT("CRAFTBUKKIT", 1, "org.bukkit.craftbukkit." + getServerVersion()),
+      MINECRAFT_SERVER("MINECRAFT_SERVER", 0, "net.minecraft.server"),
+      CRAFTBUKKIT("CRAFTBUKKIT", 1, "org.bukkit.craftbukkit"),
       CRAFTBUKKIT_BLOCK("CRAFTBUKKIT_BLOCK", 2, CRAFTBUKKIT, "block"),
       CRAFTBUKKIT_CHUNKIO("CRAFTBUKKIT_CHUNKIO", 3, CRAFTBUKKIT, "chunkio"),
       CRAFTBUKKIT_COMMAND("CRAFTBUKKIT_COMMAND", 4, CRAFTBUKKIT, "command"),
@@ -325,7 +327,7 @@ public final class ReflectionUtils {
       MINECRAFT_SERVER_NETWORK("MINECRAFT_SERVER_NETWORK", 30, "net.minecraft.server.network"),
       MINECRAFT_CORE_PARTICLES("MINECRAFT_CORE_PARTICLES", 31, "net.minecraft.core.particles"),
       MINECRAFT_NETWORK_PROTOCOL("MINECRAFT_NETWORK_PROTOCOL_GAME", 32, "net.minecraft.network.protocol"),
-      MOJANG_MATH("MOJANG_MATH", 33, "com.mojang.math"),
+      MOJANG_MATH("MOJANG_MATH", 33, "org.joml"),
       MINECRAFT_CORE("MINECRAFT_CORE", 34, "net.minecraft.core"),
       MINECRAFT_WORLD_LEVEL_GAMEEVENT("MINECRAFT_WORLD_LEVEL_GAMEEVENT", 35, "net.minecraft.world.level.gameevent"),
       MINECRAFT_WORLD_LEVEL_GAMEEVENT_VIBRATIONS("MINECRAFT_WORLD_LEVEL_GAMEEVENT_VIBRATIONS", 36, "net.minecraft.world.level.gameevent.vibrations");
@@ -353,12 +355,11 @@ public final class ReflectionUtils {
       }
 
       public static String getServerVersion() {
-         String name = Bukkit.getServer().getClass().getPackage().getName();
-         return name.substring(name.lastIndexOf(".") + 1);
+         return XReflection.findNMSVersionString();
       }
 
       public static int getServerVersionMinor(){
-         return Integer.parseInt(getServerVersion().split("_")[1]);
+         return XReflection.MINOR_NUMBER;
       }
    }
 }

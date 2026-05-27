@@ -1,6 +1,7 @@
 package wtfplswork;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ public class Runnable implements java.lang.Runnable { // My guy passes arguments
   protected ArrayList<Object> vars = new ArrayList<>();
 
   public Runnable(Object... vars){
-    this.vars.addAll(List.of(vars));
+    this.vars.addAll(Arrays.asList(vars));
   }
 
   @Override

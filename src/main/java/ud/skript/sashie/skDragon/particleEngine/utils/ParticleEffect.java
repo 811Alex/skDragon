@@ -27,101 +27,99 @@ import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.particleEngine.maths.EffectsLib;
 
 public enum ParticleEffect {
-   explosion("explosion", "18 -> 9: 0", ParticleProperty.DIRECTIONAL),
-   explosionlarge("explosionlarge", "17 -> 9: 1"),
-   explosionhuge("explosionhuge", "16 -> 9: 2"),
-   fireworkspark("fireworkspark", "0 -> 9: 3", ParticleProperty.DIRECTIONAL),
-   waterbubble("waterbubble", "9: 4", ParticleProperty.USES_WATER),
-   watersplash("watersplash", "14 -> 9: 5"),
-   waterwake("waterwake", "9: 6", ParticleProperty.DIRECTIONAL),
-   suspended("suspended", "9: 7", ParticleProperty.USES_WATER),
-   suspenddepth("suspenddepth", "9: 8"),
-   crit("crit", "1 -> 9: 9", ParticleProperty.DIRECTIONAL),
-   critmagic("critmagic", "2 -> 9: 10", ParticleProperty.DIRECTIONAL),
-   smoke("smoke", "20 -> 9: 11", ParticleProperty.DIRECTIONAL),
-   smokelarge("smokelarge", "31 -> 9: 12", ParticleProperty.DIRECTIONAL),
-   spell("spell", "5 -> 9: 13", ParticleProperty.DIRECTIONAL),
-   spellinstant("spellinstant", "6 -> 9: 14", ParticleProperty.DIRECTIONAL),
-   mobspell("mobspell", "9: 15", ParticleProperty.COLORABLE, ParticleProperty.DIRECTIONAL),
-   mobspellambient("mobspellambient", "9: 16", ParticleProperty.COLORABLE, ParticleProperty.DIRECTIONAL),
-   witchspell("witchspell", "7 -> 9: 17", ParticleProperty.DIRECTIONAL),
-   waterdrip("waterdrip", "24 -> 9: 18"),
-   lavadrip("lavadrip", "25 -> 9: 19"),
-   angryvillager("angryvillager", "29 -> 9: 20"),
-   happyvillager("happyvillager", "30 -> 9: 21", ParticleProperty.DIRECTIONAL),
-   townaura("townaura", "9: 22", ParticleProperty.DIRECTIONAL),
-   note("note", "8 -> 9: 23", ParticleProperty.COLORABLE),
-   portal("portal", "9 -> 9: 24", ParticleProperty.DIRECTIONAL),
-   enchantmenttable("enchantmenttable", "10 -> 9: 25", ParticleProperty.DIRECTIONAL),
-   flame("flame", "11 -> 9: 26", ParticleProperty.DIRECTIONAL),
-   lava("lava", "12 -> 9: 27"),
-   footstep("footstep", "13 -> 9: 28 -> 13: -1"),
-   cloud("cloud", "21 -> 9: 29 -> 13: 28", ParticleProperty.DIRECTIONAL),
-   redstone("redstone", "22 -> 9: 30 -> 13: 29", ParticleProperty.COLORABLE),
-   snowball("snowball", "23 -> 9: 31 -> 13: 30"),
-   snowshovel("snowshovel", "26 -> 9: 32 -> 13: 31"),
-   slime("slime", "27 -> 9: 33 -> 13: 32"),
-   heart("heart", "28 -> 9: 34 -> 13: 33"),
-   barrier("barrier", "9: 35 -> 13: 34 -> 18: -1"),
-   itemcrack("itemcrack", "32 -> 9: 36 -> 13: 35 -> 18: 34", ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
-   blockcrack("blockcrack", "33 -> 9: 37 -> 13: 36 -> 18: 35", ParticleProperty.REQUIRES_DATA),
-   blockdust("blockdust", "34 -> 9: 38 -> 13: 37 -> 18: 36", ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
-   waterdrop("waterdrop", "24 -> 9: 39 -> 13: 38 -> 18: 37"),
-   itemtake("itemtake", "9: 40 -> 13: -1"),
-   mobappearance("mobappearance", "9: 41 -> 13: 39 -> 18: 38"),
-   dragonbreath("dragonbreath", "9: 42 -> 13: 40 -> 18: 39", ParticleProperty.DIRECTIONAL),
-   endrod("endrod", "9: 43 -> 13: 41 -> 18: 40", ParticleProperty.DIRECTIONAL),
-   damage("damage", "9: 44 -> 13: 42 -> 18: 41", ParticleProperty.DIRECTIONAL),
-   sweep("sweep", "9: 45 -> 13: 43 -> 18: 42"),
-   fallingdust("fallingdust", "10: 46 -> 13: 44 -> 18: 43", ParticleProperty.REQUIRES_DATA),
-   totem("totem", "11: 47 -> 13: 45 -> 18: 44", ParticleProperty.DIRECTIONAL),
-   spit("spit", "11: 48 -> 13: 46 -> 18: 45", ParticleProperty.DIRECTIONAL),
-   squidink("squidink", "13: 47 -> 18: 46", ParticleProperty.DIRECTIONAL),
-   bubblepop("bubblepop", "13: 48 -> 18: 47", ParticleProperty.DIRECTIONAL),
-   bubblecurrentdown("bubblecurrentdown", "13: 49 -> 18: 48"),
-   bubblecurrentup("bubblecurrentup", "13: 50 -> 18: 49"),
-   nautilus("nautilus", "13: 51 -> 18: 50", ParticleProperty.DIRECTIONAL),
-   dolphin("dolphin", "13: 52 -> 18: 51", ParticleProperty.DIRECTIONAL),
-   sneeze("sneeze", "14: 53 -> 18: 52", ParticleProperty.DIRECTIONAL),
-   campfirecozy("campfirecozy", "14: 54 -> 18: 53", ParticleProperty.DIRECTIONAL),
-   campfiresignal("campfiresignal", "14: 55 -> 18: 54", ParticleProperty.DIRECTIONAL),
-   composter("composter", "14: 56 -> 18: 55"),
-   flash("flash", "14: 57 -> 18: 56"),
-   fallinglava("fallinglava", "14: 58 -> 18: 57"),
-   landinglava("landinglava", "14: 59 -> 18: 58"),
-   fallingwater("fallingwater", "14: 60 -> 18: 59"),
-   drippinghoney("drippinghoney", "15: 61 -> 18: 60"),
-   fallinghoney("fallinghoney", "15: 62 -> 18: 61"),
-   landinghoney("landinghoney", "15: 63 -> 18: 62"),
-   fallingnectar("fallingnectar", "15: 64 -> 18: 63"),
-   soulfireflame("soulfireflame", "16: 65 -> 18: 64", ParticleProperty.DIRECTIONAL),
-   ash("ash", "16: 66 -> 18: 65"),
-   crimsonspore("crimsonspore", "16: 67 -> 18: 66"),
-   warpedspore("warpedspore", "16: 68 -> 18: 67"),
-   soul("soul", "16: 69 -> 18: 68", ParticleProperty.DIRECTIONAL),
-   drippingtear("drippingtear", "16: 70 -> 18: 69"),
-   fallingtear("fallingtear", "16: 71 -> 18: 70"),
-   landingtear("landingtear", "16: 72 -> 18: 71"),
-   reverseportal("reverseportal", "16: 73 -> 18: 72", ParticleProperty.DIRECTIONAL),
-   whiteash("whiteash", "16: 74 -> 18: 73"),
-   light("light", "17: 75 -> 18: -1"),
-   dustcolortransition("dustcolortransition", "17: 76 -> 18: 74", ParticleProperty.COLORABLE, ParticleProperty.TRANSITIONABLE),
-   vibration("vibration", "17: 77 -> 18: 75", ParticleProperty.DIRECTIONAL, ParticleProperty.VIBRATION),
-   fallingsporeblossom("fallingsporeblossom", "17: 78 -> 18: 76"),
-   sporeblossomair("sporeblossomair", "17: 79 -> 18: 77"),
-   smallflame("smallflame", "17: 80 -> 18: 78", ParticleProperty.DIRECTIONAL),
-   snowflake("snowflake", "17: 81 -> 18: 79", ParticleProperty.DIRECTIONAL),
-   drippingdripstonelava("drippingdripstonelava", "17: 82 -> 18: 80"),
-   fallingdripstonelava("fallingdripstonelava", "17: 83 -> 18: 81"),
-   drippingdripstonewater("drippingdripstonewater", "17: 84 -> 18: 82"),
-   fallingdripstonewater("fallingdripstonewater", "17: 85 -> 18: 83"),
-   glowsquidink("glowsquidink", "17: 86 -> 18: 84", ParticleProperty.DIRECTIONAL),
-   glow("glow", "17: 87 -> 18: 85", ParticleProperty.DIRECTIONAL),
-   waxon("waxon", "17: 88 -> 18: 86", ParticleProperty.DIRECTIONAL),
-   waxoff("waxoff", "17: 89 -> 18: 87", ParticleProperty.DIRECTIONAL),
-   electricspark("electricspark", "17: 90 -> 18: 88", ParticleProperty.DIRECTIONAL),
-   scrape("scrape", "17: 91 -> 18: 89", ParticleProperty.DIRECTIONAL),
-   blockmarker("blockmarker", "18: 90", ParticleProperty.REQUIRES_DATA),
+   explosion("explosion", "0", ParticleProperty.DIRECTIONAL),
+   explosionlarge("explosionlarge", "1"),
+   explosionhuge("explosionhuge", "2"),
+   fireworkspark("fireworkspark", "3", ParticleProperty.DIRECTIONAL),
+   waterbubble("waterbubble", "4", ParticleProperty.USES_WATER),
+   watersplash("watersplash", "5"),
+   waterwake("waterwake", "6", ParticleProperty.DIRECTIONAL),
+   suspended("suspended", "7", ParticleProperty.USES_WATER),
+   crit("crit", "8", ParticleProperty.DIRECTIONAL),
+   critmagic("critmagic", "9", ParticleProperty.DIRECTIONAL),
+   smoke("smoke", "10", ParticleProperty.DIRECTIONAL),
+   smokelarge("smokelarge", "11", ParticleProperty.DIRECTIONAL),
+   spell("spell", "12", ParticleProperty.DIRECTIONAL),
+   spellinstant("spellinstant", "13", ParticleProperty.DIRECTIONAL),
+   mobspell("mobspell", "14", ParticleProperty.COLORABLE, ParticleProperty.DIRECTIONAL),
+   mobspellambient("mobspellambient", "15", ParticleProperty.COLORABLE, ParticleProperty.DIRECTIONAL),
+   witchspell("witchspell", "15", ParticleProperty.DIRECTIONAL),
+   waterdrip("waterdrip", "16"),
+   lavadrip("lavadrip", "17"),
+   angryvillager("angryvillager", "18"),
+   happyvillager("happyvillager", "19", ParticleProperty.DIRECTIONAL),
+   townaura("townaura", "20", ParticleProperty.DIRECTIONAL),
+   note("note", "21", ParticleProperty.COLORABLE),
+   portal("portal", "22", ParticleProperty.DIRECTIONAL),
+   enchantmenttable("enchantmenttable", "23", ParticleProperty.DIRECTIONAL),
+   flame("flame", "24", ParticleProperty.DIRECTIONAL),
+   lava("lava", "25"),
+   //footstep("footstep", "13 -> 9: 28 -> 13: -1"),
+   cloud("cloud", "26", ParticleProperty.DIRECTIONAL),
+   redstone("redstone", "27", ParticleProperty.COLORABLE),
+   snowball("snowball", "28"),
+   //snowshovel("snowshovel", "29"),
+   slime("slime", "29"),
+   heart("heart", "30"),
+   itemcrack("itemcrack", "31", ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
+   blockcrack("blockcrack", "32", ParticleProperty.REQUIRES_DATA),
+   blockdust("blockdust", "32", ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
+   waterdrop("waterdrop", "33"),
+   //itemtake("itemtake", "9: 40 -> 13: -1"),
+   mobappearance("mobappearance", "34"),
+   dragonbreath("dragonbreath", "35", ParticleProperty.DIRECTIONAL),
+   endrod("endrod", "36", ParticleProperty.DIRECTIONAL),
+   damage("damage", "37", ParticleProperty.DIRECTIONAL),
+   sweep("sweep", "38"),
+   fallingdust("fallingdust", "39", ParticleProperty.REQUIRES_DATA),
+   totem("totem", "40", ParticleProperty.DIRECTIONAL),
+   spit("spit", "41", ParticleProperty.DIRECTIONAL),
+   squidink("squidink", "42", ParticleProperty.DIRECTIONAL),
+   bubblepop("bubblepop", "43", ParticleProperty.DIRECTIONAL),
+   bubblecurrentdown("bubblecurrentdown", "44"),
+   bubblecurrentup("bubblecurrentup", "45"),
+   nautilus("nautilus", "46", ParticleProperty.DIRECTIONAL),
+   dolphin("dolphin", "47", ParticleProperty.DIRECTIONAL),
+   sneeze("sneeze", "48", ParticleProperty.DIRECTIONAL),
+   campfirecozy("campfirecozy", "49", ParticleProperty.DIRECTIONAL),
+   campfiresignal("campfiresignal", "50", ParticleProperty.DIRECTIONAL),
+   composter("composter", "51"),
+   flash("flash", "52"),
+   fallinglava("fallinglava", "53"),
+   landinglava("landinglava", "54"),
+   fallingwater("fallingwater", "55"),
+   drippinghoney("drippinghoney", "56"),
+   fallinghoney("fallinghoney", "57"),
+   landinghoney("landinghoney", "58"),
+   fallingnectar("fallingnectar", "59"),
+   soulfireflame("soulfireflame", "60", ParticleProperty.DIRECTIONAL),
+   ash("ash", "61"),
+   crimsonspore("crimsonspore", "62"),
+   warpedspore("warpedspore", "63"),
+   soul("soul", "64", ParticleProperty.DIRECTIONAL),
+   drippingtear("drippingtear", "65"),
+   fallingtear("fallingtear", "66"),
+   landingtear("landingtear", "67"),
+   reverseportal("reverseportal", "68", ParticleProperty.DIRECTIONAL),
+   whiteash("whiteash", "69"),
+   //light("light", "17: 75 -> 18: -1"),
+   dustcolortransition("dustcolortransition", "70", ParticleProperty.COLORABLE, ParticleProperty.TRANSITIONABLE),
+   vibration("vibration", "71", ParticleProperty.DIRECTIONAL, ParticleProperty.VIBRATION),
+   fallingsporeblossom("fallingsporeblossom", "72"),
+   sporeblossomair("sporeblossomair", "72"),
+   smallflame("smallflame", "74", ParticleProperty.DIRECTIONAL),
+   snowflake("snowflake", "75", ParticleProperty.DIRECTIONAL),
+   drippingdripstonelava("drippingdripstonelava", "76"),
+   fallingdripstonelava("fallingdripstonelava", "77"),
+   drippingdripstonewater("drippingdripstonewater", "78"),
+   fallingdripstonewater("fallingdripstonewater", "79"),
+   glowsquidink("glowsquidink", "80", ParticleProperty.DIRECTIONAL),
+   glow("glow", "81", ParticleProperty.DIRECTIONAL),
+   waxon("waxon", "82", ParticleProperty.DIRECTIONAL),
+   waxoff("waxoff", "83", ParticleProperty.DIRECTIONAL),
+   electricspark("electricspark", "84", ParticleProperty.DIRECTIONAL),
+   scrape("scrape", "85", ParticleProperty.DIRECTIONAL),
+   blockmarker("blockmarker", "108", ParticleProperty.REQUIRES_DATA),
    legacyblockcrack("legacyblockcrack", "13: 53 -> 14: 61 -> 15: 65 -> 16: 75 -> 17: 92 -> 18: 91", ParticleProperty.REQUIRES_DATA),
    legacyblockdust("legacyblockdust", "13: 54 -> 14: 62 -> 15: 66 -> 16: 76 -> 17: 93 -> 18: 92", ParticleProperty.DIRECTIONAL, ParticleProperty.REQUIRES_DATA),
    legacyfallingdust("legacyfallingdust", "13: 55 -> 14: 63 -> 15: 67 -> 16: 77 -> 17: 94 -> 18: 93", ParticleProperty.REQUIRES_DATA),
@@ -1154,39 +1152,25 @@ public enum ParticleEffect {
                version = ReflectionUtils.PackageType.getServerVersionMinor();
                getHandle = ReflectionUtils.getMethod("CraftPlayer", ReflectionUtils.PackageType.CRAFTBUKKIT_ENTITY, "getHandle");
 
-               Class packetClass, packet;
-               if(version < 17){
-                  packetClass = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass(version < 7 ? "Packet63WorldParticles" : "PacketPlayOutWorldParticles");
-                  playerConnection = FieldAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("EntityPlayer"));
-                  playerConnectionIndex = playerConnection.getIndex("playerConnection");
-                  sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("PlayerConnection"));
-                  packet = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("Packet");
-               }else{
-                  packetClass = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL_GAME.getClass("PacketPlayOutWorldParticles");
-                  playerConnection = FieldAccess.get(ReflectionUtils.PackageType.MINECRAFT_LEVEL.getClass("EntityPlayer"));
-                  playerConnectionIndex = playerConnection.getIndex("b");
-                  sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK.getClass("PlayerConnection"));
-                  packet = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet");
+               Class<?> packetClass, packet;
+               packetClass = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL_GAME.getClass("ClientboundLevelParticlesPacket");
+               playerConnection = FieldAccess.get(ReflectionUtils.PackageType.MINECRAFT_LEVEL.getClass("ServerPlayer"));
+               try {
+                  playerConnectionIndex = playerConnection.getIndex("c");
+               } catch (Exception ignored) {
+                  playerConnectionIndex = playerConnection.getIndex("connection");
+               }
+               sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK.getClass("ServerPlayerConnection"));
+               packet = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet");
+
+               try {
+                  sendPacketIndex = sendPacket.getIndex("b", packet);
+               } catch (Exception ignored) {
+                  sendPacketIndex = sendPacket.getIndex("send", packet);
                }
 
-               sendPacketIndex = sendPacket.getIndex(version < 18 ? "sendPacket" : "a", packet);
-               Class particleParam;
-               if(version >= 17){
-                  enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
-                  particleParam = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("ParticleParam");
-                  packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
-               }else if(version >= 15) {
-                  enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
-                  particleParam = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParam");
-                  packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Double.class, Double.class, Double.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
-               } else if (version >= 13) {
-                  enumParticle = ReflectionUtils.PackageType.CRAFTBUKKIT.getClass("CraftParticle");
-                  particleParam = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("ParticleParam");
-                  packetConstructor = ReflectionUtils.getConstructor(packetClass, particleParam, Boolean.class, Float.class, Float.class, Float.class, Float.class, Float.class, Float.class, Float.class, Integer.class);
-               } else {
-                  enumParticle = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("EnumParticle");
-                  packetConstructor = ReflectionUtils.getConstructor(packetClass, enumParticle, Boolean.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Float.TYPE, Integer.TYPE, int[].class);
-               }
+               enumParticle = ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES.getClass("ParticleType");
+               packetConstructor = ReflectionUtils.getConstructor(packetClass, enumParticle, boolean.class, boolean.class, double.class, double.class, double.class, float.class, float.class, float.class, float.class, int.class);
             } catch (Exception var3) {
                throw new ParticleEffect.ParticlePacket.VersionIncompatibleException("Your current bukkit version seems to be incompatible with this library", var3);
             }
@@ -1219,8 +1203,6 @@ public enum ParticleEffect {
                   ReflectionUtils.setValue(this.packet, true, "a", name);
                } else if (version >= 13) {
                   Particle particle = Particle.values()[this.effect.getID()];
-                  Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
-                  Method toNMS = null;
                   Object param = null;
                   Class materialDataClass;
                   Constructor materialDataConstructor;
@@ -1229,14 +1211,11 @@ public enum ParticleEffect {
                         param = ReflectionUtils.getConstructor("ParticleParamRedstone", ReflectionUtils.PackageType.MINECRAFT_SERVER, Float.class, Float.class, Float.class, Float.class)
                                 .newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB(), this.colorData.getSize());
                      }else{
-                        Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3fa");
-                        Object vector3fa = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class)
-                                .newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
-                        param = ReflectionUtils.getConstructor("ParticleParamRedstone", ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES, vector3faClass, Float.class)
-                                .newInstance(vector3fa, this.colorData.getSize());
+                        param = ReflectionUtils.getConstructor("DustParticleOptions", ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES, int.class, float.class)
+                                .newInstance(colorData.color.getRGB(), this.colorData.getSize());
                      }
                   } else if (this.effect == ParticleEffect.dustcolortransition) {
-                     Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3fa");
+                     Class vector3faClass = ReflectionUtils.PackageType.MOJANG_MATH.getClass("Vector3f");
                      Constructor vector3faConstructor = ReflectionUtils.getConstructor(vector3faClass, Float.class, Float.class, Float.class);
                      Object vector3fa = vector3faConstructor.newInstance(this.colorData.getR(), this.colorData.getG(), this.colorData.getB());
                      Object vector3fa2 = vector3faConstructor.newInstance(this.colorTransData.getR(), this.colorTransData.getG(), this.colorTransData.getB());
@@ -1260,44 +1239,47 @@ public enum ParticleEffect {
                              .newInstance(ReflectionUtils.getConstructor(vibrationPathClass, blockPosClass, ReflectionUtils.PackageType.MINECRAFT_WORLD_LEVEL_GAMEEVENT.getClass("PositionSource"), Integer.class)
                                              .newInstance(origin, dest, this.destination.getArrivalTicks()));
                   } else {
-                     Object materialData;
+                     Method toNMS;
                      if (this.effect != ParticleEffect.fallingdust && this.effect != ParticleEffect.blockcrack && this.effect != ParticleEffect.blockdust) {
                         if (this.effect != ParticleEffect.legacyfallingdust && this.effect != ParticleEffect.legacyblockcrack && this.effect != ParticleEffect.legacyblockdust) {
-                           if (this.effect == ParticleEffect.itemcrack) {
+                        if (this.effect == ParticleEffect.itemcrack) {
                               ItemStack item = new ItemStack(this.data.getMaterial());
                               item.setDurability(this.data.getData());
-                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, ItemStack.class);
+                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, ItemStack.class);
+                              Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                               param = toNMS.invoke(particleParam, particle, item);
                            } else {
-                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class);
-                              param = toNMS.invoke(particleParam, particle);
+                              toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, Void.class);
+                              param = toNMS.invoke(null, particle, null);
                            }
                         } else {
                            materialDataClass = ReflectionUtils.PackageType.BUKKIT_MATERIAL.getClass("MaterialData");
-                           materialData = ReflectionUtils.getConstructor(materialDataClass, Material.class)
+                           Object materialData = ReflectionUtils.getConstructor(materialDataClass, Material.class)
                                    .newInstance(this.data.getMaterial());
-                           toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, materialDataClass);
+                           toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, materialDataClass);
+                           Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                            param = toNMS.invoke(particleParam, particle, materialData);
                         }
                      } else {
                         materialDataClass = ReflectionUtils.PackageType.BUKKIT_BLOCK_DATA.getClass("BlockData");
                         Method getBlockData = ReflectionUtils.getMethod(Bukkit.class, "createBlockData", Material.class);
-                        materialData = getBlockData.invoke(materialDataClass, this.data.getMaterial());
-                        toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "toNMS", Particle.class, materialDataClass);
+                        Object materialData = getBlockData.invoke(materialDataClass, this.data.getMaterial());
+                        toNMS = ReflectionUtils.getMethod("CraftParticle", ReflectionUtils.PackageType.CRAFTBUKKIT, "createParticleParam", Particle.class, materialDataClass);
+                        Class particleParam = (version < 17 ? ReflectionUtils.PackageType.MINECRAFT_SERVER : ReflectionUtils.PackageType.MINECRAFT_CORE_PARTICLES).getClass("ParticleParam");
                         param = toNMS.invoke(particleParam, particle, materialData);
                      }
                   }
 
                   if (version >= 15) {
-                     this.packet = packetConstructor.newInstance(param, this.longDistance, center.getX(), center.getY(), center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount);
+                     this.packet = packetConstructor.newInstance(param, this.longDistance, true, center.getX(), center.getY(), center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount);
                   } else {
-                     this.packet = packetConstructor.newInstance(param, this.longDistance, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount);
+                     this.packet = packetConstructor.newInstance(param, this.longDistance, true, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount);
                   }
                } else if (this.data != null) {
                   int[] packetData = this.data.getPacketData();
-                  this.packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getID()], this.longDistance, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, this.effect == ParticleEffect.itemcrack ? packetData : new int[]{packetData[0] | packetData[1] << 12});
+                  this.packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getID()], this.longDistance, true, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, this.effect == ParticleEffect.itemcrack ? packetData : new int[]{packetData[0] | packetData[1] << 12});
                } else {
-                  this.packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getID()], this.longDistance, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, new int[0]);
+                  this.packet = packetConstructor.newInstance(enumParticle.getEnumConstants()[this.effect.getID()], this.longDistance, true, (float)center.getX(), (float)center.getY(), (float)center.getZ(), this.offsetX, this.offsetY, this.offsetZ, this.speed, this.amount, new int[0]);
                }
 
             } catch (Exception var9) {
@@ -1336,14 +1318,12 @@ public enum ParticleEffect {
          } else {
             String worldName = center.getWorld().getName();
             double squared = range * range;
-            Iterator var8 = Bukkit.getOnlinePlayers().iterator();
 
-            while(var8.hasNext()) {
-               Player player = (Player)var8.next();
-               if (player.getWorld().getName().equals(worldName) && !(player.getLocation().distanceSquared(center) > squared)) {
-                  this.sendTo(center, player);
-               }
-            }
+             for (Player player : Bukkit.getOnlinePlayers()) {
+                 if (player.getWorld().getName().equals(worldName) && !(player.getLocation().distanceSquared(center) > squared)) {
+                     this.sendTo(center, player);
+                 }
+             }
 
          }
       }

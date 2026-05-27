@@ -35,10 +35,15 @@ public abstract class ReflectionPacket {
                playerConnection = ReflectionUtils.getField("EntityPlayer", ReflectionUtils.PackageType.MINECRAFT_SERVER, false, "playerConnection");
                packet = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("Packet");
             }else{
-               playerConnection = ReflectionUtils.getField("EntityPlayer", ReflectionUtils.PackageType.MINECRAFT_LEVEL, false, "b");
+               playerConnection = ReflectionUtils.getField("ServerPlayer", ReflectionUtils.PackageType.MINECRAFT_LEVEL, false, "b");
                packet = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet");
             }
-            sendPacket = ReflectionUtils.getMethod(playerConnection.getType(), version < 18 ? "sendPacket" : "a", packet);
+
+            try {
+               sendPacket = ReflectionUtils.getMethod(playerConnection.getType(), "send", packet);
+            } catch (Exception ignored) {
+               sendPacket = ReflectionUtils.getMethod(playerConnection.getType(), "b", packet);
+            }
          } catch (Exception var2) {
             throw new VersionIncompatibleException("Your current bukkit version seems to be incompatible with this library", var2);
          }

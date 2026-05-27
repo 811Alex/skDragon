@@ -11,6 +11,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.util.SimpleExpression;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
@@ -32,10 +33,10 @@ import ud.skript.sashie.skDragon.registration.annotations.PropertyExpressionType
 import ud.skript.sashie.skDragon.registration.annotations.Syntaxes;
 
 public class AnnotationParser {
-   public void register() {
+   public void register() throws UnsupportedEncodingException {
       File file = null;
 
-      file = new File(URLDecoder.decode(skDragonCore.class.getProtectionDomain().getCodeSource().getLocation().getFile(), StandardCharsets.UTF_8));
+      file = new File(URLDecoder.decode(skDragonCore.class.getProtectionDomain().getCodeSource().getLocation().getFile(), String.valueOf(StandardCharsets.UTF_8)));
 
       Iterator var3 = this.getClasses(file, "ud.skript.sashie").iterator();
 

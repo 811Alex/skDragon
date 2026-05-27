@@ -41,12 +41,21 @@ public abstract class ASMPacket {
                sendPacket = MethodAccess.get((ReflectionUtils.PackageType.MINECRAFT_SERVER).getClass("PlayerConnection"));
                packet = ReflectionUtils.PackageType.MINECRAFT_SERVER.getClass("Packet");
             }else{
-               playerConnection = FieldAccess.get(ReflectionUtils.PackageType.MINECRAFT_LEVEL.getClass("EntityPlayer"));
-               playerConnectionIndex = ASMPacket.playerConnection.getIndex("b");
-               sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK.getClass("PlayerConnection"));
+               playerConnection = FieldAccess.get(ReflectionUtils.PackageType.MINECRAFT_LEVEL.getClass("ServerPlayer"));
+               try {
+                  playerConnectionIndex = playerConnection.getIndex("c");
+               } catch (Exception ignored) {
+                  playerConnectionIndex = playerConnection.getIndex("connection");
+               }
+               sendPacket = MethodAccess.get(ReflectionUtils.PackageType.MINECRAFT_SERVER_NETWORK.getClass("ServerPlayerConnection"));
                packet = ReflectionUtils.PackageType.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet");
             }
-            sendPacketIndex = sendPacket.getIndex(version < 18 ? "sendPacket" : "a", packet);
+
+            try {
+               sendPacketIndex = sendPacket.getIndex("b", packet);
+            } catch (Exception ignored) {
+               sendPacketIndex = sendPacket.getIndex("send", packet);
+            }
          } catch (Exception var2) {
             throw new VersionIncompatibleException("Your current bukkit version seems to be incompatible with this library", var2);
          }

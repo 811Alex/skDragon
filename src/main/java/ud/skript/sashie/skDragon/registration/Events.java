@@ -2,8 +2,6 @@ package ud.skript.sashie.skDragon.registration;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.util.SimpleEvent;
-import ch.njol.skript.registrations.EventValues;
-import ch.njol.skript.util.Getter;
 import eu.phiwa.dragontravel.api.events.DragonPlayerDismountEvent;
 import eu.phiwa.dragontravel.api.events.DragonPostPlayerMountEvent;
 import eu.phiwa.dragontravel.api.events.DragonPrePlayerMountEvent;
@@ -11,28 +9,26 @@ import eu.phiwa.dragontravel.core.movement.DragonType;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.skriptlang.skript.bukkit.lang.eventvalue.EventValue;
+import org.skriptlang.skript.bukkit.lang.eventvalue.EventValueRegistry;
+import ud.skript.sashie.skDragonCore;
 import ud.skript.sashie.skDragon.emotes.EmoteEndedEvent;
 import ud.skript.sashie.skDragon.emotes.EmoteStartedEvent;
 
 public class Events {
    public static void emoteEvents() {
       Skript.registerEvent("emote start", SimpleEvent.class, EmoteStartedEvent.class, "emote start");
-      EventValues.registerEventValue(EmoteStartedEvent.class, Entity.class, new Getter() {
-         public Entity get(Object e) {
-            return ((EmoteStartedEvent)e).getEntity();
-         }
-      }, 0);
-      EventValues.registerEventValue(EmoteStartedEvent.class, String.class, new Getter() {
-         public String get(Object e) {
-            return ((EmoteStartedEvent)e).getEmoteType();
-         }
-      }, 0);
+      EventValueRegistry eventValues = skDragonCore.getAddonInstance().registry(EventValueRegistry.class);
+      eventValues.register(EventValue.builder(EmoteStartedEvent.class, Entity.class)
+         .getter(EmoteStartedEvent::getEntity)
+         .build());
+      eventValues.register(EventValue.builder(EmoteStartedEvent.class, String.class)
+         .getter(EmoteStartedEvent::getEmoteType)
+         .build());
       Skript.registerEvent("emote stop", SimpleEvent.class, EmoteEndedEvent.class, "emote stop");
-      EventValues.registerEventValue(EmoteEndedEvent.class, Entity.class, new Getter() {
-         public Entity get(Object e) {
-            return ((EmoteEndedEvent)e).getEntity();
-         }
-      }, 0);
+      eventValues.register(EventValue.builder(EmoteEndedEvent.class, Entity.class)
+         .getter(EmoteEndedEvent::getEntity)
+         .build());
    }
 
    public static void dragonTravelEvents() {
@@ -42,50 +38,33 @@ public class Events {
    }
 
    public static void dragonTravelValues() {
-      EventValues.registerEventValue(DragonPrePlayerMountEvent.class, Player.class, new Getter() {
-         public Player get(Object e) {
-            return ((DragonPrePlayerMountEvent)e).getPlayer().getPlayer();
-         }
-      }, 0);
-      EventValues.registerEventValue(DragonPrePlayerMountEvent.class, DragonType.class, new Getter() {
-         public DragonType get(Object e) {
-            return ((DragonPrePlayerMountEvent)e).getDragonType();
-         }
-      }, 0);
-      EventValues.registerEventValue(DragonPrePlayerMountEvent.class, Entity.class, new Getter() {
-         public Entity get(Object e) {
-            return ((DragonPrePlayerMountEvent)e).getDragon().getEntity();
-         }
-      }, 0);
-      EventValues.registerEventValue(DragonPostPlayerMountEvent.class, Player.class, new Getter() {
-         public Player get(Object e) {
-            return ((DragonPostPlayerMountEvent)e).getPlayer().getPlayer();
-         }
-      }, 0);
-      EventValues.registerEventValue(DragonPostPlayerMountEvent.class, DragonType.class, new Getter() {
-         public DragonType get(Object e) {
-            return ((DragonPostPlayerMountEvent)e).getDragonType();
-         }
-      }, 0);
-      EventValues.registerEventValue(DragonPostPlayerMountEvent.class, Entity.class, new Getter() {
-         public Entity get(Object e) {
-            return ((DragonPostPlayerMountEvent)e).getDragon().getEntity();
-         }
-      }, 0);
-      EventValues.registerEventValue(DragonPlayerDismountEvent.class, Player.class, new Getter() {
-         public Player get(Object e) {
-            return ((DragonPlayerDismountEvent)e).getPlayer().getPlayer();
-         }
-      }, 0);
-      EventValues.registerEventValue(DragonPlayerDismountEvent.class, Location.class, new Getter() {
-         public Location get(Object e) {
-            return ((DragonPlayerDismountEvent)e).getDismountLoc();
-         }
-      }, 0);
-      EventValues.registerEventValue(DragonPlayerDismountEvent.class, Entity.class, new Getter() {
-         public Entity get(Object e) {
-            return ((DragonPlayerDismountEvent)e).getDragon().getEntity();
-         }
-      }, 0);
+      EventValueRegistry eventValues = skDragonCore.getAddonInstance().registry(EventValueRegistry.class);
+      eventValues.register(EventValue.builder(DragonPrePlayerMountEvent.class, Player.class)
+         .getter(e -> e.getPlayer().getPlayer())
+         .build());
+      eventValues.register(EventValue.builder(DragonPrePlayerMountEvent.class, DragonType.class)
+         .getter(DragonPrePlayerMountEvent::getDragonType)
+         .build());
+      eventValues.register(EventValue.builder(DragonPrePlayerMountEvent.class, Entity.class)
+         .getter(e -> e.getDragon().getEntity())
+         .build());
+      eventValues.register(EventValue.builder(DragonPostPlayerMountEvent.class, Player.class)
+         .getter(e -> e.getPlayer().getPlayer())
+         .build());
+      eventValues.register(EventValue.builder(DragonPostPlayerMountEvent.class, DragonType.class)
+         .getter(DragonPostPlayerMountEvent::getDragonType)
+         .build());
+      eventValues.register(EventValue.builder(DragonPostPlayerMountEvent.class, Entity.class)
+         .getter(e -> e.getDragon().getEntity())
+         .build());
+      eventValues.register(EventValue.builder(DragonPlayerDismountEvent.class, Player.class)
+         .getter(e -> e.getPlayer().getPlayer())
+         .build());
+      eventValues.register(EventValue.builder(DragonPlayerDismountEvent.class, Location.class)
+         .getter(DragonPlayerDismountEvent::getDismountLoc)
+         .build());
+      eventValues.register(EventValue.builder(DragonPlayerDismountEvent.class, Entity.class)
+         .getter(e -> e.getDragon().getEntity())
+         .build());
    }
 }

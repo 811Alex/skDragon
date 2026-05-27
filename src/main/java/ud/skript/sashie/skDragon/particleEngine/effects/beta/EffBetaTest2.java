@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import ud.skript.sashie.skDragon.particleEngine.maths.EffectsLib;
 
-public class EffBetaTest2 extends Effect {
+public class  EffBetaTest2 extends Effect {
    private Expression player;
    private Expression idName;
 

@@ -34,6 +34,7 @@ import ud.skript.sashie.skDragon.emotes.SkullEvents1_12;
 import ud.skript.sashie.skDragon.emotes.SkullEvents1_8;
 import ud.skript.sashie.skDragon.emotes.SkullEvents1_9;
 import ud.skript.sashie.skDragon.metrics.Metrics;
+import ud.skript.sashie.skDragon.particleEngine.effects.beta.*;
 import ud.skript.sashie.skDragon.particleEngine.utils.ItemFountainEvents;
 import ud.skript.sashie.skDragon.particleEngine.utils.PlayerEvents;
 import ud.skript.sashie.skDragon.particleEngine.utils.ReflectionUtils;
@@ -109,6 +110,13 @@ public class skDragonCore extends JavaPlugin {
          Bukkit.getPluginManager().registerEvents(new ItemFountainEvents(), skdragoncore);
          Objects.requireNonNull(getCommand("skdragon")).setExecutor(new CommandSkdragon());
          sendLog("This hacky version of skDragon does not check for updates!");
+         new EffBetaTest1();
+         new EffBetaTest2();
+         new EffBetaTest3();
+         new EffBetaTest4();
+         new EffBetaTest5();
+         new EffBetaTest7();
+         new EffBetaTest8();
       } else {
          Bukkit.getPluginManager().disablePlugin(skdragoncore);
          sendLog("Plugin is now disabled. Why you no haz Skript?");
@@ -142,6 +150,10 @@ public class skDragonCore extends JavaPlugin {
 
    public static skDragonCore getInstance() {
       return skdragoncore;
+   }
+
+   public static SkriptAddon getAddonInstance() {
+      return skdragoncore.addon;
    }
 
    public static File getFolder() {
